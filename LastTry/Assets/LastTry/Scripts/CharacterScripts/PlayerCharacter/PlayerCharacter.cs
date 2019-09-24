@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerCharacter : BasicAnimation
 {
+    [Header("Player Character Properties")]
+    public Joystick JoystickAndroid;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +16,17 @@ public class PlayerCharacter : BasicAnimation
     // Update is called once per frame
     void Update()
     {
-        
+        MovementHandler();
+    }
+
+    /// <summary>
+    /// This method moves the player.
+    /// </summary>
+    private void MovementHandler()
+    {
+        transform.position += new Vector3(JoystickAndroid.Horizontal * SpeedMovement * Time.deltaTime,
+                                          0,
+                                          JoystickAndroid.Vertical * SpeedMovement * Time.deltaTime);
     }
 
     /// <summary>
