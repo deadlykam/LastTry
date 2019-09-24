@@ -6,6 +6,9 @@ public class PlayerCharacter : BasicAnimation
 {
     [Header("Player Character Properties")]
     public Joystick JoystickAndroid;
+    public Transform PlayerModel;
+
+    private Vector3 _movement;
 
     // Start is called before the first frame update
     void Start()
@@ -16,17 +19,27 @@ public class PlayerCharacter : BasicAnimation
     // Update is called once per frame
     void Update()
     {
-        MovementHandler();
+        MovementRotationHandler();
     }
 
     /// <summary>
-    /// This method moves the player.
+    /// This method moves the player through thumbstick, joypad and keyboard.
     /// </summary>
-    private void MovementHandler()
+    private void MovementRotationHandler()
     {
-        transform.position += new Vector3(JoystickAndroid.Horizontal * SpeedMovement * Time.deltaTime,
-                                          0,
-                                          JoystickAndroid.Vertical * SpeedMovement * Time.deltaTime);
+        // Getting the movement direction
+        _movement = new Vector3(
+            (JoystickAndroid.Horizontal + Input.GetAxis("Horizontal")),
+
+            0,
+
+            (JoystickAndroid.Vertical + Input.GetAxis("Vertical"))
+            );
+
+        // Rotating the player towards the movement direction
+        PlayerModel.rotation = Quaternion.LookRotation(_movement);
+        // Moving the player
+        transform.Translate(_movement * SpeedMovement * Time.deltaTime);
     }
 
     /// <summary>
