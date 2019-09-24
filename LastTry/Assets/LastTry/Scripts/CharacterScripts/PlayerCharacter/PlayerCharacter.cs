@@ -36,8 +36,15 @@ public class PlayerCharacter : BasicAnimation
             (JoystickAndroid.Vertical + Input.GetAxis("Vertical"))
             );
 
-        // Rotating the player towards the movement direction
-        PlayerModel.rotation = Quaternion.LookRotation(_movement);
+        // Condition for rotating the player, when movement is not zero,
+        // this condition is needed so that the player rotation is not
+        // reset back to zero
+        if (_movement != Vector3.zero)
+        {
+            // Rotating the player towards the movement direction
+            PlayerModel.rotation = Quaternion.LookRotation(_movement);
+        }
+
         // Moving the player
         transform.Translate(_movement * SpeedMovement * Time.deltaTime);
     }
