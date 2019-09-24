@@ -11,8 +11,8 @@ public class PlayerCharacter : BasicAnimation
     [Range(0.0f, 1.0f)]
     public float SpeedSlerp;
 
-    private Vector3 _movement;
-    private Vector3 _dir;
+    private Vector3 _movement = new Vector3(0, 0, 0.1f);
+    private Vector3 _dir = new Vector3(0, 0, 0.1f);
 
     // Start is called before the first frame update
     void Start()
