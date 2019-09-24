@@ -8,7 +8,11 @@ public class PlayerCharacter : BasicAnimation
     public Joystick JoystickAndroid;
     public Transform PlayerModel;
 
+    [Range(0.0f, 1.0f)]
+    public float SpeedSlerp;
+
     private Vector3 _movement;
+    private Vector3 _dir;
 
     // Start is called before the first frame update
     void Start()
@@ -36,13 +40,18 @@ public class PlayerCharacter : BasicAnimation
             (JoystickAndroid.Vertical + Input.GetAxis("Vertical"))
             );
 
-        // Condition for rotating the player, when movement is not zero,
-        // this condition is needed so that the player rotation is not
-        // reset back to zero
-        if (_movement != Vector3.zero)
+        // Condition for updating the direction when movement is not zero,
+        // this condition is needed so that the direction is not updated
+        // to zero when player not moving
+        if (_movement != Vector3.zero) _dir = _movement;
+
+        // Condition for rotating the player model
+        if (Quaternion.LookRotation(_dir) != PlayerModel.rotation)
         {
             // Rotating the player towards the movement direction
-            PlayerModel.rotation = Quaternion.LookRotation(_movement);
+            PlayerModel.rotation = Quaternion.Slerp(PlayerModel.rotation,
+                                   Quaternion.LookRotation(_dir),
+                                   SpeedSlerp);
         }
 
         // Moving the player
