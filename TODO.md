@@ -25,3 +25,4 @@
 23. Armours
 24. Items
 25. Upgrading weapon, armour, items
+26. ~~Movement Animation~~
