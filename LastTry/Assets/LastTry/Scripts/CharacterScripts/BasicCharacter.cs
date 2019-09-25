@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class BasicCharacter : MonoBehaviour
 {
+    [Header("Basic Character Properties")]
     public int HealthMax;
     public int HealthMin;
     private int _healthCur;

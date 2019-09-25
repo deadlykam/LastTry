@@ -11,8 +11,16 @@ public class PlayerCharacter : BasicAnimation
     [Range(0.0f, 1.0f)]
     public float SpeedSlerp;
 
+    public float MovementAcceleration;
+
     private Vector3 _movement = new Vector3(0, 0, 0.1f);
     private Vector3 _dir = new Vector3(0, 0, 0.1f);
+
+    private float _horizontalValue = 0; // Storing the joystick horizontal value
+    private float _horzontalVelocity;
+
+    private float _verticalValue = 0; // Storing the joystick vertical value
+    private float _verticalVelocity;
 
     // Start is called before the first frame update
     void Start()
@@ -31,13 +39,26 @@ public class PlayerCharacter : BasicAnimation
     /// </summary>
     private void MovementRotationHandler()
     {
+        // Accelerating horizontal movement from joystick/keyboard/joypad
+        _horizontalValue = Mathf.SmoothDamp(_horizontalValue,
+                                            JoystickAndroid.Horizontal
+                                            + Input.GetAxis("Horizontal"),
+                                            ref _horzontalVelocity,
+                                            MovementAcceleration);
+
+        // Accelerating vertical movement from joystick/keyboard/joypad
+        _verticalValue = Mathf.SmoothDamp(_verticalValue,
+                                          JoystickAndroid.Vertical
+                                          + Input.GetAxis("Vertical"),
+                                          ref _verticalVelocity,
+                                          MovementAcceleration);
+
+
         // Getting the movement direction
         _movement = new Vector3(
-            (JoystickAndroid.Horizontal + Input.GetAxis("Horizontal")),
-
+            _horizontalValue,
             0,
-
-            (JoystickAndroid.Vertical + Input.GetAxis("Vertical"))
+            _verticalValue
             );
 
         // Condition for updating the direction when movement is not zero,
@@ -56,6 +77,8 @@ public class PlayerCharacter : BasicAnimation
 
         // Moving the player
         transform.Translate(_movement * SpeedMovement * Time.deltaTime);
+        // Setting the move animation speed
+        SetMoveSpeed(_horizontalValue, _verticalValue);
     }
 
     /// <summary>
