@@ -1,7 +1,7 @@
-# ~~TODO~~
+# TODO
 
-1. Basic world layout
-2. Setting up player movement.
+~~1. Basic world layout
+2. Setting up player movement.~~
 3. Setting up blob shadow.
 4. Study Light Probe Group.
 5. Use bake lighting in the world.
