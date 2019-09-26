@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCharacter : BasicAnimation
+public class PlayerCharacter : PlayerCombatControl
 {
     [Header("Player Character Properties")]
     public Joystick JoystickAndroid;
@@ -14,7 +14,8 @@ public class PlayerCharacter : BasicAnimation
     public float MovementAcceleration;
 
     private Vector3 _movement = new Vector3(0, 0, 0.1f);
-    private Vector3 _dir = new Vector3(0, 0, 0.1f);
+    //private Vector3 _dir = new Vector3(0, 0, 0.1f);
+    private Quaternion _dir = Quaternion.identity;
 
     private float _horizontalValue = 0; // Storing the joystick horizontal value
     private float _horzontalVelocity;
@@ -31,7 +32,13 @@ public class PlayerCharacter : BasicAnimation
     // Update is called once per frame
     void Update()
     {
-        MovementRotationHandler();
+        // Calling the Update of PlayerCombatControl
+        PlayerCombatControlUpdate();
+        
+        // Condition for being able to move
+        if (IsMovable) MovementRotationHandler();
+
+        AttackHandler();
     }
 
     /// <summary>
@@ -53,7 +60,6 @@ public class PlayerCharacter : BasicAnimation
                                           ref _verticalVelocity,
                                           MovementAcceleration);
 
-
         // Getting the movement direction
         _movement = new Vector3(
             _horizontalValue,
@@ -64,21 +70,56 @@ public class PlayerCharacter : BasicAnimation
         // Condition for updating the direction when movement is not zero,
         // this condition is needed so that the direction is not updated
         // to zero when player not moving
-        if (_movement != Vector3.zero) _dir = _movement;
+        if (_movement != Vector3.zero) _dir = Quaternion.LookRotation(_movement);
 
         // Condition for rotating the player model
-        if (Quaternion.LookRotation(_dir) != PlayerModel.rotation)
+        if (_dir != PlayerModel.rotation)
         {
             // Rotating the player towards the movement direction
-            PlayerModel.rotation = Quaternion.Slerp(PlayerModel.rotation,
-                                   Quaternion.LookRotation(_dir),
-                                   SpeedSlerp);
+            PlayerModel.rotation = Quaternion.Slerp(
+                                       PlayerModel.rotation,
+                                       _dir,
+                                       SpeedSlerp);
         }
 
         // Moving the player
         transform.Translate(_movement * SpeedMovement * Time.deltaTime);
         // Setting the move animation speed
         SetMoveSpeed(_horizontalValue, _verticalValue);
+    }
+
+    /// <summary>
+    /// This method handles the attack system of the player.
+    /// </summary>
+    private void AttackHandler()
+    {
+        // Condition for attacking
+        if (IsAcceptInput)
+        {
+            // Condition for getting input from the user and then
+            // the player attacking
+            if (Input.GetButtonDown("Fire1"))
+            {
+                // Sending the correct attack information
+                AddCombatInput(AnimationInfos[0].ToCombatInfo());
+
+                // Resetting the speed values because the player
+                // is attacking
+                ResetMovementRotation();
+            }
+        }
+    }
+
+    /// <summary>
+    /// This method resets the movement and rotation feature.
+    /// </summary>
+    private void ResetMovementRotation()
+    {
+        _horizontalValue = 0;
+        _verticalValue = 0;
+        _dir = PlayerModel.rotation;
+        //_movement = Vector3.zero;
+        SetMoveSpeed(0);
     }
 
     /// <summary>
