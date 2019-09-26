@@ -8,6 +8,7 @@ using UnityEngine;
 public class BasicAnimation : BasicCharacter
 {
     private readonly string AnimationMovePercentage = "MovePercentage";
+    protected readonly string AnimationTriggerAttackSword = "AttackSword";
 
     [Header("Basic Animation Properties")]
     public Animator CharacterAnimator;
@@ -17,6 +18,12 @@ public class BasicAnimation : BasicCharacter
     {
         InitializeStartUp();
     }
+
+    /// <summary>
+    /// This method triggers the sword attack animation.
+    /// </summary>
+    private void SwordAttack()
+    { CharacterAnimator.SetTrigger(AnimationTriggerAttackSword); }
 
     /// <summary>
     /// This method initializes all basic attribute and basic animations at the start up.
@@ -60,5 +67,17 @@ public class BasicAnimation : BasicCharacter
 
         // Taking the value2 value to apply as percentage
         else SetMoveSpeed(value2); // Vertical value
+    }
+
+    /// <summary>
+    /// This method plays attack animation of the character.
+    /// </summary>
+    /// <param name="weapon">The type of weapon animation to play,
+    ///                      of type WeaponType</param>
+    protected void PlayAttackAnimation(AttackAnimationInfo.WeaponType weapon)
+    {
+        // Animation for sword attacks
+        if (weapon == AttackAnimationInfo.WeaponType.Sword)
+            SwordAttack();
     }
 }
