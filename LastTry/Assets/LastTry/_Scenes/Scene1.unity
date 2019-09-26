@@ -911,10 +911,14 @@ MonoBehaviour:
   HealthMin: 10
   SpeedMovement: 6
   CharacterAnimator: {fileID: 2774895911397821563}
+  AnimationInfos:
+  - TotalTime: 0.8
+    ProcessTime: 0.3
+    Weapon: 1
   JoystickAndroid: {fileID: 2013279159}
   PlayerModel: {fileID: 1668799147}
   SpeedSlerp: 0.25
-  MovementAcceleration: 0.1
+  MovementAcceleration: 0
 --- !u!54 &1170275258
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1413,6 +1417,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 3a74f678ee8f3bd49aacf3de1ae4bcaa,
         type: 3}
+    - target: {fileID: 2929252283123773951, guid: aaa2c939c0359ac4dbce3f49e8b90252,
+        type: 3}
+      propertyPath: handleRange
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
 --- !u!224 &1435211882 stripped
@@ -3890,8 +3899,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1773117562625415207}
-  m_LocalRotation: {x: -0.06138086, y: 0.000000017661762, z: 0.0000000010861414, w: 0.9981144}
-  m_LocalPosition: {x: 5.8592817e-19, y: 0.0025289527, z: -9.3132255e-12}
+  m_LocalRotation: {x: -0.06138087, y: 0.00000001766176, z: 0.0000000010861444, w: 0.9981144}
+  m_LocalPosition: {x: 8.350178e-19, y: 0.0025289527, z: -1.3969876e-11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8902418428165429492}
@@ -4365,8 +4374,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 916857943207871879}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0.7034676, z: 0}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 0, y: 0.7034676, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children:
   - {fileID: 3552300699090517601}
