@@ -909,12 +909,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HealthMax: 10
   HealthMin: 10
+  Weapons: []
   SpeedMovement: 6
   CharacterAnimator: {fileID: 2774895911397821563}
-  AnimationInfos:
+  AttackClip: {fileID: 7400000, guid: 096bdc14818c6ae45b2ec64ae18acef5, type: 2}
+  DefaultAnimationAttacks:
+  - TotalTime: 0.7
+    ProcessTime: 0.3
+    AttackAnimation: {fileID: 7400000, guid: 096bdc14818c6ae45b2ec64ae18acef5, type: 2}
+  - TotalTime: 0.7
+    ProcessTime: 0.3
+    AttackAnimation: {fileID: 7400000, guid: fa718797a226e694f8e1fb9d622bf501, type: 2}
+  - TotalTime: 0.7
+    ProcessTime: 0.3
+    AttackAnimation: {fileID: 7400000, guid: 400ee32e6e76cd14d9238baaca7c32b3, type: 2}
+  SwordAnimationAttacks:
   - TotalTime: 0.8
     ProcessTime: 0.3
-    Weapon: 1
+    AttackAnimation: {fileID: 7400000, guid: 096bdc14818c6ae45b2ec64ae18acef5, type: 2}
   JoystickAndroid: {fileID: 2013279159}
   PlayerModel: {fileID: 1668799147}
   SpeedSlerp: 0.25
