@@ -23,6 +23,8 @@ public class PlayerCharacter : PlayerCombatControl
     private float _verticalValue = 0; // Storing the joystick vertical value
     private float _verticalVelocity;
 
+    private bool _isAttackButtonA = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -101,7 +103,7 @@ public class PlayerCharacter : PlayerCombatControl
         {
             // Condition for getting input from the user and then
             // the player attacking
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("Fire1") || _isAttackButtonA)
             {
                 // Attacking
                 AddCombatInput();
@@ -111,6 +113,9 @@ public class PlayerCharacter : PlayerCombatControl
                 ResetMovementRotation();
             }
         }
+
+        // Making button A false if being used
+        _isAttackButtonA = _isAttackButtonA ? false : false;
     }
 
     /// <summary>
@@ -132,4 +137,9 @@ public class PlayerCharacter : PlayerCombatControl
     {
         base.InitializeStartUp();
     }
+
+    /// <summary>
+    /// This method takes the button A attack command from the on screen button A.
+    /// </summary>
+    public void ButtonA() { if (IsAcceptInput) _isAttackButtonA = true; }
 }
