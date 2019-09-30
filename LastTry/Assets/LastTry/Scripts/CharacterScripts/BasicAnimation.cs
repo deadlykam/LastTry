@@ -9,6 +9,7 @@ public class BasicAnimation : BasicCharacter
 {
     private readonly string AnimationMovePercentage = "MovePercentage";
     protected readonly string AnimationTriggerAttackSword = "Attack";
+    private readonly string AnimationIsAttackIdle = "IsAttackIdle";
 
     [Header("Basic Animation Properties")]
     public Animator CharacterAnimator;
@@ -18,6 +19,9 @@ public class BasicAnimation : BasicCharacter
     public CombatAnimation[] SwordAnimationAttacks;
     private CombatAnimation[] _currentAnimationAttacks;
     private AnimatorOverrideController _overrideController;
+
+    public float CombatTimer;
+    private float _combatTimerCurrent;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +51,31 @@ public class BasicAnimation : BasicCharacter
         // Setting the attack animations to default at start
         // NOTE: This may change in future and will depend on the weapon equipped
         _currentAnimationAttacks = DefaultAnimationAttacks;
+
+        // Making the combat stance false at the start
+        CharacterAnimator.SetBool(AnimationIsAttackIdle, false);
+    }
+
+    /// <summary>
+    /// This method is the update method of BasicAnimation.
+    /// </summary>
+    protected void UpdateBasicAnimation()
+    {
+        // Condition for handling attack idle mode
+        if (CharacterAnimator.GetBool(AnimationIsAttackIdle))
+        {
+            // Counting down the attack idle mode
+            _combatTimerCurrent -= Time.deltaTime;
+
+            // Condition for stopping the idle mode
+            if(_combatTimerCurrent <= 0)
+            {
+                // Stopping the attack idle animation
+                CharacterAnimator.SetBool(AnimationIsAttackIdle, false);
+                _combatTimerCurrent = 0; // Making timer to 0 to clearify
+                                         // that attack idle mode is done
+            }
+        }
     }
 
     /// <summary>
@@ -96,25 +125,22 @@ public class BasicAnimation : BasicCharacter
     }
 
     /// <summary>
-    /// This method plays the random attack animation of the weapon.
+    /// This method plays the random attack animation of the weapon and resets the
+    /// combat mode timer and enables the combat stance.
     /// </summary>
     /// <param name="animation">The animatino to play, of type AnimationClip</param>
     protected void PlayAttackAnimation(AnimationClip animation)
     {
         CharacterAnimator.SetTrigger(AnimationTriggerAttackSword);
         _overrideController[AttackClip.name] = animation;
-    }
 
-    /// <summary>
-    /// [Depricated]This method plays attack animation of the character.
-    /// </summary>
-    /// <param name="weapon">The type of weapon animation to play,
-    ///                      of type WeaponType</param>
-    protected void PlayAttackAnimation(WeaponInfo.WeaponType weapon)
-    {
-        // Animation for sword attacks
-        if (weapon == WeaponInfo.WeaponType.Sword)
-            SwordAttack();
+        _combatTimerCurrent = CombatTimer; // Resetting the combat timer
+
+        // Condition for starting the combat mode
+        if (!CharacterAnimator.GetBool(AnimationIsAttackIdle))
+        {
+            CharacterAnimator.SetBool(AnimationIsAttackIdle, true);
+        }
     }
 }
 

@@ -32,8 +32,11 @@ public class PlayerCharacter : PlayerCombatControl
     // Update is called once per frame
     void Update()
     {
+        // Calling the update of BasicAnimation
+        UpdateBasicAnimation();
+
         // Calling the Update of PlayerCombatControl
-        PlayerCombatControlUpdate();
+        UpdatePlayerCombatControl();
         
         // Condition for being able to move
         if (IsMovable) MovementRotationHandler();

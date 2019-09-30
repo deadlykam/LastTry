@@ -40,7 +40,7 @@ public class PlayerCombatControl : BasicAnimation
     // Update is called once per frame
     void Update()
     {
-        PlayerCombatControlUpdate();
+        UpdatePlayerCombatControl();
     }
     
     /// <summary>
@@ -57,8 +57,7 @@ public class PlayerCombatControl : BasicAnimation
             _isCurrentCombatProcessing = true; // Current CombatInfo is being processed
             _isAcceptInputThreshold = false; // Accepting input threshold resetted
             _currentAnimationTime = 0; // Resetting current animation timer for further use
-            /*PlayAttackAnimation(_currentCombatInfo.Weapon); // Playing the current
-                                                            // attack animation*/
+
             // Playing the attack animation
             PlayAttackAnimation(_currentCombatInfo.AttackAnimation);
         }
@@ -101,8 +100,6 @@ public class PlayerCombatControl : BasicAnimation
     protected override void InitializeStartUp()
     {
         base.InitializeStartUp();
-        //_combatInputs = new Queue<CombatInfo>();
-        //_combatState = CombatState.AcceptInput;
         _isCurrentCombatProcessing = false;
         _isAcceptInputThreshold = false;
         _currentAnimationTime = 0;
@@ -112,7 +109,7 @@ public class PlayerCombatControl : BasicAnimation
     /// This method handles the player combat control update and must be called
     /// by child classes for the processing of PlayerCombatControl.
     /// </summary>
-    protected void PlayerCombatControlUpdate()
+    protected void UpdatePlayerCombatControl()
     {
         SetupCombatInputForProcessing();
         ProcessingCombatInfo();

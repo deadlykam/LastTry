@@ -927,6 +927,7 @@ MonoBehaviour:
   - TotalTime: 0.8
     ProcessTime: 0.3
     AttackAnimation: {fileID: 7400000, guid: 096bdc14818c6ae45b2ec64ae18acef5, type: 2}
+  CombatTimer: 5
   JoystickAndroid: {fileID: 2013279159}
   PlayerModel: {fileID: 1668799147}
   SpeedSlerp: 0.25
