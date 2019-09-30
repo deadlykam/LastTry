@@ -7,19 +7,30 @@ public class EnemyCharacter : BasicAnimation
     [Header("Enemy Character Properties")]
     public EnemyManager Manager;
     public float AttackRadius;
+    public float StopRadius;
     [Tooltip("The rate at which the enemy will come to a halt or run")]
     public float Acceleration;
 
     private float _speedPercentage = 0;
     private Vector3 _lookAtTarget;
 
+    /// <summary>
+    /// Checking if the player is within the target.
+    /// </summary>
     protected bool IsInRange
-    { get
-        {
+    { get { return Vector3.Distance(Manager.Player.transform.position,
+                                    transform.position) <= AttackRadius
+                                    &&
+                                    Vector3.Distance(Manager.Player.transform.position,
+                                    transform.position) >= StopRadius; ; } }
+
+    /// <summary>
+    /// For checking if the enemy have reached the player.
+    /// </summary>
+    protected bool IsReachedTarget
+    { get {
             return Vector3.Distance(Manager.Player.transform.position,
-                                    transform.position) <= AttackRadius;
-        }
-    }
+                                    transform.position) <= StopRadius; } }
 
     // Start is called before the first frame update
     void Start()
