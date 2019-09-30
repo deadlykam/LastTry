@@ -26,7 +26,7 @@ public class PlayerCharacter : PlayerCombatControl
     // Start is called before the first frame update
     void Start()
     {
-        
+        InitializeStartUp();
     }
 
     // Update is called once per frame
@@ -100,8 +100,8 @@ public class PlayerCharacter : PlayerCombatControl
             // the player attacking
             if (Input.GetButtonDown("Fire1"))
             {
-                // Sending the correct attack information
-                AddCombatInput(AnimationInfos[0].ToCombatInfo());
+                // Attacking
+                AddCombatInput();
 
                 // Resetting the speed values because the player
                 // is attacking
@@ -123,7 +123,7 @@ public class PlayerCharacter : PlayerCombatControl
     }
 
     /// <summary>
-    /// This method initializes the player character at the start up.
+    /// This method initializes the player character at the start up in PlayerCharacter.
     /// </summary>
     protected override void InitializeStartUp()
     {
