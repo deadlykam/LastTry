@@ -1358,6 +1358,7 @@ MonoBehaviour:
   HealthMin: 10
   Weapons: []
   SpeedMovement: 6
+  SpeedSlerp: 0.25
   CharacterAnimator: {fileID: 7764990781122079462}
   AttackClip: {fileID: 7400000, guid: 096bdc14818c6ae45b2ec64ae18acef5, type: 2}
   DefaultAnimationAttacks:
@@ -1377,7 +1378,7 @@ MonoBehaviour:
   CombatTimer: 5
   JoystickAndroid: {fileID: 0}
   PlayerModel: {fileID: 5566625993097755702}
-  SpeedSlerp: 0.25
+  IsJoyPad: 1
   MovementAcceleration: 0
 --- !u!54 &5566625992538791207
 Rigidbody:

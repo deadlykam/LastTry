@@ -212,6 +212,7 @@ MonoBehaviour:
   CombatTimer: 5
   Manager: {fileID: 0}
   AttackRadius: 5
+  StopRadius: 1
   Acceleration: 2
 --- !u!1 &1518025621384769219
 GameObject:
