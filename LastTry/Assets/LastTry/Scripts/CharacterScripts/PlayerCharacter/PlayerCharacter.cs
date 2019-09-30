@@ -7,6 +7,9 @@ public class PlayerCharacter : PlayerCombatControl
     [Header("Player Character Properties")]
     public Joystick JoystickAndroid;
     public Transform PlayerModel;
+    [Tooltip("True for using the joypad in editor. Make false while build " +
+        "otherwise touching screen will act as triggering attack.")]
+    public bool IsJoyPad;
     
     public float MovementAcceleration;
 
@@ -100,7 +103,8 @@ public class PlayerCharacter : PlayerCombatControl
         {
             // Condition for getting input from the user and then
             // the player attacking
-            if (Input.GetButtonDown("Fire1") || _isAttackButtonA)
+            if ((Input.GetButtonDown("Fire1") && IsJoyPad) 
+                || _isAttackButtonA)
             {
                 // Attacking
                 AddCombatInput();
