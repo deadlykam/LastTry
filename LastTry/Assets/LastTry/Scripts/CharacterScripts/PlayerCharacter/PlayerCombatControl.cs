@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerCombatControl : BasicAnimation
 {
     public enum CombatState { None, SetupInput, Processing, AcceptInput };
-
-    [Header("Player Combat Control Properties")]
-    public AttackAnimationInfo[] AnimationInfos;
+    
+    /*[Header("Player Combat Control Properties")]*/
+    //public AttackAnimationInfo[] AnimationInfos;
 
     // For checking if input is allowed to be accepted
     public bool IsAcceptInput { get { return _combatState == CombatState.AcceptInput; } }
@@ -16,9 +16,10 @@ public class PlayerCombatControl : BasicAnimation
     public bool IsMovable { get { return !_isCurrentCombatProcessing &&
                                          _combatInputs.Count == 0; } }
 
-    private Queue<CombatInfo> _combatInputs = new Queue<CombatInfo>();
+    private Queue<CombatAnimation> _combatInputs = new Queue<CombatAnimation>();
     private CombatState _combatState = CombatState.AcceptInput;
-    private CombatInfo _currentCombatInfo; // The current combat time information
+
+    private CombatAnimation _currentCombatInfo; // The current combat time information
                                            // of the animation
 
     private bool _isCurrentCombatProcessing; // For checking if current CombatInfo
@@ -56,8 +57,10 @@ public class PlayerCombatControl : BasicAnimation
             _isCurrentCombatProcessing = true; // Current CombatInfo is being processed
             _isAcceptInputThreshold = false; // Accepting input threshold resetted
             _currentAnimationTime = 0; // Resetting current animation timer for further use
-            PlayAttackAnimation(_currentCombatInfo.Weapon); // Playing the current
-                                                            // attack animation
+            /*PlayAttackAnimation(_currentCombatInfo.Weapon); // Playing the current
+                                                            // attack animation*/
+            // Playing the attack animation
+            PlayAttackAnimation(_currentCombatInfo.AttackAnimation);
         }
 
         // Todo: Check if else condition is require as fail safe here
@@ -92,7 +95,8 @@ public class PlayerCombatControl : BasicAnimation
     }
 
     /// <summary>
-    /// This method initializes the player combat control at the start up.
+    /// This method initializes the player combat control at the start up 
+    /// in PlayerCombatControl.
     /// </summary>
     protected override void InitializeStartUp()
     {
@@ -119,53 +123,16 @@ public class PlayerCombatControl : BasicAnimation
     /// </summary>
     /// <param name="animationTimeInfo">The time information of the animation,
     ///                                 of type CombatInfo</param>
-    protected void AddCombatInput(CombatInfo animationTimeInfo)
+    protected void AddCombatInput()
     {
         // Condition to check if input is allowed to be accepted
         if (IsAcceptInput)
         {
             // Adding a new input to the queue
-            _combatInputs.Enqueue(animationTimeInfo);
+            _combatInputs.Enqueue(GetAttackAnimation());
 
             // Starting to process the queue
             _combatState = CombatState.SetupInput;
         }
-    }
-}
-
-/// <summary>
-/// This class stores the time information of a combat animation.
-/// </summary>
-public struct CombatInfo
-{
-    /// <summary>
-    /// Total animation time.
-    /// </summary>
-    public readonly float TotalTime;
-
-    /// <summary>
-    /// The time at which no input will be accepted.
-    /// </summary>
-    public readonly float ProcessTime;
-
-    /// <summary>
-    /// The type of weapon animation to play.
-    /// </summary>
-    public readonly AttackAnimationInfo.WeaponType Weapon;
-
-    /// <summary>
-    /// This constructor creates an CombatInfo struct object.
-    /// </summary>
-    /// <param name="totalTime">The total time for the animation, of type float</param>
-    /// <param name="processTime">The time for which no input will be accepeted,
-    ///                           of type float</param>
-    /// <param name="weapon">The type of weapon animation to play, 
-    ///                      of type WeaponType</param>
-    public CombatInfo(float totalTime, float processTime, 
-                      AttackAnimationInfo.WeaponType weapon)
-    {
-        TotalTime = totalTime;
-        ProcessTime = processTime;
-        Weapon = weapon;
     }
 }
