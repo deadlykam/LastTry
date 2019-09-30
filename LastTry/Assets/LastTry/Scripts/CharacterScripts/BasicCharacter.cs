@@ -15,6 +15,9 @@ public class BasicCharacter : MonoBehaviour
 
     public float SpeedMovement;
 
+    [Range(0.0f, 1.0f)]
+    public float SpeedSlerp;
+
     // Start is called before the first frame update
     void Start()
     {

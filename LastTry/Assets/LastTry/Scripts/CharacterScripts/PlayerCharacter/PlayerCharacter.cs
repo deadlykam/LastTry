@@ -7,10 +7,7 @@ public class PlayerCharacter : PlayerCombatControl
     [Header("Player Character Properties")]
     public Joystick JoystickAndroid;
     public Transform PlayerModel;
-
-    [Range(0.0f, 1.0f)]
-    public float SpeedSlerp;
-
+    
     public float MovementAcceleration;
 
     private Vector3 _movement = new Vector3(0, 0, 0.1f);
