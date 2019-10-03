@@ -1,5 +1,63 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &687514814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 687514815}
+  - component: {fileID: 687514816}
+  - component: {fileID: 687514817}
+  m_Layer: 11
+  m_Name: EnemyDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &687514815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687514814}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5566625993097755702}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &687514816
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687514814}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 2, z: 1}
+  m_Center: {x: 0, y: 1, z: 0.5}
+--- !u!114 &687514817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687514814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a36b4181be534ef4b8b3670ef4f1b851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 5566625992538791204}
 --- !u!1 &72769338070547481
 GameObject:
   m_ObjectHideFlags: 0
@@ -1322,7 +1380,7 @@ GameObject:
   - component: {fileID: 5566625992538791206}
   m_Layer: 8
   m_Name: PlayerHolder
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1354,11 +1412,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74d4908896977e44a82eecfd8b9854d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterCollider: {fileID: 5566625992538791206}
+  CharacterRigid: {fileID: 5566625992538791207}
   HealthMax: 10
   HealthMin: 10
-  Weapons: []
+  Weapons:
+  - {fileID: 1790873923}
   SpeedMovement: 6
   SpeedSlerp: 0.25
+  HurtTimer: 0
   CharacterAnimator: {fileID: 7764990781122079462}
   AttackClip: {fileID: 7400000, guid: 096bdc14818c6ae45b2ec64ae18acef5, type: 2}
   DefaultAnimationAttacks:
@@ -1489,6 +1551,7 @@ Transform:
   m_Children:
   - {fileID: 380776511032149916}
   - {fileID: 5566625992680125123}
+  - {fileID: 687514815}
   m_Father: {fileID: 5566625992538791205}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1597,6 +1660,7 @@ GameObject:
   - component: {fileID: 4871104026946223177}
   - component: {fileID: 5970560118098716272}
   - component: {fileID: 3220924411611372831}
+  - component: {fileID: 1790873923}
   m_Layer: 9
   m_Name: Sword
   m_TagString: Untagged
@@ -1664,6 +1728,21 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1790873923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6993477362775589908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0c53da8f94efff438d135e82bd6d702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Weapon: 1
+  Damage: 5
+  Cost: 100
 --- !u!1 &6993639670516673900
 GameObject:
   m_ObjectHideFlags: 0
