@@ -40,13 +40,16 @@ public class PlayerCharacter : PlayerCombatControl
         // Calling the update of BasicAnimation
         UpdateBasicAnimation();
 
-        // Calling the Update of PlayerCombatControl
-        UpdatePlayerCombatControl();
-        
-        // Condition for being able to move
-        if (IsMovable) MovementRotationHandler();
+        if (!IsDead) // Condition for not being dead
+        {
+            // Calling the Update of PlayerCombatControl
+            UpdatePlayerCombatControl();
 
-        AttackHandler();
+            // Condition for being able to move
+            if (IsMovable) MovementRotationHandler();
+
+            AttackHandler();
+        }
     }
 
     /// <summary>

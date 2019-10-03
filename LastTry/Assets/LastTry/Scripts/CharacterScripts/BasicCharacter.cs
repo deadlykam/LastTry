@@ -13,6 +13,7 @@ public class BasicCharacter : MonoBehaviour
 
     public int HealthMax;
     public int HealthMin;
+    [SerializeField]
     private int _health;
     protected bool IsDead { get { return _health == 0; } }
 

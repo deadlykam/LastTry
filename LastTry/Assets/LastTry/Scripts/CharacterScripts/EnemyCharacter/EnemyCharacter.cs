@@ -6,7 +6,7 @@ public class EnemyCharacter : BasicAnimation
 {
     [Header("Enemy Character Properties")]
     public EnemyManager Manager;
-    public float AttackRadius;
+    public float FollowRadius;
     public float StopRadius;
     [Tooltip("The rate at which the enemy will come to a halt or run")]
     public float Acceleration;
@@ -14,15 +14,21 @@ public class EnemyCharacter : BasicAnimation
     private float _speedPercentage = 0;
     private Vector3 _lookAtTarget;
 
+    protected bool IsPlayerInWeaponRange = false;
+    protected CombatAnimation CurrentCombatInfo;
+    protected float AttackTimer = -1; // Starting must be -1 because it means animation done
+                                      // or another attack can take place.
+    protected bool IsAttacking { get { return AttackTimer != -1; } }
+
     /// <summary>
     /// Checking if the player is within the target.
     /// </summary>
     protected bool IsInRange
     { get { return Vector3.Distance(Manager.Player.transform.position,
-                                    transform.position) <= AttackRadius
+                                    transform.position) <= FollowRadius
                                     &&
                                     Vector3.Distance(Manager.Player.transform.position,
-                                    transform.position) >= StopRadius; ; } }
+                                    transform.position) > StopRadius; ; } }
 
     /// <summary>
     /// For checking if the enemy have reached the player.
@@ -120,7 +126,9 @@ public class EnemyCharacter : BasicAnimation
     {
         if (!IsDead && !IsHurt) // Condition for when the enemy is not hurt or dead
         {
-            if (IsInRange) // Condition for looking at the player
+            // Condition for looking at the player
+            // and moving towards the player
+            if (IsInRange && !IsAttacking)
             {
                 LookAtTarget(); // Looking at the player
                 MovementHandler(); // Moving towards the player
@@ -129,8 +137,45 @@ public class EnemyCharacter : BasicAnimation
             {
                 // Condition for deceleration
                 SlowingDownEnemy();
+
+                // Condition for looking at the player
+                // if not in weapon range
+                if(!IsAttacking && IsReachedTarget && !IsPlayerInWeaponRange)
+                {
+                    LookAtTarget();
+                }
             }
         }
         else SlowingDownEnemy(); // Slowing down enemy for getting hurt
+    }
+
+    /// <summary>
+    /// This method gets a new attack information from the BasicAnimation class.
+    /// </summary>
+    protected virtual void GetNewAttackAnimation()
+    {
+        CurrentCombatInfo = GetAttackAnimation();
+        AttackTimer = 0; // Resetting attack timer for further use
+    }
+
+    /// <summary>
+    /// This method makes the enemy take damage and resets any attack timer.
+    /// </summary>
+    /// <param name="amount">The amount of damage to be taken, of type int</param>
+    public override void TakeDamage(int amount)
+    {
+        base.TakeDamage(amount);
+
+        AttackTimer = -1;
+    }
+
+    /// <summary>
+    /// This method sets if the player is in weapon range.
+    /// </summary>
+    /// <param name="isInRange">The flag which sets that the player is
+    ///                         in weapon range, of type bool</param>
+    public void SetPlayerInWeaponRange(bool isInRange)
+    {
+        IsPlayerInWeaponRange = isInRange;
     }
 }
