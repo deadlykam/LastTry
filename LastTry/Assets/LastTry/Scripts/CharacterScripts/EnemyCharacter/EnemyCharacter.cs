@@ -41,6 +41,9 @@ public class EnemyCharacter : BasicAnimation
     // Update is called once per frame
     void Update()
     {
+        // Calling the update of BasicCharacter
+        UpdateBasicCharacter();
+
         // Calling the update of BasicAnimation
         UpdateBasicAnimation();
 
@@ -85,6 +88,24 @@ public class EnemyCharacter : BasicAnimation
     }
 
     /// <summary>
+    /// This method slows down the enemy.
+    /// </summary>
+    private void SlowingDownEnemy()
+    {
+        // Condition for deceleration
+        if (_speedPercentage != 0)
+        {
+
+            _speedPercentage = (_speedPercentage - Time.deltaTime * Acceleration)
+                               <= 0 ?
+                               0 :
+                               _speedPercentage - Time.deltaTime * Acceleration;
+
+            SetMoveSpeed(_speedPercentage); // Setting animation speed
+        }
+    }
+
+    /// <summary>
     /// This method initializes the enemy character at the start up in EnemyCharacter.
     /// </summary>
     protected override void InitializeStartUp()
@@ -97,23 +118,19 @@ public class EnemyCharacter : BasicAnimation
     /// </summary>
     protected virtual void UpdateEnemyCharacter()
     {
-        if (IsInRange) // Condition for looking at the player
+        if (!IsDead && !IsHurt) // Condition for when the enemy is not hurt or dead
         {
-            LookAtTarget(); // Looking at the player
-            MovementHandler(); // Moving towards the player
-        }
-        else // Condition for not moving
-        {
-            // Condition for deceleration
-            if (_speedPercentage != 0) {
-
-                _speedPercentage = (_speedPercentage - Time.deltaTime * Acceleration) 
-                                   <= 0 ? 
-                                   0 : 
-                                   _speedPercentage - Time.deltaTime * Acceleration;
-
-                SetMoveSpeed(_speedPercentage); // Setting animation speed
+            if (IsInRange) // Condition for looking at the player
+            {
+                LookAtTarget(); // Looking at the player
+                MovementHandler(); // Moving towards the player
+            }
+            else // Condition for not moving
+            {
+                // Condition for deceleration
+                SlowingDownEnemy();
             }
         }
+        else SlowingDownEnemy(); // Slowing down enemy for getting hurt
     }
 }

@@ -31,6 +31,9 @@ public class PlayerCombatControl : BasicAnimation
 
     private float _currentAnimationTime; // Animation time for the current combat animation
 
+    private List<EnemyCharacter> Enemies // For storing a list of enemies that have entered
+        = new List<EnemyCharacter>();    // the weapons' range
+
     // Start is called before the first frame update
     void Start()
     {
@@ -76,10 +79,11 @@ public class PlayerCombatControl : BasicAnimation
             // The current time of the combat animation
             _currentAnimationTime += Time.deltaTime;
 
-            // Condition for accepting a new combat input
+            // Condition for accepting a new combat input and hurting the enemies
             if(_currentAnimationTime >= _currentCombatInfo.ProcessTime &&
                !_isAcceptInputThreshold)
             {
+                HurtEnemiesInRange();
                 _combatState = CombatState.AcceptInput; // New combat input can be accepted
                 _isAcceptInputThreshold = true; // Accepting input threshold crossed
             }
@@ -89,6 +93,24 @@ public class PlayerCombatControl : BasicAnimation
             {
                 _isCurrentCombatProcessing = false; // Processing done for current 
                                                     // CombatInfo
+            }
+        }
+    }
+
+    /// <summary>
+    /// This method hurts all the enemies within weapon range.
+    /// </summary>
+    private void HurtEnemiesInRange()
+    {
+        // Checking if any enemies are in the weapon range.
+        if(Enemies.Count != 0)
+        {
+            // Loop for going through all the enemies in the list and hurting them
+            for(int i = 0; i < Enemies.Count; i++)
+            {
+                // Checking if enemy is not null and hurting it
+                if (Enemies[i] != null) Enemies[i].TakeDamage(GetDefaultWeapon().Damage);
+                else Enemies.Remove(Enemies[i]); // Removing null enemies
             }
         }
     }
@@ -131,5 +153,23 @@ public class PlayerCombatControl : BasicAnimation
             // Starting to process the queue
             _combatState = CombatState.SetupInput;
         }
+    }
+
+    /// <summary>
+    /// This method adds an enemy to the weapon range list.
+    /// </summary>
+    /// <param name="enemy">The enemy to add, of type EnemyCharacter</param>
+    public void AddEnemyToRange(EnemyCharacter enemy)
+    {
+        Enemies.Add(enemy);
+    }
+
+    /// <summary>
+    /// This method removes an enemy from the weapon range list.
+    /// </summary>
+    /// <param name="enemy">The enemy to remove, of type EnemyCharacter</param>
+    public void RemoveEnemyFromRange(EnemyCharacter enemy)
+    {
+        Enemies.Remove(enemy);
     }
 }

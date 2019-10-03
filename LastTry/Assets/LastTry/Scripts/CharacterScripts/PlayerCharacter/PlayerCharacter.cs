@@ -34,6 +34,9 @@ public class PlayerCharacter : PlayerCombatControl
     // Update is called once per frame
     void Update()
     {
+        // Calling the update of BasicCharacter
+        UpdateBasicCharacter();
+
         // Calling the update of BasicAnimation
         UpdateBasicAnimation();
 

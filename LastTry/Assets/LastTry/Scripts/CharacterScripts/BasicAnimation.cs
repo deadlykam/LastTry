@@ -8,8 +8,12 @@ using UnityEngine;
 public class BasicAnimation : BasicCharacter
 {
     private readonly string AnimationMovePercentage = "MovePercentage";
-    protected readonly string AnimationTriggerAttackSword = "Attack";
+
     private readonly string AnimationIsAttackIdle = "IsAttackIdle";
+
+    private readonly string AnimationTriggerAttackSword = "Attack";
+    private readonly string AnimationTriggerHurt = "Hurt";
+    private readonly string AnimationTriggerDeath = "Death";
 
     [Header("Basic Animation Properties")]
     public Animator CharacterAnimator;
@@ -141,6 +145,20 @@ public class BasicAnimation : BasicCharacter
         {
             CharacterAnimator.SetBool(AnimationIsAttackIdle, true);
         }
+    }
+
+    /// <summary>
+    /// This method hurts the character and plays the hurt animation.
+    /// </summary>
+    /// <param name="amount">The mount of damage to take, of type int</param>
+    public override void TakeDamage(int amount)
+    {
+        base.TakeDamage(amount);
+
+        // Condition for triggering hurt animation
+        if (!IsDead) CharacterAnimator.SetTrigger(AnimationTriggerHurt);
+        // Condition for trigerring death animation
+        else CharacterAnimator.SetTrigger(AnimationTriggerDeath);
     }
 }
 
