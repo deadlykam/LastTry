@@ -1509,8 +1509,8 @@ MonoBehaviour:
   Title: Default Weapon
   cost: 10
   Weapon: 1
-  DamageMax: 1
-  DamageMin: 3
+  DamageMax: 3
+  DamageMin: 1
   AttackAnimations: []
 --- !u!54 &5566625992538791207
 Rigidbody:
