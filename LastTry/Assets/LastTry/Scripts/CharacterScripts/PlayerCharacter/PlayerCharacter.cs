@@ -195,8 +195,12 @@ public class PlayerCharacter : PlayerCombatControl
         if (_hoverWeapon == null)
         {
             _hoverWeapon = weaponItem;
-            Debug.Log(_hoverWeapon.GetDescription()); // Remove, Debug only
-            //Todo: Show weapon description here
+            
+            // Showing the weapon description here
+            UIInGameUIController.Instance.ShowWeaponPopup(
+                GetDefaultWeapon().Title, _hoverWeapon.Title,
+                GetDefaultWeapon().GetDescription(),
+                _hoverWeapon.GetDescription());
         }
         else if (_hoverWeapon != weaponItem) // Checking if not same weapon
         {
@@ -206,8 +210,12 @@ public class PlayerCharacter : PlayerCombatControl
                 Vector3.Distance(transform.position, _hoverWeapon.transform.position))
             {
                 _hoverWeapon = weaponItem;
-                Debug.Log(_hoverWeapon.GetDescription()); // Remove, Debug only
-                //Todo: Show weapon description here
+
+                // Showing the weapon description here
+                UIInGameUIController.Instance.ShowWeaponPopup(
+                    GetDefaultWeapon().Title, _hoverWeapon.Title,
+                    GetDefaultWeapon().GetDescription(),
+                    _hoverWeapon.GetDescription());
             }
         }
 
@@ -227,7 +235,11 @@ public class PlayerCharacter : PlayerCombatControl
         //if (_hoverWeapon != null) _hoverWeapon = null;
 
         // Condition for removing the selected hover weapon
-        if (_hoverWeapon == weaponItem) _hoverWeapon = null;
+        if (_hoverWeapon == weaponItem)
+        {
+            _hoverWeapon = null;
+            UIInGameUIController.Instance.HideWeaponPopup();
+        }
 
         //Todo: Call the hide UI from here for hiding the weapon description
     }
@@ -254,7 +266,11 @@ public class PlayerCharacter : PlayerCombatControl
                 _hoverWeapon = null; // Clearing the hover select weapon
 
                 ResetPickupTimer();
+                UIInGameUIController.Instance.SetWeaponBar(0);
+                UIInGameUIController.Instance.HideWeaponPopup();
             }
+
+            UIInGameUIController.Instance.SetWeaponBar(_pickUpTimer / PickUpTimer);
         }
     }
 
@@ -272,6 +288,7 @@ public class PlayerCharacter : PlayerCombatControl
             _hoverWeapon = null; // Clearing the hover select weapon
 
             ResetPickupTimer();
+            UIInGameUIController.Instance.HideWeaponPopup();
         }
     }
 
