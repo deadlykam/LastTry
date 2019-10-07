@@ -58,6 +58,64 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 5566625992538791204}
+--- !u!1 &1962793092
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1962793093}
+  - component: {fileID: 1962793094}
+  - component: {fileID: 1962793095}
+  m_Layer: 15
+  m_Name: ItemDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1962793093
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962793092}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5566625993097755702}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1962793094
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962793092}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7, y: 2, z: 0.7}
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &1962793095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962793092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140deedf10bf238409f1302ad02a9f3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 5566625992538791204}
 --- !u!1 &72769338070547481
 GameObject:
   m_ObjectHideFlags: 0
@@ -1376,8 +1434,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5566625992538791205}
   - component: {fileID: 5566625992538791204}
+  - component: {fileID: 2359980824506688025}
   - component: {fileID: 5566625992538791207}
   - component: {fileID: 5566625992538791206}
+  - component: {fileID: 3588855246795890039}
   m_Layer: 8
   m_Name: PlayerHolder
   m_TagString: Player
@@ -1418,7 +1478,7 @@ MonoBehaviour:
   HealthMin: 10
   _health: 0
   Weapons:
-  - {fileID: 1790873923}
+  - {fileID: 2359980824506688025}
   SpeedMovement: 6
   SpeedSlerp: 0.25
   HurtTimer: 0
@@ -1428,21 +1488,30 @@ MonoBehaviour:
   - TotalTime: 0.7
     ProcessTime: 0.3
     AttackAnimation: {fileID: 7400000, guid: 096bdc14818c6ae45b2ec64ae18acef5, type: 2}
-  - TotalTime: 0.7
-    ProcessTime: 0.3
-    AttackAnimation: {fileID: 7400000, guid: fa718797a226e694f8e1fb9d622bf501, type: 2}
-  - TotalTime: 0.7
-    ProcessTime: 0.3
-    AttackAnimation: {fileID: 7400000, guid: 400ee32e6e76cd14d9238baaca7c32b3, type: 2}
-  SwordAnimationAttacks:
-  - TotalTime: 0.8
-    ProcessTime: 0.3
-    AttackAnimation: {fileID: 7400000, guid: 096bdc14818c6ae45b2ec64ae18acef5, type: 2}
   CombatTimer: 5
   JoystickAndroid: {fileID: 0}
   PlayerModel: {fileID: 5566625993097755702}
   IsJoyPad: 1
   MovementAcceleration: 0
+  PickUpTimer: 1
+--- !u!114 &2359980824506688025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5566625992538791210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e91b39c941c9d264ebb636747ef4008a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Title: Default Weapon
+  cost: 10
+  Weapon: 1
+  DamageMax: 1
+  DamageMin: 3
+  AttackAnimations: []
 --- !u!54 &5566625992538791207
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1473,6 +1542,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!65 &3588855246795890039
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5566625992538791210}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5566625992679632611
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,6 +1635,7 @@ Transform:
   - {fileID: 380776511032149916}
   - {fileID: 5566625992680125123}
   - {fileID: 687514815}
+  - {fileID: 1962793093}
   m_Father: {fileID: 5566625992538791205}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1661,7 +1744,6 @@ GameObject:
   - component: {fileID: 4871104026946223177}
   - component: {fileID: 5970560118098716272}
   - component: {fileID: 3220924411611372831}
-  - component: {fileID: 1790873923}
   m_Layer: 9
   m_Name: Sword
   m_TagString: Untagged
@@ -1729,21 +1811,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &1790873923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6993477362775589908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0c53da8f94efff438d135e82bd6d702, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Weapon: 1
-  Damage: 5
-  Cost: 100
 --- !u!1 &6993639670516673900
 GameObject:
   m_ObjectHideFlags: 0
