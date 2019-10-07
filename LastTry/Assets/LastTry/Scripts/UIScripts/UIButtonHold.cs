@@ -8,17 +8,17 @@ public class UIButtonHold : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 {
     [Header("UI Button Hold Properties")]
     public UnityEvent OnButtonPressed;
-    public UIJoypadController JoypadController;
     public float HoldTimer;
     private float _holdTimer = 0;
 
     private bool _isButtonPressed = false;
+    public bool IsButtonPressed { get { return _isButtonPressed; } }
 
     // Update is called once per frame
     void Update()
     {
         // Condition for checking if player is hovering over an item
-        if (JoypadController.IsHoverItem())
+        if (UIJoypadController.Instance.IsHoverItem())
         {
             if (_isButtonPressed) // Condition to check if button pressed
             {
@@ -68,5 +68,5 @@ public class UIButtonHold : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     /// This method returns the percentage value of the hold timer.
     /// </summary>
     /// <returns>The percentage value of the hold timer, of type float</returns>
-    public float HoldTimerPercentage() { return _holdTimer / HoldTimer; }
+    public float GetHoldTimerPercentage() { return _holdTimer / HoldTimer; }
 }
