@@ -17,7 +17,7 @@ public class BasicCharacter : MonoBehaviour
     private int _health;
     protected bool IsDead { get { return _health == 0; } }
 
-    public WeaponInfo[] Weapons; // For storing multiple weapons for player and boss
+    public WeaponItem[] Weapons; // For storing multiple weapons for player and boss
 
     public float SpeedMovement;
 
@@ -61,8 +61,8 @@ public class BasicCharacter : MonoBehaviour
     /// This method gets the default weapon of the character which is the
     /// weapon at the 0th index.
     /// </summary>
-    /// <returns>The weapon at the 0th index, of type WeaponInfo</returns>
-    protected WeaponInfo GetDefaultWeapon()
+    /// <returns>The weapon at the 0th index, of type WeaponItem</returns>
+    protected WeaponItem GetDefaultWeapon()
     {
         return Weapons[0];
     }
@@ -72,18 +72,24 @@ public class BasicCharacter : MonoBehaviour
     /// the weapontype at the 0th index.
     /// </summary>
     /// <returns>The weapon type at the 0th index, of type WeaponType</returns>
-    protected WeaponInfo.WeaponType GetDefaultWeaponType()
+    protected WeaponType GetDefaultWeaponType()
     {
         return GetDefaultWeapon().Weapon;
     }
 
     /// <summary>
-    /// This method picks up another weapon.
+    /// This method picks up another weapon for index 0th.
     /// </summary>
-    protected virtual void PickUpWeapon()
+    /// <param name="weaponItem">The weapon to pick up, of type WeaponItem</param>
+    protected virtual void PickUpWeapon1(WeaponItem weaponItem)
     {
-        //Todo: This method picks up a weapon and either replaces at the 0th index
-        //      or adds to 0th or 1st index.
+        //Weapons[0] = weaponItem; // Replacing the weapon at the 0th index
+        Weapons[0].Title = weaponItem.Title;
+        Weapons[0].cost = weaponItem.cost;
+        Weapons[0].Weapon = weaponItem.Weapon;
+        Weapons[0].DamageMax = weaponItem.DamageMax;
+        Weapons[0].DamageMin = weaponItem.DamageMin;
+        Weapons[0].AttackAnimations = weaponItem.AttackAnimations;
     }
 
     /// <summary>

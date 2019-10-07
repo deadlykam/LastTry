@@ -10,8 +10,11 @@ public class PlayerCharacter : PlayerCombatControl
     [Tooltip("True for using the joypad in editor. Make false while build " +
         "otherwise touching screen will act as triggering attack.")]
     public bool IsJoyPad;
-    
     public float MovementAcceleration;
+
+    [Tooltip("This timer is for joypad use not the virtual button press.")]
+    public float PickUpTimer;
+    private float _pickUpTimer = 0;
 
     private Vector3 _movement = new Vector3(0, 0, 0.1f);
     //private Vector3 _dir = new Vector3(0, 0, 0.1f);
@@ -22,6 +25,13 @@ public class PlayerCharacter : PlayerCombatControl
 
     private float _verticalValue = 0; // Storing the joystick vertical value
     private float _verticalVelocity;
+
+    /// <summary>
+    /// The weapon being currently hovered over.
+    /// </summary>
+    private WeaponItem _hoverWeapon;
+
+    public bool IsHoverWeapon { get { return _hoverWeapon != null; } }
 
     private bool _isAttackButtonA = false;
 
@@ -49,6 +59,7 @@ public class PlayerCharacter : PlayerCombatControl
             if (IsMovable) MovementRotationHandler();
 
             AttackHandler();
+            PickUpItemFromJoypad();
         }
     }
 
@@ -109,7 +120,7 @@ public class PlayerCharacter : PlayerCombatControl
         {
             // Condition for getting input from the user and then
             // the player attacking
-            if ((Input.GetButtonDown("Fire1") && IsJoyPad) 
+            if ((Input.GetButtonDown("Fire1") && IsJoyPad)
                 || _isAttackButtonA)
             {
                 // Attacking
@@ -123,6 +134,20 @@ public class PlayerCharacter : PlayerCombatControl
 
         // Making button A false if being used
         _isAttackButtonA = _isAttackButtonA ? false : false;
+    }
+
+    /// <summary>
+    /// Picking up item from joypad.
+    /// </summary>
+    private void PickUpItemFromJoypad()
+    {
+        if (Input.GetButton("Fire1") && IsJoyPad)
+        {
+            if (_hoverWeapon != null) PickUpItemTimer();
+        }
+        else _pickUpTimer = 0; // This condition may be required to be called
+                               // differently since joypad will not be used
+                               // in android
     }
 
     /// <summary>
@@ -146,7 +171,112 @@ public class PlayerCharacter : PlayerCombatControl
     }
 
     /// <summary>
+    /// This method picks up another weapon for index 0th and plays visual effects.
+    /// </summary>
+    /// <param name="weaponItem">The weapon to pick up, of type WeaponItem</param>
+    protected override void PickUpWeapon1(WeaponItem weaponItem)
+    {
+        base.PickUpWeapon1(weaponItem);
+    }
+
+    /// <summary>
     /// This method takes the button A attack command from the on screen button A.
     /// </summary>
     public void ButtonA() { if (IsAcceptInput) _isAttackButtonA = true; }
+
+    /// <summary>
+    /// This method adds an hovered over weapon item.
+    /// </summary>
+    /// <param name="weaponItem">The weapon that is being hovered over by the
+    ///                          player, of type WeaponItem</param>
+    public void AddHoverWeapon(WeaponItem weaponItem)
+    {
+        // Condition to check if there are no current hovered weapon item
+        if (_hoverWeapon == null)
+        {
+            _hoverWeapon = weaponItem;
+            Debug.Log(_hoverWeapon.GetDescription()); // Remove, Debug only
+            //Todo: Show weapon description here
+        }
+        else if (_hoverWeapon != weaponItem) // Checking if not same weapon
+        {
+            // Condition to check if the new hover weapon item is closer
+            // thus making it the current hovered over weapon item
+            if (Vector3.Distance(transform.position, weaponItem.transform.position) <
+                Vector3.Distance(transform.position, _hoverWeapon.transform.position))
+            {
+                _hoverWeapon = weaponItem;
+                Debug.Log(_hoverWeapon.GetDescription()); // Remove, Debug only
+                //Todo: Show weapon description here
+            }
+        }
+
+        //Note: Don't show weapon description here because the detector is using
+        //      OnTriggerStay so then the description menu will be called every
+        //      detection frame which is not good for UI.
+    }
+
+    /// <summary>
+    /// This method removes the weapon from being picked up.
+    /// </summary>
+    /// <param name="weaponItem">The weapon needed to check if to remove
+    ///                          the hover weapon, of type WeaponItem</param>
+    public void RemoveHoverWeapon(WeaponItem weaponItem)
+    {
+        // Removing the hover weapon from the pick up slot
+        //if (_hoverWeapon != null) _hoverWeapon = null;
+
+        // Condition for removing the selected hover weapon
+        if (_hoverWeapon == weaponItem) _hoverWeapon = null;
+
+        //Todo: Call the hide UI from here for hiding the weapon description
+    }
+
+    /// <summary>
+    /// This method is for picking up items with timer.
+    /// </summary>
+    public void PickUpItemTimer()
+    {
+        if (IsHoverWeapon) // Condition to check if the player is hovering over a weapon
+        {
+            // Counting how long the button has been pressed
+            _pickUpTimer = (_pickUpTimer + Time.deltaTime) >= PickUpTimer ?
+                                             PickUpTimer :
+                                            _pickUpTimer + Time.deltaTime;
+
+            // Condition for picking up the weapon
+            if (_pickUpTimer == PickUpTimer)
+            {
+                // Picking up the weapon
+                PickUpWeapon1(_hoverWeapon);
+                // Hiding the hover weapon
+                _hoverWeapon.gameObject.SetActive(false);
+                _hoverWeapon = null; // Clearing the hover select weapon
+
+                ResetPickupTimer();
+            }
+        }
+    }
+
+    /// <summary>
+    /// This method picks up the item instantly.
+    /// </summary>
+    public void PickUpItemInstant()
+    {
+        if (IsHoverWeapon) // Condition to check if the player is hovering over a weapon
+        {
+            // Picking up the weapon
+            PickUpWeapon1(_hoverWeapon);
+            // Hiding the hover weapon
+            _hoverWeapon.gameObject.SetActive(false);
+            _hoverWeapon = null; // Clearing the hover select weapon
+
+            ResetPickupTimer();
+        }
+    }
+
+    /// <summary>
+    /// This method resets the pickup timer.
+    /// </summary>
+    public void ResetPickupTimer() { _pickUpTimer = 0; }
 }

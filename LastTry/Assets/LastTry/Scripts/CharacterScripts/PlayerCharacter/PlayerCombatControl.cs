@@ -6,9 +6,6 @@ public class PlayerCombatControl : BasicAnimation
 {
     public enum CombatState { None, SetupInput, Processing, AcceptInput };
     
-    /*[Header("Player Combat Control Properties")]*/
-    //public AttackAnimationInfo[] AnimationInfos;
-
     // For checking if input is allowed to be accepted
     public bool IsAcceptInput { get { return _combatState == CombatState.AcceptInput; } }
 
@@ -109,7 +106,8 @@ public class PlayerCombatControl : BasicAnimation
             for(int i = 0; i < Enemies.Count; i++)
             {
                 // Checking if enemy is not null and hurting it
-                if (Enemies[i] != null) Enemies[i].TakeDamage(GetDefaultWeapon().Damage);
+                if (Enemies[i] != null)
+                    Enemies[i].TakeDamage(GetDefaultWeapon().GetDamage());
                 else Enemies.Remove(Enemies[i]); // Removing null enemies
             }
         }

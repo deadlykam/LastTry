@@ -2,23 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// [Depricated] This class may not be required anymore. It has been replaced by
+/// WeaponItem class. See WeaponItem for more details. This class will be deleted
+/// in future.
+/// </summary>
 public class WeaponInfo : MonoBehaviour
 {
-    public enum WeaponType { None, Sword, Staff, Hammer};
-
     public WeaponType Weapon;
-    public int Damage;
+    public int DamageMax;
+    public int DamageMin;
     public int Cost;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    /// <summary>
+    /// This method returns a random damage value within the range.
+    /// </summary>
+    /// <returns>The random damage value within the range, of type int</returns>
+    public int GetDamage() { return Random.Range(DamageMin, DamageMax); }
 }

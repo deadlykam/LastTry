@@ -20,7 +20,7 @@ public class BasicAnimation : BasicCharacter
     public AnimationClip AttackClip; // This clip is used to play other animations
                                      // from script
     public CombatAnimation[] DefaultAnimationAttacks;
-    public CombatAnimation[] SwordAnimationAttacks;
+    //public CombatAnimation[] SwordAnimationAttacks;
     private CombatAnimation[] _currentAnimationAttacks;
     private AnimatorOverrideController _overrideController;
 
@@ -58,6 +58,21 @@ public class BasicAnimation : BasicCharacter
 
         // Making the combat stance false at the start
         CharacterAnimator.SetBool(AnimationIsAttackIdle, false);
+    }
+
+    /// <summary>
+    /// This method picks up another weapon for index 0th and updates the
+    /// attack animations.
+    /// </summary>
+    /// <param name="weaponItem">The weapon to pick up and to replace the
+    ///                          attack animation/s from, of type WeaponItem</param>
+    protected override void PickUpWeapon1(WeaponItem weaponItem)
+    {
+        base.PickUpWeapon1(weaponItem);
+
+        // Replacing attack animations with picked up weapon's
+        // attack animations
+        _currentAnimationAttacks = weaponItem.AttackAnimations;
     }
 
     /// <summary>
