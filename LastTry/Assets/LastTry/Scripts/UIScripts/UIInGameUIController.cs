@@ -1,12 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIInGameUIController : MonoBehaviour
 {
     public static UIInGameUIController Instance;
 
+    [Header("Popup Menu Properties")]
     public UIItemPopUpController WeaponItemPopup;
+
+    [Header("Player Health Bar Properties")]
+    public Image PlayerHealthBar;
+    public float PlayerHealthBarTimer;
+    private float _playerHealthBarTimer;
+    private float _playerHealth = 1f;
 
     private void Awake()
     {
@@ -18,6 +26,26 @@ public class UIInGameUIController : MonoBehaviour
         }
         else Destroy(gameObject); // Already initialized so
                                   // destroying
+    }
+
+    private void Update()
+    {
+        // Condition for transitioning the health bar
+        if (_playerHealthBarTimer != 1f)
+        {
+            _playerHealthBarTimer = (_playerHealthBarTimer 
+                                    + (PlayerHealthBarTimer * Time.deltaTime)) >= 
+                                    1f ? 
+                                    1 : 
+                                    _playerHealthBarTimer + 
+                                    (PlayerHealthBarTimer * Time.deltaTime);
+
+            // Lerping the health bar
+            PlayerHealthBar.fillAmount = Mathf.Lerp(
+                                            PlayerHealthBar.fillAmount,
+                                            _playerHealth,
+                                            PlayerHealthBarTimer);
+        }
     }
 
     /// <summary>
@@ -51,4 +79,15 @@ public class UIInGameUIController : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public bool IsWeaponBarNotDone() { return WeaponItemPopup.IsBarNotFinished; }
+
+    /// <summary>
+    /// This method sets the fill amount for the player health bar.
+    /// </summary>
+    /// <param name="amount">The amount to set for the player health bar,
+    ///                      of type float</param>
+    public void SetPlayerHealthBar(float amount)
+    {
+        _playerHealth = amount;
+        _playerHealthBarTimer = 0;
+    }
 }
