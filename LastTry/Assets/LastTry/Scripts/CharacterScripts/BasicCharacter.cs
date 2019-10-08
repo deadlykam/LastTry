@@ -83,13 +83,10 @@ public class BasicCharacter : MonoBehaviour
     /// <param name="weaponItem">The weapon to pick up, of type WeaponItem</param>
     protected virtual void PickUpWeapon1(WeaponItem weaponItem)
     {
-        //Weapons[0] = weaponItem; // Replacing the weapon at the 0th index
-        Weapons[0].Title = weaponItem.Title;
-        Weapons[0].cost = weaponItem.cost;
-        Weapons[0].Weapon = weaponItem.Weapon;
-        Weapons[0].DamageMax = weaponItem.DamageMax;
-        Weapons[0].DamageMin = weaponItem.DamageMin;
-        Weapons[0].AttackAnimations = weaponItem.AttackAnimations;
+        // Dropping the item in the game world
+        Weapons[0].SetParentToWorld(GameWorldManager.Instance.Items);
+
+        Weapons[0] = weaponItem; // Replacing the weapon at the 0th index
     }
 
     /// <summary>
