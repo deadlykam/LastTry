@@ -111,4 +111,11 @@ public class BasicCharacter : MonoBehaviour
             CharacterCollider.isTrigger = true;
         }
     }
+
+    /// <summary>
+    /// This method returns the health percentage value.
+    /// </summary>
+    /// <returns>The health percentage value of health, of type float</returns>
+    public virtual float GetHealthPercentage()
+    { return (float)_health / (float)HealthMax; }
 }
