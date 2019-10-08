@@ -64,6 +64,9 @@ public class PlayerCharacter : PlayerCombatControl
             AttackHandler();
             PickUpItemFromJoypad();
         }
+
+        // Setting the player health
+        UIInGameUIController.Instance.SetPlayerHealthBar(GetHealthPercentage());
     }
 
     /// <summary>
