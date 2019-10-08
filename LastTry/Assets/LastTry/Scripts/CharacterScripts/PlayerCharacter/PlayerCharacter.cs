@@ -16,6 +16,9 @@ public class PlayerCharacter : PlayerCombatControl
     public float PickUpTimer;
     private float _pickUpTimer = 0;
 
+    [Header("Weapon Slot Locations")]
+    public Transform RightHand;
+
     private Vector3 _movement = new Vector3(0, 0, 0.1f);
     //private Vector3 _dir = new Vector3(0, 0, 0.1f);
     private Quaternion _dir = Quaternion.identity;
@@ -177,6 +180,7 @@ public class PlayerCharacter : PlayerCombatControl
     protected override void PickUpWeapon1(WeaponItem weaponItem)
     {
         base.PickUpWeapon1(weaponItem);
+        weaponItem.SetParentToPlayer(RightHand);
     }
 
     /// <summary>
@@ -198,7 +202,7 @@ public class PlayerCharacter : PlayerCombatControl
             
             // Showing the weapon description here
             UIInGameUIController.Instance.ShowWeaponPopup(
-                GetDefaultWeapon().Title, _hoverWeapon.Title,
+                GetDefaultWeapon().ItemName, _hoverWeapon.ItemName,
                 GetDefaultWeapon().GetDescription(),
                 _hoverWeapon.GetDescription());
         }
@@ -213,7 +217,7 @@ public class PlayerCharacter : PlayerCombatControl
 
                 // Showing the weapon description here
                 UIInGameUIController.Instance.ShowWeaponPopup(
-                    GetDefaultWeapon().Title, _hoverWeapon.Title,
+                    GetDefaultWeapon().ItemName, _hoverWeapon.ItemName,
                     GetDefaultWeapon().GetDescription(),
                     _hoverWeapon.GetDescription());
             }
@@ -261,8 +265,6 @@ public class PlayerCharacter : PlayerCombatControl
             {
                 // Picking up the weapon
                 PickUpWeapon1(_hoverWeapon);
-                // Hiding the hover weapon
-                _hoverWeapon.gameObject.SetActive(false);
                 _hoverWeapon = null; // Clearing the hover select weapon
 
                 ResetPickupTimer();
@@ -283,8 +285,6 @@ public class PlayerCharacter : PlayerCombatControl
         {
             // Picking up the weapon
             PickUpWeapon1(_hoverWeapon);
-            // Hiding the hover weapon
-            _hoverWeapon.gameObject.SetActive(false);
             _hoverWeapon = null; // Clearing the hover select weapon
 
             ResetPickupTimer();
