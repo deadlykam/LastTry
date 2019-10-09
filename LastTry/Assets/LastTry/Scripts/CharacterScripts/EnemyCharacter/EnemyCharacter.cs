@@ -10,6 +10,8 @@ public class EnemyCharacter : BasicAnimation
     public float StopRadius;
     [Tooltip("The rate at which the enemy will come to a halt or run")]
     public float Acceleration;
+    public float HealthBarTimer;
+    private float _healthBarTimer = 0;
 
     private float _speedPercentage = 0;
     private Vector3 _lookAtTarget;
@@ -115,6 +117,27 @@ public class EnemyCharacter : BasicAnimation
     }
 
     /// <summary>
+    /// This method updates the healthbar timer.
+    /// </summary>
+    private void UpdateHealthBarTimer()
+    {
+        // Condition for starting the countdown for removing
+        // the healthbar
+        if (_healthBarTimer != 0)
+        {
+            _healthBarTimer = (_healthBarTimer - Time.deltaTime) <= 0 ?
+                              0 : _healthBarTimer - Time.deltaTime;
+
+            // Condition for releasing the health bar
+            if (_healthBarTimer == 0)
+            {
+                Manager.RequestToReleasehealthBar(_healthBarReference);
+                _healthBarReference = -1;
+            }
+        }
+    }
+
+    /// <summary>
     /// This method initializes the enemy character at the start up in EnemyCharacter.
     /// </summary>
     protected override void InitializeStartUp()
@@ -150,6 +173,9 @@ public class EnemyCharacter : BasicAnimation
             }
         }
         else SlowingDownEnemy(); // Slowing down enemy for getting hurt
+
+        // Conditions for enemy not dead
+        if (!IsDead) UpdateHealthBarTimer();
     }
 
     /// <summary>
@@ -170,6 +196,7 @@ public class EnemyCharacter : BasicAnimation
         base.TakeDamage(amount);
 
         AttackTimer = -1;
+        _healthBarTimer = HealthBarTimer;
 
         // Condition for setting health bar
         if (!IsDead && !_hasHealthBar) Manager.RequestHealthBar(transform);
