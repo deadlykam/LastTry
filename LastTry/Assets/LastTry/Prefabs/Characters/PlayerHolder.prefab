@@ -101,7 +101,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7, y: 2, z: 0.7}
+  m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &1962793095
 MonoBehaviour:
@@ -1473,14 +1473,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterCollider: {fileID: 5566625992538791206}
   CharacterRigid: {fileID: 5566625992538791207}
-  HealthMax: 10
-  HealthMin: 10
+  HealthMax: 50
+  HealthMin: 50
   _health: 0
   Weapons:
   - {fileID: 8214687357827361251}
   SpeedMovement: 6
   SpeedSlerp: 0.25
   HurtTimer: 0
+  DamageFontColour: {r: 1, g: 0, b: 0.12784052, a: 1}
   CharacterAnimator: {fileID: 7764990781122079462}
   AttackClip: {fileID: 7400000, guid: 096bdc14818c6ae45b2ec64ae18acef5, type: 2}
   DefaultAnimationAttacks:
@@ -1493,7 +1494,7 @@ MonoBehaviour:
   IsJoyPad: 1
   MovementAcceleration: 0
   PickUpTimer: 1
-  RightHand: {fileID: 0}
+  RightHand: {fileID: 3044638017798640731}
 --- !u!54 &5566625992538791207
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1716,7 +1717,7 @@ GameObject:
   - component: {fileID: 7244895812509572965}
   - component: {fileID: 8214687357827361251}
   m_Layer: 14
-  m_Name: Sword_Default
+  m_Name: Sword_Weak
   m_TagString: Weapons
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1807,15 +1808,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e91b39c941c9d264ebb636747ef4008a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Title: Weak Sword
+  ItemName: Weak Sword
   Cost: 10
   ItemCollider: {fileID: 7244895812509572965}
   Weapon: 1
   DamageMax: 3
   DamageMin: 1
-  AttackAnimations: []
+  AttackAnimations:
+  - TotalTime: 0.7
+    ProcessTime: 0.3
+    AttackAnimation: {fileID: 7400000, guid: 096bdc14818c6ae45b2ec64ae18acef5, type: 2}
   PlacementPosition: {x: 9.685754e-10, y: 5.960464e-10, z: -9.313225e-11}
   PlacementRotation: {x: 89.802, y: 132.231, z: -47.097}
+  PositionOffset: {x: 0, y: 0.49, z: 0}
 --- !u!1 &6993639670516673900
 GameObject:
   m_ObjectHideFlags: 0

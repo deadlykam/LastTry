@@ -4754,12 +4754,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271538405}
   m_CullTransparentMesh: 0
---- !u!4 &1292877510 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3044638017798640731, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
-    type: 3}
-  m_PrefabInstance: {fileID: 5566625991544792733}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1330063915
 GameObject:
   m_ObjectHideFlags: 0
@@ -8946,83 +8940,8 @@ PrefabInstance:
       objectReference: {fileID: 2929252284524374422}
     - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
         type: 3}
-      propertyPath: RightHand
-      value: 
-      objectReference: {fileID: 1292877510}
-    - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
-        type: 3}
       propertyPath: IsJoyPad
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
-        type: 3}
-      propertyPath: HealthMax
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
-        type: 3}
-      propertyPath: HealthMin
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
-        type: 3}
-      propertyPath: DamageFontColour.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
-        type: 3}
-      propertyPath: DamageFontColour.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
-        type: 3}
-      propertyPath: DamageFontColour.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
-        type: 3}
-      propertyPath: DamageFontColour.b
-      value: 0.12784052
-      objectReference: {fileID: 0}
-    - target: {fileID: 6993477362775589908, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
-        type: 3}
-      propertyPath: m_Name
-      value: Sword_Weak
-      objectReference: {fileID: 0}
-    - target: {fileID: 7244895812509572965, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214687357827361251, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
-        type: 3}
-      propertyPath: AttackAnimations.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214687357827361251, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
-        type: 3}
-      propertyPath: ItemName
-      value: Weak Sword
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214687357827361251, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
-        type: 3}
-      propertyPath: AttackAnimations.Array.data[0].TotalTime
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214687357827361251, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
-        type: 3}
-      propertyPath: AttackAnimations.Array.data[0].ProcessTime
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214687357827361251, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
-        type: 3}
-      propertyPath: AttackAnimations.Array.data[0].AttackAnimation
-      value: 
-      objectReference: {fileID: 7400000, guid: 096bdc14818c6ae45b2ec64ae18acef5, type: 2}
-    - target: {fileID: 8214687357827361251, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
-        type: 3}
-      propertyPath: PositionOffset.y
-      value: 0.49
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 840d7fa51d7a85c4b9b085a33e54c68d, type: 3}
