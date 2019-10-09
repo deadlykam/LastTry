@@ -100,8 +100,6 @@ public class BasicCharacter : MonoBehaviour
         // Taking damage and keeping health with in range
         _health = (_health - amount <= 0) ? 0 : _health - amount;
 
-        // Todo: Put all the death conditions here or in child
-        //       override method
         // Condition for the BasicCharacter to die
         if (_health == 0)
         {
@@ -110,6 +108,9 @@ public class BasicCharacter : MonoBehaviour
 
             CharacterCollider.isTrigger = true;
         }
+
+        // Starting a damage font effect
+        UIDamageFontManager.Instance.RequestDamageFont(transform.position, amount);
     }
 
     /// <summary>
