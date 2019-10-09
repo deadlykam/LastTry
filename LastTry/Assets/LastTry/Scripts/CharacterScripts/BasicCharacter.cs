@@ -28,6 +28,8 @@ public class BasicCharacter : MonoBehaviour
     private float _hurtTimer;
     protected bool IsHurt { get { return _hurtTimer != 0; } }
 
+    public Color DamageFontColour;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -110,7 +112,8 @@ public class BasicCharacter : MonoBehaviour
         }
 
         // Starting a damage font effect
-        UIDamageFontManager.Instance.RequestDamageFont(transform.position, amount);
+        UIDamageFontManager.Instance.RequestDamageFont(transform.position, amount,
+                                                       DamageFontColour);
     }
 
     /// <summary>
