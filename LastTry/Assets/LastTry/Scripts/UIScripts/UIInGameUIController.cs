@@ -44,7 +44,7 @@ public class UIInGameUIController : MonoBehaviour
             PlayerHealthBar.fillAmount = Mathf.Lerp(
                                             PlayerHealthBar.fillAmount,
                                             _playerHealth,
-                                            PlayerHealthBarTimer);
+                                            _playerHealthBarTimer);
         }
     }
 
