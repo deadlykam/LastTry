@@ -16,11 +16,16 @@ public class PlayerCharacter : PlayerCombatControl
     public float PickUpTimer;
     private float _pickUpTimer = 0;
 
+    [Header("Dash Properties")]
+    public float DashSpeed;
+    public float DashTimer;
+    private float _dashTimer = 0;
+    private bool _IsDash { get { return _dashTimer != 0; } }
+
     [Header("Weapon Slot Locations")]
     public Transform RightHand;
 
     private Vector3 _movement = new Vector3(0, 0, 0.1f);
-    //private Vector3 _dir = new Vector3(0, 0, 0.1f);
     private Quaternion _dir = Quaternion.identity;
 
     private float _horizontalValue = 0; // Storing the joystick horizontal value
@@ -59,9 +64,10 @@ public class PlayerCharacter : PlayerCombatControl
             UpdatePlayerCombatControl();
 
             // Condition for being able to move
-            if (IsMovable) MovementRotationHandler();
+            if (IsMovable && !_IsDash) MovementRotationHandler();
 
-            AttackHandler();
+            if(!_IsDash) AttackHandler();
+            DashHandler();
             PickUpItemFromJoypad();
         }
 
@@ -117,6 +123,31 @@ public class PlayerCharacter : PlayerCombatControl
     }
 
     /// <summary>
+    /// This method handles all the dash related events.
+    /// </summary>
+    private void DashHandler()
+    {
+        // Condition for dashing
+        if (!_IsDash && Input.GetButtonDown("Fire2"))
+        {
+            //_IsDash = true;
+            _dashTimer = DashTimer;
+            PlayDashAnimation();
+        }
+
+        if (_IsDash) // Condition for dashing
+        {
+            _dashTimer = (_dashTimer - Time.deltaTime) <= 0 ? 
+                         0 : _dashTimer - Time.deltaTime;
+
+            // Player dashing forward
+            transform.Translate(PlayerModel.transform.forward * DashSpeed * Time.deltaTime);
+
+            if (!_IsDash) StopDashing(); // Condition for stopping dashing animation
+        }
+    }
+
+    /// <summary>
     /// This method handles the attack system of the player.
     /// </summary>
     private void AttackHandler()
@@ -164,7 +195,6 @@ public class PlayerCharacter : PlayerCombatControl
         _horizontalValue = 0;
         _verticalValue = 0;
         _dir = PlayerModel.rotation;
-        //_movement = Vector3.zero;
         SetMoveSpeed(0);
     }
 
