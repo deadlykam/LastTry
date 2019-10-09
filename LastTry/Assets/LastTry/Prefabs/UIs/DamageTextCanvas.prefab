@@ -114,9 +114,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DamageValue: {fileID: 7058684668991804040}
   TransitionTime: 5
-  HideTimer: 3
+  HideTimer: 2
   MovementSpeed: 0.35
-  AxisRandom: 0.5
+  AxisRandom: 0.25
   TransitionTimeOffset: 2
 --- !u!1 &7058684668991804042
 GameObject:

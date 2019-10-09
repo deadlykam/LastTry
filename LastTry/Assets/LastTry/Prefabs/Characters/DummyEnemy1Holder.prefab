@@ -346,18 +346,19 @@ MonoBehaviour:
   SpeedMovement: 5
   SpeedSlerp: 0.25
   HurtTimer: 1
+  DamageFontColour: {r: 1, g: 0.76840115, b: 0, a: 1}
   CharacterAnimator: {fileID: 5688155232184101756}
   AttackClip: {fileID: 7400000, guid: 096bdc14818c6ae45b2ec64ae18acef5, type: 2}
   DefaultAnimationAttacks:
   - TotalTime: 2.3
     ProcessTime: 1.3
     AttackAnimation: {fileID: 7400000, guid: b554d164891afe540951e48fc86d714b, type: 2}
-  SwordAnimationAttacks: []
   CombatTimer: 5
   Manager: {fileID: 0}
   FollowRadius: 5
   StopRadius: 1
   Acceleration: 2
+  HealthBarTimer: 5
 --- !u!54 &2856416194704904054
 Rigidbody:
   m_ObjectHideFlags: 0
