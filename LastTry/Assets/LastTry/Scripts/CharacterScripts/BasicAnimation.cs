@@ -7,13 +7,17 @@ using UnityEngine;
 /// </summary>
 public class BasicAnimation : BasicCharacter
 {
+    #region Animator Attributes
     private readonly string AnimationMovePercentage = "MovePercentage";
 
     private readonly string AnimationIsAttackIdle = "IsAttackIdle";
+    private readonly string AnimationIsDash = "IsDash";
 
     private readonly string AnimationTriggerAttackSword = "Attack";
     private readonly string AnimationTriggerHurt = "Hurt";
     private readonly string AnimationTriggerDeath = "Death";
+    private readonly string AnimationTriggerDash = "Dash";
+    #endregion Animator Attributes
 
     [Header("Basic Animation Properties")]
     public Animator CharacterAnimator;
@@ -161,6 +165,21 @@ public class BasicAnimation : BasicCharacter
             CharacterAnimator.SetBool(AnimationIsAttackIdle, true);
         }
     }
+
+    /// <summary>
+    /// This method plays the dash animation.
+    /// </summary>
+    protected void PlayDashAnimation()
+    {
+        CharacterAnimator.SetBool(AnimationIsDash, true);
+        CharacterAnimator.SetTrigger(AnimationTriggerDash);
+        _combatTimerCurrent = 0; // Stopping any combat stance
+    }
+
+    /// <summary>
+    /// This method stops the dashing animation.
+    /// </summary>
+    protected void StopDashing() { CharacterAnimator.SetBool(AnimationIsDash, false); }
 
     /// <summary>
     /// This method hurts the character and plays the hurt animation.
