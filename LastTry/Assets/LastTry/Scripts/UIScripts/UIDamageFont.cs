@@ -7,7 +7,7 @@ public class UIDamageFont : MonoBehaviour
 {
     public TextMeshProUGUI DamageValue;
     public float TransitionTime;
-    private float _transitionTime = 1f;
+    private float _transitionTime;
     public float HideTimer;
     private float _hideTimer;
     public float MovementSpeed;
@@ -17,6 +17,7 @@ public class UIDamageFont : MonoBehaviour
     public float AxisRandom;
     public float TransitionTimeOffset;
     private float _transitionTimeOffset;
+    private Color _textColour;
 
     private float ActualTransitionTime
     { get { return TransitionTime + _transitionTimeOffset; } }
@@ -25,6 +26,12 @@ public class UIDamageFont : MonoBehaviour
     /// The index position of this UIDamageFont
     /// </summary>
     public int Index { get; set; }
+
+    private void Start()
+    {
+        _transitionTime = 1f;
+        _hideTimer = HideTimer;
+    }
 
     public void Update()
     {
@@ -50,6 +57,10 @@ public class UIDamageFont : MonoBehaviour
                 if(_hideTimer == HideTimer)
                     UIDamageFontManager.Instance
                     .RequestReleaseDamageFont(Index);
+
+                // Fading out the font
+                _textColour.a = 1 - (_hideTimer / HideTimer);
+                DamageValue.color = _textColour;
             }
         }
     }
@@ -60,7 +71,8 @@ public class UIDamageFont : MonoBehaviour
     /// <param name="position">The position of the damage effect, of type Vector3</param>
     /// <param name="damageValue">The damage value to set for the effect,
     ///                           of type float</param>
-    public void StartEffect(Vector3 position, int damageValue)
+    /// <param name="color">The colour of the font, of type Color</param>                          
+    public void StartEffect(Vector3 position, int damageValue, Color color)
     {
         position.x = position.x + Random.Range(-AxisRandom, AxisRandom);
         position.z = position.z + Random.Range(-AxisRandom, AxisRandom);
@@ -74,6 +86,10 @@ public class UIDamageFont : MonoBehaviour
 
         _transitionTime = 0; // Resetting the transition
         _hideTimer = 0; // Resetting the hide timer
+
+        // Setting the colour of the font
+        DamageValue.color = color;
+        _textColour = color; 
 
         // Getting the random value for the transition timer
         _transitionTimeOffset = Random.Range(0, TransitionTimeOffset);
