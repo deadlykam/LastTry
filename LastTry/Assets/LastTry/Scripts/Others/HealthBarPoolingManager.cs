@@ -10,7 +10,7 @@ public class HealthBarPoolingManager : MonoBehaviour
     private Queue<Transform> _requestHealthBar = new Queue<Transform>();
     private Queue<int> _releaseHealthBar = new Queue<int>();
 
-    private int _pointer;
+    private int _pointer = 0;
 
     private bool _isProcessingRequest = false;
     private bool _isProcessingRelease = false;
