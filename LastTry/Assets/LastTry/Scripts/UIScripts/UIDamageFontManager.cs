@@ -68,7 +68,7 @@ public class UIDamageFontManager : MonoBehaviour
     {
         _damageFontCanvases[_pointer].enabled = true;
         _damageFontCanvases[_pointer].GetComponent<UIDamageFont>().
-            StartEffect(damageFont.Position, damageFont.DamageValue);
+            StartEffect(damageFont.Position, damageFont.DamageValue, damageFont.FontColour);
     }
 
     /// <summary>
@@ -84,9 +84,11 @@ public class UIDamageFontManager : MonoBehaviour
     /// </summary>
     /// <param name="position">The position for the damage font, of type Vector3</param>
     /// <param name="damageValue">The damage value for the damage font, of type int</param>
-    public void RequestDamageFont(Vector3 position, int damageValue)
+    /// <param name="fontColour">The colour of the font, of type Color</param>
+    public void RequestDamageFont(Vector3 position, int damageValue, Color fontColour)
     {
-        _requestDamageFont.Enqueue(new DamageFontDataset(position, damageValue));
+        _requestDamageFont.Enqueue(new DamageFontDataset(position, damageValue,
+                                                         fontColour));
     }
 
     /// <summary>
@@ -101,6 +103,7 @@ public struct DamageFontDataset
 {
     public Vector3 Position;
     public int DamageValue;
+    public Color FontColour;
 
     /// <summary>
     /// This constructor creates the struct.
@@ -109,9 +112,11 @@ public struct DamageFontDataset
     ///                        of type Vector3</param>
     /// <param name="damageValue">Storing the damage value of the damage font,
     ///                           of type int</param>
-    public DamageFontDataset(Vector3 position, int damageValue)
+    /// <param name="fontColour">The colour of the font, of type Color</param>
+    public DamageFontDataset(Vector3 position, int damageValue, Color fontColour)
     {
         Position = position;
         DamageValue = damageValue;
+        FontColour = fontColour;
     }
 }
