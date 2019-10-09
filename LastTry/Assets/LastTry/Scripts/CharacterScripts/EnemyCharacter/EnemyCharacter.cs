@@ -14,6 +14,9 @@ public class EnemyCharacter : BasicAnimation
     private float _speedPercentage = 0;
     private Vector3 _lookAtTarget;
 
+    private int _healthBarReference = -1;
+    private bool _hasHealthBar { get { return _healthBarReference != -1; } }
+
     protected bool IsPlayerInWeaponRange = false;
     protected CombatAnimation CurrentCombatInfo;
     protected float AttackTimer = -1; // Starting must be -1 because it means animation done
@@ -167,6 +170,18 @@ public class EnemyCharacter : BasicAnimation
         base.TakeDamage(amount);
 
         AttackTimer = -1;
+
+        // Condition for setting health bar
+        if (!IsDead && !_hasHealthBar) Manager.RequestHealthBar(transform);
+
+        // Condition to free up a health bar
+        if(IsDead && _hasHealthBar)
+        {
+            // Freeing up a health bar
+            Manager.RequestToReleasehealthBar(_healthBarReference);
+            // Removing the reference to the health bar
+            _healthBarReference = -1;
+        }
     }
 
     /// <summary>
@@ -178,4 +193,10 @@ public class EnemyCharacter : BasicAnimation
     {
         IsPlayerInWeaponRange = isInRange;
     }
+
+    /// <summary>
+    /// This method sets the reference to the health bar.
+    /// </summary>
+    /// <param name="index">The reference to the health bar, of type int</param>
+    public void SetHealthBarReference(int index) { _healthBarReference = index; }
 }
