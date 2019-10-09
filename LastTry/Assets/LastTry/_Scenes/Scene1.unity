@@ -8938,11 +8938,6 @@ PrefabInstance:
       propertyPath: JoystickAndroid
       value: 
       objectReference: {fileID: 2929252284524374422}
-    - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
-        type: 3}
-      propertyPath: IsJoyPad
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 840d7fa51d7a85c4b9b085a33e54c68d, type: 3}
 --- !u!1001 &7058684668364009734
