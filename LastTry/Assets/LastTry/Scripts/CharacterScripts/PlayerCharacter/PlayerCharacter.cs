@@ -21,6 +21,9 @@ public class PlayerCharacter : PlayerCombatControl
     public float DashTimer;
     private float _dashTimer = 0;
     private bool _IsDash { get { return _dashTimer != 0; } }
+    public float DashReloadTimer;
+    private float _dashReloadTimer;
+    private bool _isDashReloaded { get { return _dashReloadTimer == 0; } }
 
     [Header("Weapon Slot Locations")]
     public Transform RightHand;
@@ -128,17 +131,20 @@ public class PlayerCharacter : PlayerCombatControl
     private void DashHandler()
     {
         // Condition for dashing
-        if (!_IsDash && Input.GetButtonDown("Fire2"))
+        if (!_IsDash && Input.GetButtonDown("Fire2")
+            && _isDashReloaded)
         {
             _dashTimer = DashTimer;
             PlayDashAnimation();
-            /*Physics.IgnoreLayerCollision(8, 10); // Disabling enemy collisions
-            Physics.IgnoreLayerCollision(8, 11); // Disabling enemy collisions
-            Physics.IgnoreLayerCollision(9, 10); // Disabling enemy detection*/
             SetCollisions(false);
+
+            // Resetting the speed values because the player
+            // is attacking
+            ResetMovementRotation();
 
             RemoveAllEnemies(); // Removing enemies in the list
             IsStopDamage = true; // Stopping any damage given to the enemies
+            _dashReloadTimer = DashReloadTimer; // Reloading timer for the next dash
         }
 
         if (_IsDash) // Condition for dashing
@@ -152,14 +158,16 @@ public class PlayerCharacter : PlayerCombatControl
             if (!_IsDash) // Condition for stopping dash
             {
                 StopDashing(); // Stopping dashing animation
-
-                /*Physics.IgnoreLayerCollision(8, 10, false); // Enabling enemy collisions
-                Physics.IgnoreLayerCollision(8, 11, false); // Enabling enemy collisions
-                Physics.IgnoreLayerCollision(9, 10, false); // Enabling enemy detection*/
                 SetCollisions(true);
 
                 IsStopDamage = false; // Starting any damage given to the enemies
             }
+        }
+        else if (!_isDashReloaded) // Condition for resetting the dash
+        {
+            _dashReloadTimer = (_dashReloadTimer - Time.deltaTime) <= 0 ?
+                               0 :
+                               (_dashReloadTimer - Time.deltaTime);
         }
     }
 

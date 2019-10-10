@@ -1494,8 +1494,9 @@ MonoBehaviour:
   IsJoyPad: 1
   MovementAcceleration: 0
   PickUpTimer: 1
-  DashSpeed: 30
-  DashTimer: 0.1666667
+  DashSpeed: 15
+  DashTimer: 0.25
+  DashReloadTimer: 0.5
   RightHand: {fileID: 3044638017798640731}
 --- !u!54 &5566625992538791207
 Rigidbody:
