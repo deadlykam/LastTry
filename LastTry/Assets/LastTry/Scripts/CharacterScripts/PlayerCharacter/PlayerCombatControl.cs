@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerCombatControl : BasicAnimation
 {
     public enum CombatState { None, SetupInput, Processing, AcceptInput };
-    
+
     // For checking if input is allowed to be accepted
     public bool IsAcceptInput { get { return _combatState == CombatState.AcceptInput; } }
 
@@ -30,6 +30,8 @@ public class PlayerCombatControl : BasicAnimation
 
     private List<EnemyCharacter> Enemies // For storing a list of enemies that have entered
         = new List<EnemyCharacter>();    // the weapons' range
+
+    protected bool IsStopDamage = false;
 
     // Start is called before the first frame update
     void Start()
@@ -80,7 +82,7 @@ public class PlayerCombatControl : BasicAnimation
             if(_currentAnimationTime >= _currentCombatInfo.ProcessTime &&
                !_isAcceptInputThreshold)
             {
-                HurtEnemiesInRange();
+                if(!IsStopDamage) HurtEnemiesInRange(); // Condition for hurting the enemies
                 _combatState = CombatState.AcceptInput; // New combat input can be accepted
                 _isAcceptInputThreshold = true; // Accepting input threshold crossed
             }
@@ -151,6 +153,15 @@ public class PlayerCombatControl : BasicAnimation
             // Starting to process the queue
             _combatState = CombatState.SetupInput;
         }
+    }
+
+    /// <summary>
+    /// This method removes all the enemies in the enemy list.
+    /// </summary>
+    public void RemoveAllEnemies()
+    {
+        // Loop for removing all the enemies
+        while (Enemies.Count != 0) Enemies.RemoveAt(0);
     }
 
     /// <summary>

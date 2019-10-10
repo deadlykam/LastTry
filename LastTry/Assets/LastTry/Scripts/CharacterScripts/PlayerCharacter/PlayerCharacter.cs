@@ -130,9 +130,15 @@ public class PlayerCharacter : PlayerCombatControl
         // Condition for dashing
         if (!_IsDash && Input.GetButtonDown("Fire2"))
         {
-            //_IsDash = true;
             _dashTimer = DashTimer;
             PlayDashAnimation();
+            /*Physics.IgnoreLayerCollision(8, 10); // Disabling enemy collisions
+            Physics.IgnoreLayerCollision(8, 11); // Disabling enemy collisions
+            Physics.IgnoreLayerCollision(9, 10); // Disabling enemy detection*/
+            SetCollisions(false);
+
+            RemoveAllEnemies(); // Removing enemies in the list
+            IsStopDamage = true; // Stopping any damage given to the enemies
         }
 
         if (_IsDash) // Condition for dashing
@@ -143,7 +149,17 @@ public class PlayerCharacter : PlayerCombatControl
             // Player dashing forward
             transform.Translate(PlayerModel.transform.forward * DashSpeed * Time.deltaTime);
 
-            if (!_IsDash) StopDashing(); // Condition for stopping dashing animation
+            if (!_IsDash) // Condition for stopping dash
+            {
+                StopDashing(); // Stopping dashing animation
+
+                /*Physics.IgnoreLayerCollision(8, 10, false); // Enabling enemy collisions
+                Physics.IgnoreLayerCollision(8, 11, false); // Enabling enemy collisions
+                Physics.IgnoreLayerCollision(9, 10, false); // Enabling enemy detection*/
+                SetCollisions(true);
+
+                IsStopDamage = false; // Starting any damage given to the enemies
+            }
         }
     }
 
@@ -171,6 +187,28 @@ public class PlayerCharacter : PlayerCombatControl
 
         // Making button A false if being used
         _isAttackButtonA = _isAttackButtonA ? false : false;
+    }
+
+    /// <summary>
+    /// This method enables/disables collision between the player and the enemy.
+    /// </summary>
+    /// <param name="isCollision">The flat to set the collision, true means
+    ///                           there should be collision, false otherwise,
+    ///                           of type bool</param>
+    private void SetCollisions(bool isCollision)
+    {
+        if (isCollision) // Condition for enabling collision
+        {
+            Physics.IgnoreLayerCollision(8, 10, false); // Enabling enemy collisions
+            Physics.IgnoreLayerCollision(8, 11, false); // Enabling enemy collisions
+            Physics.IgnoreLayerCollision(9, 10, false); // Enabling enemy detection
+        }
+        else // Condition for disabling collision
+        {
+            Physics.IgnoreLayerCollision(8, 10); // Disabling enemy collisions
+            Physics.IgnoreLayerCollision(8, 11); // Disabling enemy collisions
+            Physics.IgnoreLayerCollision(9, 10); // Disabling enemy detection
+        }
     }
 
     /// <summary>
@@ -214,6 +252,16 @@ public class PlayerCharacter : PlayerCombatControl
     {
         base.PickUpWeapon1(weaponItem);
         weaponItem.SetParentToPlayer(RightHand);
+    }
+
+    /// <summary>
+    /// This method hurts the player.
+    /// </summary>
+    /// <param name="amount">The amount of damage to take, of type int</param>
+    public override void TakeDamage(int amount)
+    {
+        // Conditions to take damage
+        if(!_IsDash) base.TakeDamage(amount);
     }
 
     /// <summary>

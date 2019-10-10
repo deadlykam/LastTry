@@ -184,7 +184,7 @@ public class BasicAnimation : BasicCharacter
     /// <summary>
     /// This method hurts the character and plays the hurt animation.
     /// </summary>
-    /// <param name="amount">The mount of damage to take, of type int</param>
+    /// <param name="amount">The amount of damage to take, of type int</param>
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
