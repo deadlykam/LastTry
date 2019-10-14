@@ -123,3 +123,5 @@ public class BasicCharacter : MonoBehaviour
     public virtual float GetHealthPercentage()
     { return (float)_health / (float)HealthMax; }
 }
+
+public enum CharacterState { None, Move, Stop};

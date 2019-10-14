@@ -69,9 +69,6 @@ public class EnemyCharacter : BasicAnimation
         _lookAtTarget = Manager.Player.transform.position - transform.position;
         _lookAtTarget.y = 0;
 
-        // Instantly looking at the player
-        /*transform.rotation = Quaternion.LookRotation(_lookAtTarget);*/
-
         // Slerping to look at the player
         transform.rotation = Quaternion.Slerp(transform.rotation,
                                               Quaternion.LookRotation(_lookAtTarget),

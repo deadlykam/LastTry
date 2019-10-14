@@ -24,7 +24,6 @@ public class BasicAnimation : BasicCharacter
     public AnimationClip AttackClip; // This clip is used to play other animations
                                      // from script
     public CombatAnimation[] DefaultAnimationAttacks;
-    //public CombatAnimation[] SwordAnimationAttacks;
     private CombatAnimation[] _currentAnimationAttacks;
     private AnimatorOverrideController _overrideController;
 
