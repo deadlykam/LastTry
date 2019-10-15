@@ -6,9 +6,21 @@ public class BotCharacter : BasicCharacter
 {
     [Header("Bot Character Properties")]
     public Transform Player;
+    public Transform BotModel;
     public float FollowRadius;
     public float StopRadius;
     public float Acceleration;
+
+    [Header("Bot Hover Properties")]
+    public float HoverHeight;
+    public float HoverSpeed;
+    private int _hoverDir = 1;
+
+    [Header("Bot Enemy Targeting Properties")]
+    public float EnemyRadius;
+    private List<EnemyCharacter> _enemies = new List<EnemyCharacter>();
+    private EnemyCharacter _enemy { get { return _enemies[0]; } }
+    //private bool _isEnemyTargeted { get { return _enemies.Count != null; } }
 
     [SerializeField]
     private CharacterState BotState = CharacterState.Stop;
@@ -80,6 +92,19 @@ public class BotCharacter : BasicCharacter
     }
 
     /// <summary>
+    /// This method makes the BotModel to hover.
+    /// </summary>
+    public void HoverHandler()
+    {
+        // Conditions for determinging the hover direction
+        if (BotModel.localPosition.y > HoverHeight) _hoverDir = -1;
+        else if (BotModel.localPosition.y <= 0) _hoverDir = 1;
+
+        // Condition for moving the bot vertically
+        BotModel.Translate(Vector3.up * HoverSpeed * Time.deltaTime * _hoverDir);
+    }
+
+    /// <summary>
     /// This method checks if the target is out of range.
     /// </summary>
     /// <param name="target">The target to check against if out of range, of type
@@ -102,6 +127,43 @@ public class BotCharacter : BasicCharacter
     }
 
     /// <summary>
+    /// This method checks if the enemy is dead and makes the bot go back 
+    /// to the player.
+    /// </summary>
+    private void CheckEnemy()
+    {
+        // Condition to move back to player if enemy is dead
+        if (_enemy.IsDead)
+        {
+            _enemies.RemoveAt(0); // Removing the dead enemy
+
+            // Condition for no more enemies
+            if (_enemies.Count == 0) BotState = CharacterState.Move;
+            else BotState = CharacterState.GetNextEnemy; // Condition for starting
+                                                         // to get the next enemy
+                                                         // process
+        }
+    }
+
+    /// <summary>
+    /// This method finds another enemy to target from the list
+    /// </summary>
+    private void GetNextEnemyProcess()
+    {
+        if (_enemies.Count != 0) // Condition to check there are enemies to process
+        {
+            // Condition for moving to the next with in range enemy and not dead
+            if (Vector3.Distance(transform.position, _enemy.transform.position)
+                <= EnemyRadius && !_enemy.IsDead)
+            {
+                BotState = CharacterState.MoveToEnemy;
+            }
+            else _enemies.RemoveAt(0); // Removing the enemy from the list
+        }
+        else BotState = CharacterState.Move; // Condition to move back to the player
+    }
+
+    /// <summary>
     /// The update method of BotCharacter.
     /// </summary>
     protected void UpdateBotCharacter()
@@ -116,8 +178,8 @@ public class BotCharacter : BasicCharacter
                 return; // No further logic required
             }
 
-            MovementHandler(-1); // Slowing down and stopping the bot
             LookAtTarget(Player); // Looking at the player
+            MovementHandler(-1); // Slowing down and stopping the bot
         }
         // Bot moving state
         else if(BotState == CharacterState.Move)
@@ -129,8 +191,68 @@ public class BotCharacter : BasicCharacter
                 return; // No further logic required
             }
 
-            MovementHandler(1); // Speeding up the bot
             LookAtTarget(Player); // Looking at the player
+            MovementHandler(1); // Speeding up the bot
         }
+        // Bot moving to enemy state
+        else if(BotState == CharacterState.MoveToEnemy)
+        {
+            // Condition for stopping the bot
+            if (IsInRange(_enemy.transform))
+            {
+                BotState = CharacterState.AttackEnemy;
+                return; // No further logic required
+            }
+
+            LookAtTarget(_enemy.transform); // Looking at the enemy
+            MovementHandler(1); // Speeding up the bot
+            CheckEnemy(); // Checking enemy status
+        }
+        // Bot stopping state
+        else if(BotState == CharacterState.AttackEnemy)
+        {
+            // Condition for moving the bot to the enemy
+            if (IsOutOfRange(_enemy.transform))
+            {
+                BotState = CharacterState.MoveToEnemy;
+                return; // No further logic required
+            }
+
+            LookAtTarget(_enemy.transform); // Looking at the enemy
+            MovementHandler(-1); // Slowing down and stopping the bot
+            CheckEnemy(); // Checking enemy status
+        }
+        // Bot getting next enemy from the list state
+        else if(BotState == CharacterState.GetNextEnemy)
+        {
+            GetNextEnemyProcess();
+        }
+
+        HoverHandler(); // Hovering the bot model
+    }
+
+    /// <summary>
+    /// This adds an enemy to the list.
+    /// </summary>
+    /// <param name="enemy">The enemy to add, of type EnemyCharacter</param>
+    public void AddEnemy(EnemyCharacter enemy)
+    {
+        if (!enemy.IsDead) // Condition to add if enemy is not dead
+        {
+            _enemies.Add(enemy); // adding enemy
+
+            // Checking if only 1 enemy is added then making the bot to
+            // follow the first and only enemy
+            if (_enemies.Count == 1) BotState = CharacterState.MoveToEnemy;
+        }
+    }
+
+    /// <summary>
+    /// This method removes an enemy from the list
+    /// </summary>
+    /// <param name="enemy">The enemy to remove, of type EnemyCharacter</param>
+    public void RemoveEnemy(EnemyCharacter enemy)
+    {
+        _enemies.Remove(enemy);
     }
 }
