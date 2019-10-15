@@ -12,6 +12,10 @@ public class EnemyCharacter : BasicAnimation
     public float Acceleration;
     public float HealthBarTimer;
     private float _healthBarTimer = 0;
+    [Tooltip("This attribute is needed for the Bot's laser to contact" +
+        " the enemy so that the laser does not go completely inside the enemy" +
+        " or on the ground location of the enemy. This ONLY used by the bot.")]
+    public GameObject LaserContactOffset;
 
     private float _speedPercentage = 0;
     private Vector3 _lookAtTarget;
