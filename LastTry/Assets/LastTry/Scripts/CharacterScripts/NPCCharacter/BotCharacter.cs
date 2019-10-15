@@ -18,9 +18,14 @@ public class BotCharacter : BasicCharacter
 
     [Header("Bot Enemy Targeting Properties")]
     public float EnemyRadius;
+    public Transform LaserShooter;
+    public LineRenderer Laser;
+    public GameObject LaserVFX1;
+    public GameObject LaserVFX2;
+    public float AttackTimer;
+    private float _attackTimer = 0;
     private List<EnemyCharacter> _enemies = new List<EnemyCharacter>();
     private EnemyCharacter _enemy { get { return _enemies[0]; } }
-    //private bool _isEnemyTargeted { get { return _enemies.Count != null; } }
 
     [SerializeField]
     private CharacterState BotState = CharacterState.Stop;
@@ -127,6 +132,60 @@ public class BotCharacter : BasicCharacter
     }
 
     /// <summary>
+    /// This method attacks the enemy.
+    /// </summary>
+    private void AttackHandler()
+    {
+        // Counting up attack timer
+        _attackTimer = (_attackTimer + Time.deltaTime) >= AttackTimer ? 
+                       AttackTimer : _attackTimer + Time.deltaTime;
+
+        // Condition for damaging the enemy
+        if(_attackTimer == AttackTimer)
+        {
+            // Damaging the enemy
+            _enemy.TakeDamage(GetDefaultWeapon().GetDamage());
+            _attackTimer = 0; // Resetting the attack timer
+        }
+    }
+
+    /// <summary>
+    /// This method shoots laser from the boot
+    /// </summary>
+    /// <param name="isShot">The flag to enable/disable the laser,
+    ///                      of type bool</param>
+    private void ShootLaser(bool isShot)
+    {
+        if (isShot) // Shoots the laser
+        {
+            Laser.SetPosition(0, LaserShooter.position); // Starting the laser
+
+            // Ending the laser
+            Laser.SetPosition(1, _enemy.LaserContactOffset.transform.position);
+
+            if (!LaserVFX1.activeSelf) // Condition to show laser vfxs
+            {
+                LaserVFX1.SetActive(true);
+                LaserVFX2.SetActive(true);
+            }
+
+            // Setting the LaserVFX2 position to the contact point
+            LaserVFX2.transform.position = _enemy.LaserContactOffset.transform.position;
+        }
+        else // Disables the laser
+        {
+            Laser.SetPosition(0, Vector3.zero); // Starting the laser
+            Laser.SetPosition(1, Vector3.zero); // Ending the laser
+
+            if (LaserVFX1.activeSelf) // Condition to show laser vfxs
+            {
+                LaserVFX1.SetActive(false);
+                LaserVFX2.SetActive(false);
+            }
+        }
+    }
+
+    /// <summary>
     /// This method checks if the enemy is dead and makes the bot go back 
     /// to the player.
     /// </summary>
@@ -136,6 +195,8 @@ public class BotCharacter : BasicCharacter
         if (_enemy.IsDead)
         {
             _enemies.RemoveAt(0); // Removing the dead enemy
+            ShootLaser(false); // Stopping the laser
+            _attackTimer = 0; // Resetting the attack timer
 
             // Condition for no more enemies
             if (_enemies.Count == 0) BotState = CharacterState.Move;
@@ -208,18 +269,21 @@ public class BotCharacter : BasicCharacter
             MovementHandler(1); // Speeding up the bot
             CheckEnemy(); // Checking enemy status
         }
-        // Bot stopping state
+        // Bot stopping state and attacking the enemy
         else if(BotState == CharacterState.AttackEnemy)
         {
             // Condition for moving the bot to the enemy
             if (IsOutOfRange(_enemy.transform))
             {
                 BotState = CharacterState.MoveToEnemy;
+                ShootLaser(false); // Stopping the laser
                 return; // No further logic required
             }
 
             LookAtTarget(_enemy.transform); // Looking at the enemy
             MovementHandler(-1); // Slowing down and stopping the bot
+            ShootLaser(true); // Shooting the laser
+            AttackHandler(); // Attacking the enemy
             CheckEnemy(); // Checking enemy status
         }
         // Bot getting next enemy from the list state
