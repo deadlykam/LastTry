@@ -15,7 +15,7 @@ public class BasicCharacter : MonoBehaviour
     public int HealthMin;
     [SerializeField]
     private int _health;
-    protected bool IsDead { get { return _health == 0; } }
+    public bool IsDead { get { return _health == 0; } }
 
     public WeaponItem[] Weapons; // For storing multiple weapons for player and boss
 
@@ -124,4 +124,4 @@ public class BasicCharacter : MonoBehaviour
     { return (float)_health / (float)HealthMax; }
 }
 
-public enum CharacterState { None, Move, Stop};
+public enum CharacterState { None, Move, Stop, MoveToEnemy, AttackEnemy, GetNextEnemy};

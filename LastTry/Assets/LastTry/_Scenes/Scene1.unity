@@ -3057,6 +3057,12 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &635933469 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5566625992538791210, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5566625991544792733}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &673703622
 GameObject:
   m_ObjectHideFlags: 0
@@ -3275,6 +3281,64 @@ Transform:
   m_Father: {fileID: 1751083156}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &753203357
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 753203358}
+  - component: {fileID: 753203359}
+  - component: {fileID: 753203360}
+  m_Layer: 11
+  m_Name: EnemyDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &753203358
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753203357}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1751083156}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &753203359
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753203357}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 7
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &753203360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753203357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a36b4181be534ef4b8b3670ef4f1b851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Character: {fileID: 1751083155}
 --- !u!1 &756885274
 GameObject:
   m_ObjectHideFlags: 0
@@ -4525,7 +4589,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 5566625991544792733}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 635933469}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74d4908896977e44a82eecfd8b9854d8, type: 3}
@@ -6732,6 +6796,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 748572043}
+  - {fileID: 753203358}
   m_Father: {fileID: 287721768}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6787,10 +6852,13 @@ MonoBehaviour:
   HurtTimer: 0.1
   DamageFontColour: {r: 0.745283, g: 0, b: 0.67370015, a: 0}
   Player: {fileID: 1170275256}
-  Offset: {x: -1, y: 2, z: -1}
+  BotModel: {fileID: 748572043}
   FollowRadius: 3.1
   StopRadius: 3
   Acceleration: 2
+  HoverHeight: 0.5
+  HoverSpeed: 0.1
+  EnemyRadius: 7
   BotState: 2
 --- !u!1001 &1782369274
 PrefabInstance:
@@ -9328,6 +9396,15 @@ PrefabInstance:
       propertyPath: JoystickAndroid
       value: 
       objectReference: {fileID: 2929252284524374422}
+    - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
+        type: 3}
+      propertyPath: IsJoyPad
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 687514817, guid: 840d7fa51d7a85c4b9b085a33e54c68d, type: 3}
+      propertyPath: Character
+      value: 
+      objectReference: {fileID: 635933469}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 840d7fa51d7a85c4b9b085a33e54c68d, type: 3}
 --- !u!1001 &7058684668364009734
