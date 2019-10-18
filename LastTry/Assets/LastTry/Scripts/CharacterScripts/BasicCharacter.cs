@@ -29,6 +29,7 @@ public class BasicCharacter : MonoBehaviour
     protected bool IsHurt { get { return _hurtTimer != 0; } }
 
     public Color DamageFontColour;
+    public Color HealFontColour;
 
     // Start is called before the first frame update
     void Start()
@@ -100,7 +101,7 @@ public class BasicCharacter : MonoBehaviour
         _hurtTimer = HurtTimer; // Starting the hurt timer
 
         // Taking damage and keeping health with in range
-        _health = (_health - amount <= 0) ? 0 : _health - amount;
+        _health = (_health - amount) <= 0 ? 0 : _health - amount;
 
         // Condition for the BasicCharacter to die
         if (_health == 0)
@@ -114,6 +115,22 @@ public class BasicCharacter : MonoBehaviour
         // Starting a damage font effect
         UIDamageFontManager.Instance.RequestDamageFont(transform.position, amount,
                                                        DamageFontColour);
+    }
+
+    /// <summary>
+    /// This method heals the basic character.
+    /// </summary>
+    /// <param name="amount">The amount of health to add to the current health, if
+    ///                      health amount is over max then max amount will be used,
+    ///                      of type int</param>
+    public virtual void Heal(int amount)
+    {
+        // Calculating health from healing
+        _health = (_health + amount) >= HealthMax ? HealthMax : _health + amount;
+
+        // Starting a damage font effect
+        UIDamageFontManager.Instance.RequestDamageFont(transform.position, amount,
+                                                       HealFontColour);
     }
 
     /// <summary>
