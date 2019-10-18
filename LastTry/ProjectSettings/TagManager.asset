@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Weapons
+  - Consumables
   layers:
   - Default
   - TransparentFX

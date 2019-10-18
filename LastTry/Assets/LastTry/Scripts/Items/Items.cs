@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class Items : MonoBehaviour
 {
+    [Header("Items Properties")]
     public string ItemName;
     public int Cost;
     public BoxCollider ItemCollider;
