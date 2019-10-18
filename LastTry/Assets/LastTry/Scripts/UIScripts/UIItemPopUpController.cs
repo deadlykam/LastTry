@@ -15,6 +15,7 @@ public class UIItemPopUpController : MonoBehaviour
     public Image HoldBar;
 
     public bool IsBarNotFinished { get { return HoldBar.fillAmount != 0f; } }
+    public float FillAmount { get { return HoldBar.fillAmount; } }
 
     /// <summary>
     /// This method hides/shows the menu.

@@ -38,11 +38,12 @@ public class PlayerCharacter : PlayerCombatControl
     private float _verticalVelocity;
 
     /// <summary>
-    /// The weapon being currently hovered over.
+    /// The item being currently hovered over.
     /// </summary>
-    private WeaponItem _hoverWeapon;
+    private Items _hoverItem;
+    public Items HoverItem { get { return _hoverItem; } }
 
-    public bool IsHoverWeapon { get { return _hoverWeapon != null; } }
+    public bool IsHoverItem { get { return _hoverItem != null; } }
 
     private bool _isAttackButtonA = false;
 
@@ -226,7 +227,7 @@ public class PlayerCharacter : PlayerCombatControl
     {
         if (Input.GetButton("Fire1") && IsJoyPad)
         {
-            if (_hoverWeapon != null) PickUpItemTimer();
+            if (_hoverItem != null) PickUpItemTimer();
         }
         else _pickUpTimer = 0; // This condition may be required to be called
                                // differently since joypad will not be used
@@ -242,6 +243,29 @@ public class PlayerCharacter : PlayerCombatControl
         _verticalValue = 0;
         _dir = PlayerModel.rotation;
         SetMoveSpeed(0);
+    }
+
+    /// <summary>
+    /// This method shows/hides the item description.
+    /// </summary>
+    /// <param name="isShow">The flag to show or hide item description,
+    ///                      of type bool</param>
+    private void SetItemDescription(bool isShow)
+    {
+        if (isShow) // Condition to show item description
+        {
+            // Checking if the item is a WeaponItem
+            if (_hoverItem as WeaponItem != null)
+            {
+                // Showing the weapon description here
+                UIInGameUIController.Instance.ShowWeaponPopup(
+                    GetDefaultWeapon().ItemName, ((WeaponItem)_hoverItem).ItemName,
+                    GetDefaultWeapon().GetDescription(),
+                    ((WeaponItem)_hoverItem).GetDescription());
+            }
+        }
+        else UIInGameUIController.Instance.HideAllPopUp(); // Condition for hiding all
+                                                           // item descriptions
     }
 
     /// <summary>
@@ -278,37 +302,27 @@ public class PlayerCharacter : PlayerCombatControl
     public void ButtonA() { if (IsAcceptInput) _isAttackButtonA = true; }
 
     /// <summary>
-    /// This method adds an hovered over weapon item.
+    /// This method adds a hovered over item.
     /// </summary>
-    /// <param name="weaponItem">The weapon that is being hovered over by the
-    ///                          player, of type WeaponItem</param>
-    public void AddHoverWeapon(WeaponItem weaponItem)
+    /// <param name="hoverItem">The item that is being hovered over by the
+    ///                         player, of type Items</param>
+    public void AddHoverItem(Items hoverItem)
     {
-        // Condition to check if there are no current hovered weapon item
-        if (_hoverWeapon == null)
+        // Condition to check if there are no current hovered item
+        if(_hoverItem == null)
         {
-            _hoverWeapon = weaponItem;
-            
-            // Showing the weapon description here
-            UIInGameUIController.Instance.ShowWeaponPopup(
-                GetDefaultWeapon().ItemName, _hoverWeapon.ItemName,
-                GetDefaultWeapon().GetDescription(),
-                _hoverWeapon.GetDescription());
-        }
-        else if (_hoverWeapon != weaponItem) // Checking if not same weapon
-        {
-            // Condition to check if the new hover weapon item is closer
-            // thus making it the current hovered over weapon item
-            if (Vector3.Distance(transform.position, weaponItem.transform.position) <
-                Vector3.Distance(transform.position, _hoverWeapon.transform.position))
-            {
-                _hoverWeapon = weaponItem;
+            _hoverItem = hoverItem;
 
-                // Showing the weapon description here
-                UIInGameUIController.Instance.ShowWeaponPopup(
-                    GetDefaultWeapon().ItemName, _hoverWeapon.ItemName,
-                    GetDefaultWeapon().GetDescription(),
-                    _hoverWeapon.GetDescription());
+            SetItemDescription(true); // Showing item description
+        }
+        else if(_hoverItem != hoverItem) // Checking if not same item
+        {
+            if(Vector3.Distance(transform.position, hoverItem.transform.position) <
+               Vector3.Distance(transform.position, _hoverItem.transform.position))
+            {
+                _hoverItem = hoverItem;
+
+                SetItemDescription(true); // Showing item description
             }
         }
 
@@ -318,23 +332,18 @@ public class PlayerCharacter : PlayerCombatControl
     }
 
     /// <summary>
-    /// This method removes the weapon from being picked up.
+    /// This method removes the item from being picked up.
     /// </summary>
-    /// <param name="weaponItem">The weapon needed to check if to remove
-    ///                          the hover weapon, of type WeaponItem</param>
-    public void RemoveHoverWeapon(WeaponItem weaponItem)
+    /// <param name="hoverItem">The item needed to check if to remove
+    ///                         the hover item, of type Items</param>
+    public void RemoveHoverItem(Items hoverItem)
     {
-        // Removing the hover weapon from the pick up slot
-        //if (_hoverWeapon != null) _hoverWeapon = null;
-
-        // Condition for removing the selected hover weapon
-        if (_hoverWeapon == weaponItem)
+        // Condition for removing the selected hover item
+        if(_hoverItem == hoverItem)
         {
-            _hoverWeapon = null;
-            UIInGameUIController.Instance.HideWeaponPopup();
+            _hoverItem = null;
+            SetItemDescription(false);
         }
-
-        //Todo: Call the hide UI from here for hiding the weapon description
     }
 
     /// <summary>
@@ -342,26 +351,28 @@ public class PlayerCharacter : PlayerCombatControl
     /// </summary>
     public void PickUpItemTimer()
     {
-        if (IsHoverWeapon) // Condition to check if the player is hovering over a weapon
+        if (IsHoverItem) // Condition to check if the player is hovering over a weapon
         {
             // Counting how long the button has been pressed
             _pickUpTimer = (_pickUpTimer + Time.deltaTime) >= PickUpTimer ?
                                              PickUpTimer :
                                             _pickUpTimer + Time.deltaTime;
 
-            // Condition for picking up the weapon
-            if (_pickUpTimer == PickUpTimer)
+            // Condition for picking up the item
+            if(_pickUpTimer == PickUpTimer)
             {
-                // Picking up the weapon
-                PickUpWeapon1(_hoverWeapon);
-                _hoverWeapon = null; // Clearing the hover select weapon
+                // Condition for picking up the weapon
+                if (_hoverItem as WeaponItem) PickUpWeapon1(((WeaponItem)_hoverItem));
 
+                _hoverItem = null; // Clearing the hover selected item
                 ResetPickupTimer();
-                UIInGameUIController.Instance.SetWeaponBar(0);
-                UIInGameUIController.Instance.HideWeaponPopup();
+
+                UIInGameUIController.Instance.ResetAllBar();
+                SetItemDescription(false);
+                return; // No further logic required
             }
 
-            UIInGameUIController.Instance.SetWeaponBar(_pickUpTimer / PickUpTimer);
+            UIInGameUIController.Instance.SetAllBar(_hoverItem, _pickUpTimer / PickUpTimer);
         }
     }
 
@@ -370,14 +381,15 @@ public class PlayerCharacter : PlayerCombatControl
     /// </summary>
     public void PickUpItemInstant()
     {
-        if (IsHoverWeapon) // Condition to check if the player is hovering over a weapon
+        if (IsHoverItem) // Condition to check if the player is hovering over a weapon
         {
-            // Picking up the weapon
-            PickUpWeapon1(_hoverWeapon);
-            _hoverWeapon = null; // Clearing the hover select weapon
+            // Condition for picking up the weapon
+            if (_hoverItem as WeaponItem) PickUpWeapon1(((WeaponItem)_hoverItem));
+
+            _hoverItem = null; // Clearing the hover selected item
 
             ResetPickupTimer();
-            UIInGameUIController.Instance.HideWeaponPopup();
+            SetItemDescription(false);
         }
     }
 

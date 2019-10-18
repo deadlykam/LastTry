@@ -24,13 +24,23 @@ public class UIJoypadController : MonoBehaviour
 
     private void Update()
     {
-        // Condition for giving the fill amount for the Weapon Popup menu
+        // Remove this comment section is no future problem arises
+        // from commenting this out
+        /*// Condition for giving the fill amount for the Weapon Popup menu
         if (ButtonAHold.IsButtonPressed)
             UIInGameUIController.Instance
                 .SetWeaponBar(ButtonAHold.GetHoldTimerPercentage());
         else if (!ButtonAHold.IsButtonPressed // Condition for resetting the bar
                 && UIInGameUIController.Instance.IsWeaponBarNotDone())
-            UIInGameUIController.Instance.SetWeaponBar(0);
+            UIInGameUIController.Instance.SetWeaponBar(0);*/
+
+        // Condition for giving the fill amount for the Weapon Popup menu
+        if (ButtonAHold.IsButtonPressed && Player.IsHoverItem)
+            UIInGameUIController.Instance
+                .SetAllBar(Player.HoverItem, ButtonAHold.GetHoldTimerPercentage());
+        else if (!ButtonAHold.IsButtonPressed // Condition for resetting the bar
+                && UIInGameUIController.Instance.IsWeaponBarNotDone())
+            UIInGameUIController.Instance.ResetAllBar();
     }
 
     /// <summary>
@@ -38,7 +48,7 @@ public class UIJoypadController : MonoBehaviour
     /// </summary>
     /// <returns>True means the player is hovering over an item,
     ///          false otherwise, of type bool</returns>
-    public bool IsHoverItem() { return Player.IsHoverWeapon; }
+    public bool IsHoverItem() { return Player.IsHoverItem; }
 
     /// <summary>
     /// This method picks up an item.

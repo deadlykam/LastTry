@@ -63,16 +63,30 @@ public class UIInGameUIController : MonoBehaviour
     }
 
     /// <summary>
-    /// This method hides the menu popup.
+    /// This method hides all the pop up menu.
     /// </summary>
-    public void HideWeaponPopup() { WeaponItemPopup.HideMenu(); }
+    public void HideAllPopUp() { WeaponItemPopup.HideMenu(); }
 
     /// <summary>
-    /// This method sets bar value for the Weapon Popup menu.
+    /// This method sets the bar for the appropriate pop up menu.
     /// </summary>
+    /// <param name="item">To check the type of item, of type Items</param>
     /// <param name="amount">The fill amount for the popup bar in the range from
     ///                      0 - 1, of type float</param>
-    public void SetWeaponBar(float amount) { WeaponItemPopup.SetFillAmount(amount); }
+    public void SetAllBar(Items item, float amount)
+    {
+        // Condition for setting the weapon pop up bar
+        if (item as WeaponItem) WeaponItemPopup.SetFillAmount(amount);
+    }
+
+    /// <summary>
+    /// Resets all the non-resetted bars.
+    /// </summary>
+    public void ResetAllBar()
+    {
+        // Condition to check if weapon fill amount not resetted
+        if (WeaponItemPopup.FillAmount != 0) WeaponItemPopup.SetFillAmount(0);
+    }
 
     /// <summary>
     /// This method checks if the weapon bar is not finished.
