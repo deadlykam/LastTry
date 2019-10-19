@@ -348,6 +348,7 @@ MonoBehaviour:
   SpeedSlerp: 0.25
   HurtTimer: 1
   DamageFontColour: {r: 1, g: 0.76840115, b: 0, a: 1}
+  HealFontColour: {r: 0.43867922, g: 1, b: 0.4802743, a: 1}
   CharacterAnimator: {fileID: 5688155232184101756}
   AttackClip: {fileID: 7400000, guid: 096bdc14818c6ae45b2ec64ae18acef5, type: 2}
   DefaultAnimationAttacks:
@@ -361,6 +362,7 @@ MonoBehaviour:
   Acceleration: 2
   HealthBarTimer: 5
   LaserContactOffset: {fileID: 9166675187863505357}
+  ItemDropRate: 100
 --- !u!54 &2856416194704904054
 Rigidbody:
   m_ObjectHideFlags: 0
