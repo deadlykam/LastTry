@@ -254,18 +254,41 @@ public class PlayerCharacter : PlayerCombatControl
     {
         if (isShow) // Condition to show item description
         {
-            // Checking if the item is a WeaponItem
-            if (_hoverItem as WeaponItem != null)
+            // Checking if the item is Equipment Item
+            if (_hoverItem as WeaponItem)
             {
                 // Showing the weapon description here
-                UIInGameUIController.Instance.ShowWeaponPopup(
+                UIInGameUIController.Instance.ShowEquipmentPopup(
                     GetDefaultWeapon().ItemName, ((WeaponItem)_hoverItem).ItemName,
                     GetDefaultWeapon().GetDescription(),
                     ((WeaponItem)_hoverItem).GetDescription());
             }
+            // Checking if item is Consumable Item
+            else if(_hoverItem as ConsumableItem)
+            {
+                // Showing the consumable description
+                UIInGameUIController.Instance.ShowConsumablePopup(
+                    ((ConsumableItem)_hoverItem).ItemName, 
+                    ((ConsumableItem)_hoverItem).GetDescription());
+            }
         }
         else UIInGameUIController.Instance.HideAllPopUp(); // Condition for hiding all
                                                            // item descriptions
+    }
+
+    /// <summary>
+    /// This method picks up the item.
+    /// </summary>
+    private void PickUpItem()
+    {
+        // Condition for picking up the weapon
+        if (_hoverItem as WeaponItem) PickUpWeapon1(((WeaponItem)_hoverItem));
+        else if (_hoverItem as ConsumableItem) // Condition for picking up
+        {                                     // consumable
+                                              // Healing the player
+            if (((ConsumableItem)_hoverItem).Consumable == ConsumableType.Heal)
+                Heal(((ConsumableItem)_hoverItem).PickConsumable());
+        }
     }
 
     /// <summary>
@@ -361,9 +384,7 @@ public class PlayerCharacter : PlayerCombatControl
             // Condition for picking up the item
             if(_pickUpTimer == PickUpTimer)
             {
-                // Condition for picking up the weapon
-                if (_hoverItem as WeaponItem) PickUpWeapon1(((WeaponItem)_hoverItem));
-
+                PickUpItem(); // Picking up the item
                 _hoverItem = null; // Clearing the hover selected item
                 ResetPickupTimer();
 
@@ -383,9 +404,7 @@ public class PlayerCharacter : PlayerCombatControl
     {
         if (IsHoverItem) // Condition to check if the player is hovering over a weapon
         {
-            // Condition for picking up the weapon
-            if (_hoverItem as WeaponItem) PickUpWeapon1(((WeaponItem)_hoverItem));
-
+            PickUpItem(); // Picking up the item
             _hoverItem = null; // Clearing the hover selected item
 
             ResetPickupTimer();
