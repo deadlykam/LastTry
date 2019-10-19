@@ -8,19 +8,17 @@ public class UIItemPopUpController : MonoBehaviour
 {
     [Header("UI Item Popup Properties")]
     public Canvas[] AllCanvas;
-    public TextMeshProUGUI Item1Name;
-    public TextMeshProUGUI Item2Name;
-    public TextMeshProUGUI Item1Description;
-    public TextMeshProUGUI Item2Description;
+    public TextMeshProUGUI ItemName;
+    public TextMeshProUGUI ItemDescription;
     public Image HoldBar;
 
     public bool IsBarNotFinished { get { return HoldBar.fillAmount != 0f; } }
-    public float FillAmount { get { return HoldBar.fillAmount; } }
+    public bool IsMenuShown { get { return AllCanvas[0].enabled; } }
 
     /// <summary>
     /// This method hides/shows the menu.
     /// </summary>
-    /// <param name="isShow"></param>
+    /// <param name="isShow">The flag to hide or show the menu, of type bool</param>
     private void SetUI(bool isShow)
     {
         // Loop for setting all the canvas
@@ -30,18 +28,13 @@ public class UIItemPopUpController : MonoBehaviour
     /// <summary>
     /// This method shows the menu and sets up all the attributes of the menu.
     /// </summary>
-    /// <param name="item1Name">The name of the item 1, of type string</param>
-    /// <param name="item2Name">The name of the item 2, of type string</param>
-    /// <param name="item1Description">The description of item 1, of type string</param>
-    /// <param name="item2Description">The description of item 2, of type string</param>
-    public virtual void ShowMenu(string item1Name, string item2Name,
-                         string item1Description, string item2Description)
+    /// <param name="itemName">The name of the item, of type string</param>
+    /// <param name="itemDescription">The description of item, of type string</param>
+    public virtual void ShowMenu(string itemName, string itemDescription)
     {
         SetUI(true);
-        Item1Name.text = item1Name;
-        Item2Name.text = item2Name;
-        Item1Description.text = item1Description;
-        Item2Description.text = item2Description;
+        ItemName.text = itemName;
+        ItemDescription.text = itemDescription;
 
         HoldBar.fillAmount = 0; // Resetting the fill amount;
     }
