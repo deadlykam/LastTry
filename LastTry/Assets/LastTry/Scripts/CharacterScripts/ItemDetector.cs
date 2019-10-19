@@ -8,13 +8,17 @@ public class ItemDetector : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Weapons"))
-            Player.AddHoverItem(other.GetComponent<Items>());
+        /*if (other.CompareTag("Weapons"))
+            Player.AddHoverItem(other.GetComponent<Items>());*/
+
+        Player.AddHoverItem(other.GetComponent<Items>());
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Weapons"))
-            Player.RemoveHoverItem(other.GetComponent<Items>());
+        /*if (other.CompareTag("Weapons"))
+            Player.RemoveHoverItem(other.GetComponent<Items>());*/
+
+        Player.RemoveHoverItem(other.GetComponent<Items>());
     }
 }
