@@ -27,8 +27,7 @@ public class ConsumableItem : Items
     /// <returns>The amount of value of the consumable item, of type int</returns>
     public int PickConsumable()
     {
-        // Todo: Return availability to a manager here
-        gameObject.SetActive(false);
+        RemoveItem();
         return ConsumableAmount;
     }
 }

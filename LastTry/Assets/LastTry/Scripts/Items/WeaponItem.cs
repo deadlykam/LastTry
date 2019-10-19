@@ -19,9 +19,6 @@ public class WeaponItem : Items
     public Vector3 PlacementPosition;
     public Vector3 PlacementRotation;
 
-    [Header("Placement In World Properties")]
-    public Vector3 PositionOffset;
-
     /// <summary>
     /// This method returns a random damage value within the range.
     /// </summary>
@@ -50,27 +47,6 @@ public class WeaponItem : Items
         transform.localPosition = PlacementPosition;
         transform.localRotation = Quaternion.Euler(PlacementRotation);
         SetCollider(false); // Removing collision trigger
-    }
-
-    /// <summary>
-    /// This method sets the parent to the target and sets the position offset.
-    /// </summary>
-    /// <param name="target">The new parent for the weapon item, of type Transform</param>
-    public void SetParentToWorld(Transform target)
-    {
-        transform.parent = target;
-
-        // Making y axis to 0
-        transform.position = new Vector3(transform.position.x,
-                                         0,
-                                         transform.position.z);
-        // Adding the new offset position
-        transform.position += PositionOffset;
-
-        // Making rotation to 0
-        transform.rotation = Quaternion.Euler(Vector3.zero);
-
-        SetCollider(true); // Enabling collision trigger
     }
 }
 
