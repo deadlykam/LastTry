@@ -17,6 +17,10 @@ public class EnemyCharacter : BasicAnimation
         " or on the ground location of the enemy. This ONLY used by the bot.")]
     public GameObject LaserContactOffset;
 
+    [Range(0, 100)]
+    public int ItemDropRate;
+    private bool _isItemDropped = false;
+
     private float _speedPercentage = 0;
     private Vector3 _lookAtTarget;
 
@@ -202,13 +206,23 @@ public class EnemyCharacter : BasicAnimation
         // Condition for setting health bar
         if (!IsDead && !_hasHealthBar) Manager.RequestHealthBar(transform);
 
-        // Condition to free up a health bar
-        if(IsDead && _hasHealthBar)
+        // Condition for death
+        if(IsDead)
         {
-            // Freeing up a health bar
-            Manager.RequestToReleasehealthBar(_healthBarReference);
-            // Removing the reference to the health bar
-            _healthBarReference = -1;
+            // Condition to free up health bar
+            if (_hasHealthBar)
+            {
+                // Freeing up a health bar
+                Manager.RequestToReleasehealthBar(_healthBarReference);
+                // Removing the reference to the health bar
+                _healthBarReference = -1;
+            }
+
+            if (!_isItemDropped) // Condition for dropping an item
+            {
+                GameWorldManager.Instance.RequestItemDrop(ItemDropRate, transform.position);
+                _isItemDropped = true;
+            }
         }
     }
 
