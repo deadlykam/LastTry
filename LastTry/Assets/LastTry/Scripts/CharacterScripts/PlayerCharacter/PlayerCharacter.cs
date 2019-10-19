@@ -284,10 +284,12 @@ public class PlayerCharacter : PlayerCombatControl
         // Condition for picking up the weapon
         if (_hoverItem as WeaponItem) PickUpWeapon1(((WeaponItem)_hoverItem));
         else if (_hoverItem as ConsumableItem) // Condition for picking up
-        {                                     // consumable
-                                              // Healing the player
+        {                                      // consumable
+            // Condition for healing the player
             if (((ConsumableItem)_hoverItem).Consumable == ConsumableType.Heal)
                 Heal(((ConsumableItem)_hoverItem).PickConsumable());
+
+
         }
     }
 
