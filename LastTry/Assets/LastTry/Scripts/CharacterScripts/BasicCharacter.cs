@@ -87,7 +87,7 @@ public class BasicCharacter : MonoBehaviour
     protected virtual void PickUpWeapon1(WeaponItem weaponItem)
     {
         // Dropping the item in the game world
-        Weapons[0].SetParentToWorld(GameWorldManager.Instance.Items);
+        Weapons[0].SetParentToWorld(GameWorldManager.Instance.Equipments);
 
         Weapons[0] = weaponItem; // Replacing the weapon at the 0th index
     }
