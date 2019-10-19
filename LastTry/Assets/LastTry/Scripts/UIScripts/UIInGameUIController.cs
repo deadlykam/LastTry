@@ -8,7 +8,8 @@ public class UIInGameUIController : MonoBehaviour
     public static UIInGameUIController Instance;
 
     [Header("Popup Menu Properties")]
-    public UIItemPopUpController WeaponItemPopup;
+    public UIEquipmentPopUpController EquipmentItemPopup;
+    public UIItemPopUpController ConsumableItemPopup;
 
     [Header("Player Health Bar Properties")]
     public Image PlayerHealthBar;
@@ -49,23 +50,41 @@ public class UIInGameUIController : MonoBehaviour
     }
 
     /// <summary>
-    /// This method shows the weapon popup menu.
+    /// This method shows the consumable popup menu.
+    /// </summary>
+    /// <param name="itemName">The name of the item, of type string</param>
+    /// <param name="itemDescription">The description of the item, of type string</param>
+    public void ShowConsumablePopup(string itemName, string itemDescription)
+    {
+        HideAllPopUp(); // Hiding any shown popup
+        // Showing the popup menu
+        ConsumableItemPopup.ShowMenu(itemName, itemDescription);
+    }
+
+    /// <summary>
+    /// This method shows the equipment popup menu.
     /// </summary>
     /// <param name="item1Name">The name of the item 1, of type string</param>
     /// <param name="item2Name">The name of the item 2, of type string</param>
     /// <param name="item1Description">The description of item 1, of type string</param>
     /// <param name="item2Description">The description of item 2, of type string</param>
-    public void ShowWeaponPopup(string item1Name, string item2Name,
+    public void ShowEquipmentPopup(string item1Name, string item2Name,
                          string item1Description, string item2Description)
     {
+        HideAllPopUp(); // Hiding any shown popup
         // Showing the popup menu
-        WeaponItemPopup.ShowMenu(item1Name, item2Name, item1Description, item2Description);
+        EquipmentItemPopup.ShowMenu(item1Name, item2Name, 
+                                    item1Description, item2Description);
     }
 
     /// <summary>
     /// This method hides all the pop up menu.
     /// </summary>
-    public void HideAllPopUp() { WeaponItemPopup.HideMenu(); }
+    public void HideAllPopUp()
+    {
+        if(EquipmentItemPopup.IsMenuShown) EquipmentItemPopup.HideMenu();
+        if (ConsumableItemPopup.IsMenuShown) ConsumableItemPopup.HideMenu();
+    }
 
     /// <summary>
     /// This method sets the bar for the appropriate pop up menu.
@@ -76,7 +95,8 @@ public class UIInGameUIController : MonoBehaviour
     public void SetAllBar(Items item, float amount)
     {
         // Condition for setting the weapon pop up bar
-        if (item as WeaponItem) WeaponItemPopup.SetFillAmount(amount);
+        if (item as WeaponItem) EquipmentItemPopup.SetFillAmount(amount);
+        else if (item as ConsumableItem) ConsumableItemPopup.SetFillAmount(amount);
     }
 
     /// <summary>
@@ -84,15 +104,25 @@ public class UIInGameUIController : MonoBehaviour
     /// </summary>
     public void ResetAllBar()
     {
-        // Condition to check if weapon fill amount not resetted
-        if (WeaponItemPopup.FillAmount != 0) WeaponItemPopup.SetFillAmount(0);
+        // Conditions to check if fill amount not resetted for all menus
+        if (EquipmentItemPopup.IsBarNotFinished) EquipmentItemPopup.SetFillAmount(0);
+        if (ConsumableItemPopup.IsBarNotFinished) ConsumableItemPopup.SetFillAmount(0);
     }
 
     /// <summary>
-    /// This method checks if the weapon bar is not finished.
+    /// [Depricated]This method checks if the weapon bar is not finished.
     /// </summary>
     /// <returns></returns>
-    public bool IsWeaponBarNotDone() { return WeaponItemPopup.IsBarNotFinished; }
+    public bool IsEquipmentBarNotDone() { return EquipmentItemPopup.IsBarNotFinished; }
+
+    /// <summary>
+    /// This method checks if the bar is not finished in any of the pop up menus.
+    /// </summary>
+    /// <returns>True means not finished, false otherwise, of type bool</returns>
+    public bool IsBarNotDone()
+    {
+        return EquipmentItemPopup.IsBarNotFinished || ConsumableItemPopup.IsBarNotFinished;
+    }
 
     /// <summary>
     /// This method sets the fill amount for the player health bar.
