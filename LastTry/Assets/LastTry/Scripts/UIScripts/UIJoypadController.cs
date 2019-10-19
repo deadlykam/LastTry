@@ -39,7 +39,7 @@ public class UIJoypadController : MonoBehaviour
             UIInGameUIController.Instance
                 .SetAllBar(Player.HoverItem, ButtonAHold.GetHoldTimerPercentage());
         else if (!ButtonAHold.IsButtonPressed // Condition for resetting the bar
-                && UIInGameUIController.Instance.IsWeaponBarNotDone())
+                && UIInGameUIController.Instance.IsBarNotDone())
             UIInGameUIController.Instance.ResetAllBar();
     }
 
