@@ -31,6 +31,8 @@ public class WearableItem : Items
                 _description = _description + "Damage: +" + Stats[i].StatAmount.ToString();
             else if (Stats[i].Stat == StatType.Defense) // For showing defense description
                 _description = _description + "Defense: +" + Stats[i].StatAmount.ToString();
+            else if (Stats[i].Stat == StatType.Health) // For showing defense description
+                _description = _description + "Health: +" + Stats[i].StatAmount.ToString();
 
             _description = _description + "\n"; // Adding a new line
         }
@@ -61,6 +63,8 @@ public class WearableItem : Items
                 GameWorldManager.Instance.Player.AddStatDamage(Stats[i].StatAmount);
             else if (Stats[i].Stat == StatType.Defense) // Adding defense stat
                 GameWorldManager.Instance.Player.AddStatDefense(Stats[i].StatAmount);
+            else if (Stats[i].Stat == StatType.Health) // Adding health stat
+                GameWorldManager.Instance.Player.AddStatHealth(Stats[i].StatAmount);
         }
 
         SetCollider(false); // Removing the collision
@@ -83,6 +87,8 @@ public class WearableItem : Items
                 GameWorldManager.Instance.Player.RemoveStatDamage(Stats[i].StatAmount);
             else if (Stats[i].Stat == StatType.Defense) // Removing defense stat
                 GameWorldManager.Instance.Player.RemoveStatDefense(Stats[i].StatAmount);
+            else if (Stats[i].Stat == StatType.Health) // Removing health stat
+                GameWorldManager.Instance.Player.RemoveStatHealth(Stats[i].StatAmount);
         }
 
         WorldObject.SetActive(true); // Showing the item again
