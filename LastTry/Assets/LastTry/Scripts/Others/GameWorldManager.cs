@@ -6,10 +6,32 @@ public class GameWorldManager : MonoBehaviour
 {
     public static GameWorldManager Instance;
 
+    [Header("Game Root Location")]
     public Transform Root;
+
+    [Header("Player Location")]
+    public PlayerCharacter Player; // <-- IMPORTANT: This will require change in future 
+                                   //                because this will not point to the
+                                   //                player in other stages since
+                                   //                GameWorldManager will have only
+                                   //                one instance and the player object
+                                   //                will probably move using scene
+                                   //                addition which may require the
+                                   //                player object to be singleton as
+                                   //                well. Doing this for testing
+                                   //                purposes now since stage change
+                                   //                has not been implemented yet.
+                                   //                
+                                   //                Reported Issue in Git, Issue
+                                   //                number #58.
+                                   //
+                                   //                                     - Kamran Wali
+
+    [Header("Item Collection Location")]
     public Transform Equipments;
     public Transform Consumables;
 
+    [Header("Item Drop Rate Properties")]
     [Range(0, 100)]
     public int DropRateEquipment;
     [Range(0, 100)]
