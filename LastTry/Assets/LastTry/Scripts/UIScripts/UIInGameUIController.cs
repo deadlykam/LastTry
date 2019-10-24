@@ -95,9 +95,17 @@ public class UIInGameUIController : MonoBehaviour
     public void SetAllBar(Items item, float amount)
     {
         // Condition for setting the weapon pop up bar
-        if (item as WeaponItem) EquipmentItemPopup.SetFillAmount(amount);
-        else if (item as ConsumableItem || item as WearableItem)
+        if (item as WeaponItem)
+            EquipmentItemPopup.SetFillAmount(amount);
+        // Condition for setting the consumable
+        else if (item as ConsumableItem)
             ConsumableItemPopup.SetFillAmount(amount);
+        // Condition for setting the wearable 
+        else if(item as WearableItem)
+        {
+            EquipmentItemPopup.SetFillAmount(amount);
+            ConsumableItemPopup.SetFillAmount(amount);
+        }
     }
 
     /// <summary>

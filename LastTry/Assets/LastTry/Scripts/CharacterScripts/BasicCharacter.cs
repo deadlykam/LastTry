@@ -15,6 +15,7 @@ public class BasicCharacter : MonoBehaviour
     public int HealthMin;
     [SerializeField]
     private int _health;
+    // Todo: Give health stat here. May not be required by enemy but still giving here.
     public bool IsDead { get { return _health == 0; } }
 
     public WeaponItem[] Weapons; // For storing multiple weapons for player and boss

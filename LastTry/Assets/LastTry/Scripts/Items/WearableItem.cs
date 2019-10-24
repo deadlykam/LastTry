@@ -53,6 +53,44 @@ public class WearableItem : Items
         // Updating the bones of the wearable item
         WearableObject.bones = GameWorldManager.Instance.Player.SkinnedMesh.bones;
         WearableObject.rootBone = GameWorldManager.Instance.Player.SkinnedMesh.rootBone;
+        
+        // Loop for adding all the stats
+        for(int i = 0; i < Stats.Length; i++)
+        {
+            if (Stats[i].Stat == StatType.Attack) // Adding damage stat
+                GameWorldManager.Instance.Player.AddStatDamage(Stats[i].StatAmount);
+            else if (Stats[i].Stat == StatType.Defense) // Adding defense stat
+                GameWorldManager.Instance.Player.AddStatDefense(Stats[i].StatAmount);
+        }
+
+        SetCollider(false); // Removing the collision
+    }
+
+    /// <summary>
+    /// This method sets the parent to the target, sets the position offset and shows
+    /// the world item model and hides the player item model.
+    /// </summary>
+    /// <param name="target">The new parent for the item, of type Transform</param>
+    /// <param name="position">The new position for the item, of type Vector3</param>
+    public override void SetParentToWorld(Transform target, Vector3 position)
+    {
+        base.SetParentToWorld(target, position);
+
+        // Loop for adding all the stats
+        for (int i = 0; i < Stats.Length; i++)
+        {
+            if (Stats[i].Stat == StatType.Attack) // Removing damage stat
+                GameWorldManager.Instance.Player.RemoveStatDamage(Stats[i].StatAmount);
+            else if (Stats[i].Stat == StatType.Defense) // Removing defense stat
+                GameWorldManager.Instance.Player.RemoveStatDefense(Stats[i].StatAmount);
+        }
+
+        WorldObject.SetActive(true); // Showing the item again
+        WearableObject.gameObject.SetActive(false); // Hiding the wearable item
+
+        // Removing the bones from the player
+        WearableObject.bones = null;
+        WearableObject.rootBone = null;
     }
 }
 
@@ -63,7 +101,6 @@ public struct StatInfo
     public StatType Stat;
 }
 
-public enum WearableType { None, ArmourHead, ArmourBody, ArmourGloves, ArmourLegs,
-                           ArmourShoes };
+public enum WearableType { None, Head, Body, Hands, Legs, Shoes };
 
-public enum StatType { None, Attack, Defense, Special };
+public enum StatType { None, Attack, Defense, Special, Health };

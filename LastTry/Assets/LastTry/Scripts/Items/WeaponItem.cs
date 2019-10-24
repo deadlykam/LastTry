@@ -23,7 +23,7 @@ public class WeaponItem : Items
     /// This method returns a random damage value within the range.
     /// </summary>
     /// <returns>The random damage value within the range, of type int</returns>
-    public int GetDamage() { return Random.Range(DamageMin, DamageMax); }
+    public int GetDamage() { return Random.Range(DamageMin, DamageMax + 1); }
 
     /// <summary>
     /// This method shows the description of the weapon.
