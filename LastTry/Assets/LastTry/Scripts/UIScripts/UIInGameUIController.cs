@@ -96,7 +96,8 @@ public class UIInGameUIController : MonoBehaviour
     {
         // Condition for setting the weapon pop up bar
         if (item as WeaponItem) EquipmentItemPopup.SetFillAmount(amount);
-        else if (item as ConsumableItem) ConsumableItemPopup.SetFillAmount(amount);
+        else if (item as ConsumableItem || item as WearableItem)
+            ConsumableItemPopup.SetFillAmount(amount);
     }
 
     /// <summary>
