@@ -10,8 +10,8 @@ public class WearableItem : Items
     [Header("Wearable Item Properties")]
     public GameObject WorldObject;
     public SkinnedMeshRenderer WearableObject;
-    //public SkinnedMeshRenderer SkinMesh;
     public WearableType Wearable;
+    public MeshShapeType BlendShapeType;
     public StatInfo[] Stats;
 
     private string _description;
@@ -108,5 +108,12 @@ public struct StatInfo
 }
 
 public enum WearableType { None, Head, Body, Hands, Legs, Shoes };
-
 public enum StatType { None, Attack, Defense, Special, Health };
+
+/// <summary>
+/// The enum values' name must be same as the blendshape index so that
+/// changing the blendshape can be done dynamically. Give special case
+/// for 'None' to specify that no blendshape needed and must always be
+/// at the end.
+/// </summary>
+public enum MeshShapeType { LowerLeg, None }
