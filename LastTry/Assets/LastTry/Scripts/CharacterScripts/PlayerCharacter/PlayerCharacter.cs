@@ -28,6 +28,11 @@ public class PlayerCharacter : PlayerCombatControl
     [Header("Weapon Slot Locations")]
     public Transform RightHand;
 
+    [Header("Wearable Slot Locations")]
+    public SkinnedMeshRenderer SkinnedMesh;
+
+    // Todo: Gib wearable item stats here, like defense, special or anyother.
+
     private Vector3 _movement = new Vector3(0, 0, 0.1f);
     private Quaternion _dir = Quaternion.identity;
 
@@ -271,6 +276,14 @@ public class PlayerCharacter : PlayerCombatControl
                     ((ConsumableItem)_hoverItem).ItemName, 
                     ((ConsumableItem)_hoverItem).GetDescription());
             }
+            // Checking if item is Wearable Item
+            else if(_hoverItem as WearableItem)
+            {
+                // Showing the consumable description
+                UIInGameUIController.Instance.ShowConsumablePopup(
+                    ((WearableItem)_hoverItem).ItemName,
+                    ((WearableItem)_hoverItem).GetDescription());
+            }
         }
         else UIInGameUIController.Instance.HideAllPopUp(); // Condition for hiding all
                                                            // item descriptions
@@ -288,9 +301,9 @@ public class PlayerCharacter : PlayerCombatControl
             // Condition for healing the player
             if (((ConsumableItem)_hoverItem).Consumable == ConsumableType.Heal)
                 Heal(((ConsumableItem)_hoverItem).PickConsumable());
-
-
         }
+        // Condition for picking up the wearable
+        else if (_hoverItem as WearableItem) ((WearableItem)_hoverItem).PickUpItem();
     }
 
     /// <summary>
