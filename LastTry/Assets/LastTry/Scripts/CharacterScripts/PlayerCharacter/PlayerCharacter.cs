@@ -384,13 +384,25 @@ public class PlayerCharacter : PlayerCombatControl
             // Condition for removing the head item
             if(_head != null)
             {
-                // Todo: remove stat
                 _head.SetParentToWorld(GameWorldManager.Instance.Equipments,
                                       transform.position);
                 _head = null; // Removing the item's reference
             }
 
             _head = item; // Setting the new item
+        }
+        // Checking if the item is legs
+        else if (item.Wearable == WearableType.Legs)
+        {
+            // Condition for removing the legs item
+            if (_leg != null)
+            {
+                _leg.SetParentToWorld(GameWorldManager.Instance.Equipments,
+                                      transform.position);
+                _leg = null; // Removing the item's reference
+            }
+
+            _leg = item; // Setting the new item
         }
     }
 
