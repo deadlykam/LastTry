@@ -34,6 +34,7 @@ public class PlayerCharacter : PlayerCombatControl
     private WearableItem _hand;
     private WearableItem _body;
     private WearableItem _leg;
+    private WearableItem _shoe;
     private WearableItem _amulet;
     private WearableItem _ring1;
     private WearableItem _ring2;
@@ -355,7 +356,8 @@ public class PlayerCharacter : PlayerCombatControl
         // Condition for picking up the wearable
         else if (_hoverItem as WearableItem)
         {
-            // Removing the wearable item if exists
+            // Setting the wearable item to its correct equipment place
+            // and removing the old item if exist
             UpdateWearableItems(((WearableItem)_hoverItem));
 
             // Picking up the wearable item
@@ -364,7 +366,8 @@ public class PlayerCharacter : PlayerCombatControl
     }
 
     /// <summary>
-    /// This method sets the wearable item and removes any similar wearable item.
+    /// This method sets the wearable item and removes any similar wearable item, 
+    /// also removes and applies blendshape.
     /// </summary>
     /// <param name="item">The item to store or remove is present,
     ///                    of type WearableItem</param>
@@ -372,7 +375,16 @@ public class PlayerCharacter : PlayerCombatControl
     {
         if(item.Wearable == WearableType.Body)
         {
-            // Todo: remove the body item and its stats
+            // Condition for removing the head item
+            if (_body != null)
+            {
+                SetWearableItemBlendShape(_body, 0); // Removing blendshape
+                _body.SetParentToWorld(GameWorldManager.Instance.Equipments,
+                                      transform.position);
+                _body = null; // Removing the item's reference
+            }
+
+            _body = item; // Setting the new item
         }
         else if (item.Wearable == WearableType.Hands)
         {
@@ -384,13 +396,58 @@ public class PlayerCharacter : PlayerCombatControl
             // Condition for removing the head item
             if(_head != null)
             {
-                // Todo: remove stat
+                SetWearableItemBlendShape(_head, 0); // Removing blendshape
                 _head.SetParentToWorld(GameWorldManager.Instance.Equipments,
                                       transform.position);
                 _head = null; // Removing the item's reference
             }
 
             _head = item; // Setting the new item
+        }
+        // Checking if the item is legs
+        else if (item.Wearable == WearableType.Legs)
+        {
+            // Condition for removing the legs item
+            if (_leg != null)
+            {
+                SetWearableItemBlendShape(_leg, 0); // Removing blendshape
+                _leg.SetParentToWorld(GameWorldManager.Instance.Equipments,
+                                      transform.position);
+                _leg = null; // Removing the item's reference
+            }
+
+            _leg = item; // Setting the new item
+        }
+        // Checking if the item is shoes
+        else if (item.Wearable == WearableType.Shoes)
+        {
+            // Condition for removing the legs item
+            if (_shoe != null)
+            {
+                SetWearableItemBlendShape(_shoe, 0); // Removing blendshape
+                _shoe.SetParentToWorld(GameWorldManager.Instance.Equipments,
+                                      transform.position);
+                _shoe = null; // Removing the item's reference
+            }
+
+            _shoe = item; // Setting the new item
+        }
+
+        SetWearableItemBlendShape(item, 100); // Giving blendshape
+    }
+
+    /// <summary>
+    /// This method applies blendshape to the player model.
+    /// </summary>
+    /// <param name="item">The item from which the blendshape will be applied,
+    ///                    of type WearableItem</param>
+    /// <param name="weight">The amount of blendshape to apply, of type float</param>
+    private void SetWearableItemBlendShape(WearableItem item, float weight)
+    {
+        // Condition to apply a blendshape
+        if (item.BlendShapeType != MeshShapeType.None)
+        {
+            SkinnedMesh.SetBlendShapeWeight((int)item.BlendShapeType, weight);
         }
     }
 
