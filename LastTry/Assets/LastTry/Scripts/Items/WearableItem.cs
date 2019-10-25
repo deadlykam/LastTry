@@ -43,7 +43,7 @@ public class WearableItem : Items
     /// <summary>
     /// This method picks up the item and wears it.
     /// </summary>
-    public void PickUpItem()
+    public override void PickUpItem()
     {
         WorldObject.SetActive(false); // Hiding the world item gameobject
         WearableObject.gameObject.SetActive(true); // Showing the wearable item gameobject
@@ -76,11 +76,11 @@ public class WearableItem : Items
     /// </summary>
     /// <param name="target">The new parent for the item, of type Transform</param>
     /// <param name="position">The new position for the item, of type Vector3</param>
-    public override void SetParentToWorld(Transform target, Vector3 position)
+    public override void DropItem(Transform target, Vector3 position)
     {
-        base.SetParentToWorld(target, position);
+        base.DropItem(target, position);
 
-        // Loop for adding all the stats
+        // Loop for removing all the stats
         for (int i = 0; i < Stats.Length; i++)
         {
             if (Stats[i].Stat == StatType.Attack) // Removing damage stat

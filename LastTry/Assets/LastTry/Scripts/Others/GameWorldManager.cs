@@ -98,7 +98,7 @@ public class GameWorldManager : MonoBehaviour
                 _equipments[_itemIndex].gameObject.SetActive(true); // Enabling the item
 
                 // Dropping the item
-                _equipments[_itemIndex].SetParentToWorld(Equipments, processDrop.Position);
+                _equipments[_itemIndex].DropItem(Equipments, processDrop.Position);
 
                 _equipments.RemoveAt(_itemIndex); // Removing the item from index
             }
@@ -114,8 +114,7 @@ public class GameWorldManager : MonoBehaviour
                 _consumables[_itemIndex].gameObject.SetActive(true); // Enabling the item
 
                 // Dropping the item
-                _consumables[_itemIndex].SetParentToWorld(Consumables,
-                                                          processDrop.Position);
+                _consumables[_itemIndex].DropItem(Consumables, processDrop.Position);
 
                 _consumables.RemoveAt(_itemIndex); // Removing the item from index
             }

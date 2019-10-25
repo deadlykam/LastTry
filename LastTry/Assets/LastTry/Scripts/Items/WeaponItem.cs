@@ -41,9 +41,9 @@ public class WeaponItem : Items
     /// and rotation.
     /// </summary>
     /// <param name="target">The new parent for the weapon item, of type Transform</param>
-    public void SetParentToPlayer(Transform target)
+    public override void PickUpItem(Transform target)
     {
-        transform.parent = target;
+        base.PickUpItem(target);
         transform.localPosition = PlacementPosition;
         transform.localRotation = Quaternion.Euler(PlacementRotation);
         SetCollider(false); // Removing collision trigger

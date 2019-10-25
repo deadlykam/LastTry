@@ -88,7 +88,7 @@ public class BasicCharacter : MonoBehaviour
     protected virtual void PickUpWeapon1(WeaponItem weaponItem)
     {
         // Dropping the item in the game world
-        Weapons[0].SetParentToWorld(GameWorldManager.Instance.Equipments);
+        Weapons[0].DropItem(GameWorldManager.Instance.Equipments);
 
         Weapons[0] = weaponItem; // Replacing the weapon at the 0th index
     }
@@ -130,7 +130,7 @@ public class BasicCharacter : MonoBehaviour
         _health = (_health + amount) >= GetTotalHealth() ? 
                                         GetTotalHealth() : _health + amount;
 
-        // Starting a damage font effect
+        // Starting a heal font effect
         UIDamageFontManager.Instance.RequestDamageFont(transform.position, amount,
                                                        HealFontColour);
     }

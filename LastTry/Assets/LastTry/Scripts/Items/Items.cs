@@ -30,10 +30,10 @@ public class Items : MonoBehaviour
     }
 
     /// <summary>
-    /// This method sets the parent to the target and sets the position offset.
+    /// This method drops the item in the target transform.
     /// </summary>
     /// <param name="target">The new parent for the item, of type Transform</param>
-    public virtual void SetParentToWorld(Transform target)
+    public virtual void DropItem(Transform target)
     {
         transform.parent = target;
 
@@ -51,11 +51,11 @@ public class Items : MonoBehaviour
     }
 
     /// <summary>
-    /// This method sets the parent to the target and sets the position offset.
+    /// This method drops the item in the target transform with a vector offset.
     /// </summary>
     /// <param name="target">The new parent for the item, of type Transform</param>
     /// <param name="position">The new position for the item, of type Vector3</param>
-    public virtual void SetParentToWorld(Transform target, Vector3 position)
+    public virtual void DropItem(Transform target, Vector3 position)
     {
         transform.parent = target;
 
@@ -78,6 +78,16 @@ public class Items : MonoBehaviour
     public virtual void RemoveItem()
     {
         GameWorldManager.Instance.ReAddItem(this);
-        gameObject.SetActive(false);
     }
+
+    /// <summary>
+    /// This method picks up the item and hides the item.
+    /// </summary>
+    public virtual void PickUpItem() { gameObject.SetActive(false); }
+
+    /// <summary>
+    /// This method picks up the item and puts it in the new transform
+    /// </summary>
+    /// <param name="target">The new parent of the item, of type Transform</param>
+    public virtual void PickUpItem(Transform target) { transform.parent = target; }
 }

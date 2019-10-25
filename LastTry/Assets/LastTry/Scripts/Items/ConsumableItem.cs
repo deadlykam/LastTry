@@ -22,13 +22,19 @@ public class ConsumableItem : Items
     }
 
     /// <summary>
-    /// This method handles all the pick up related events of the consumable item.
+    /// This method gets the value of the consumable item.
     /// </summary>
-    /// <returns>The amount of value of the consumable item, of type int</returns>
-    public int PickConsumable()
+    /// <returns>The value of the consumable item, of type int</returns>
+    public int GetValue() { return ConsumableAmount; }
+
+    /// <summary>
+    /// This method picks up the item and returns the item back to the
+    /// world item list.
+    /// </summary>
+    public override void PickUpItem()
     {
         RemoveItem();
-        return ConsumableAmount;
+        base.PickUpItem();
     }
 }
 

@@ -351,7 +351,9 @@ public class PlayerCharacter : PlayerCombatControl
         {                                      // consumable
             // Condition for healing the player
             if (((ConsumableItem)_hoverItem).Consumable == ConsumableType.Heal)
-                Heal(((ConsumableItem)_hoverItem).PickConsumable());
+                Heal(((ConsumableItem)_hoverItem).GetValue());
+
+            ((ConsumableItem)_hoverItem).PickUpItem(); // Picking up the item
         }
         // Condition for picking up the wearable
         else if (_hoverItem as WearableItem)
@@ -379,7 +381,7 @@ public class PlayerCharacter : PlayerCombatControl
             if (_body != null)
             {
                 SetWearableItemBlendShape(_body, 0); // Removing blendshape
-                _body.SetParentToWorld(GameWorldManager.Instance.Equipments,
+                _body.DropItem(GameWorldManager.Instance.Equipments,
                                       transform.position);
                 _body = null; // Removing the item's reference
             }
@@ -397,7 +399,7 @@ public class PlayerCharacter : PlayerCombatControl
             if(_head != null)
             {
                 SetWearableItemBlendShape(_head, 0); // Removing blendshape
-                _head.SetParentToWorld(GameWorldManager.Instance.Equipments,
+                _head.DropItem(GameWorldManager.Instance.Equipments,
                                       transform.position);
                 _head = null; // Removing the item's reference
             }
@@ -411,7 +413,7 @@ public class PlayerCharacter : PlayerCombatControl
             if (_leg != null)
             {
                 SetWearableItemBlendShape(_leg, 0); // Removing blendshape
-                _leg.SetParentToWorld(GameWorldManager.Instance.Equipments,
+                _leg.DropItem(GameWorldManager.Instance.Equipments,
                                       transform.position);
                 _leg = null; // Removing the item's reference
             }
@@ -425,7 +427,7 @@ public class PlayerCharacter : PlayerCombatControl
             if (_shoe != null)
             {
                 SetWearableItemBlendShape(_shoe, 0); // Removing blendshape
-                _shoe.SetParentToWorld(GameWorldManager.Instance.Equipments,
+                _shoe.DropItem(GameWorldManager.Instance.Equipments,
                                       transform.position);
                 _shoe = null; // Removing the item's reference
             }
@@ -478,7 +480,7 @@ public class PlayerCharacter : PlayerCombatControl
     protected override void PickUpWeapon1(WeaponItem weaponItem)
     {
         base.PickUpWeapon1(weaponItem);
-        weaponItem.SetParentToPlayer(RightHand);
+        weaponItem.PickUpItem(RightHand);
     }
 
     /// <summary>
