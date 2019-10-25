@@ -116,4 +116,4 @@ public enum StatType { None, Attack, Defense, Special, Health };
 /// for 'None' to specify that no blendshape needed and must always be
 /// at the end.
 /// </summary>
-public enum MeshShapeType { LowerLeg, None }
+public enum MeshShapeType { LowerLeg, Torso, Arms, UpperLegs, None }
