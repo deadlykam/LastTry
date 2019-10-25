@@ -34,7 +34,7 @@ public class UIJoypadController : MonoBehaviour
                 && UIInGameUIController.Instance.IsWeaponBarNotDone())
             UIInGameUIController.Instance.SetWeaponBar(0);*/
 
-        // Condition for giving the fill amount for the Weapon Popup menu
+        // Condition for giving the fill amount for the Item Popup menus
         if (ButtonAHold.IsButtonPressed && Player.IsHoverItem)
             UIInGameUIController.Instance
                 .SetAllBar(Player.HoverItem, ButtonAHold.GetHoldTimerPercentage());

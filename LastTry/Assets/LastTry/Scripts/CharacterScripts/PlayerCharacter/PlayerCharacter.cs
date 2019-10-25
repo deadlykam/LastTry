@@ -28,6 +28,19 @@ public class PlayerCharacter : PlayerCombatControl
     [Header("Weapon Slot Locations")]
     public Transform RightHand;
 
+    [Header("Wearable Slot Locations")]
+    public SkinnedMeshRenderer SkinnedMesh;
+    private WearableItem _head;
+    private WearableItem _hand;
+    private WearableItem _body;
+    private WearableItem _leg;
+    private WearableItem _shoe;
+    private WearableItem _amulet;
+    private WearableItem _ring1;
+    private WearableItem _ring2;
+
+    private int _statDefense = 0;
+
     private Vector3 _movement = new Vector3(0, 0, 0.1f);
     private Quaternion _dir = Quaternion.identity;
 
@@ -244,7 +257,7 @@ public class PlayerCharacter : PlayerCombatControl
         _dir = PlayerModel.rotation;
         SetMoveSpeed(0);
     }
-
+    
     /// <summary>
     /// This method shows/hides the item description.
     /// </summary>
@@ -271,11 +284,62 @@ public class PlayerCharacter : PlayerCombatControl
                     ((ConsumableItem)_hoverItem).ItemName, 
                     ((ConsumableItem)_hoverItem).GetDescription());
             }
+            // Checking if item is Wearable Item
+            else if(_hoverItem as WearableItem)
+            {
+                // Condition for head wearable item
+                if(_head != null && 
+                   ((WearableItem)_hoverItem).Wearable == WearableType.Head)
+                {
+                    // Showing the wearable description here
+                    UIInGameUIController.Instance.ShowEquipmentPopup(
+                        _head.ItemName, ((WearableItem)_hoverItem).ItemName,
+                        _head.GetDescription(), 
+                        ((WearableItem)_hoverItem).GetDescription());
+                }
+                // Condition for hand wearable item
+                else if (_hand != null &&
+                   ((WearableItem)_hoverItem).Wearable == WearableType.Hands)
+                {
+                    // Showing the wearable description here
+                    UIInGameUIController.Instance.ShowEquipmentPopup(
+                        _hand.ItemName, ((WearableItem)_hoverItem).ItemName,
+                        _hand.GetDescription(),
+                        ((WearableItem)_hoverItem).GetDescription());
+                }
+                // Condition for body wearable item
+                else if (_body != null &&
+                   ((WearableItem)_hoverItem).Wearable == WearableType.Body)
+                {
+                    // Showing the wearable description here
+                    UIInGameUIController.Instance.ShowEquipmentPopup(
+                        _body.ItemName, ((WearableItem)_hoverItem).ItemName,
+                        _body.GetDescription(),
+                        ((WearableItem)_hoverItem).GetDescription());
+                }
+                // Condition for leg wearable item
+                else if (_leg != null &&
+                   ((WearableItem)_hoverItem).Wearable == WearableType.Legs)
+                {
+                    // Showing the wearable description here
+                    UIInGameUIController.Instance.ShowEquipmentPopup(
+                        _leg.ItemName, ((WearableItem)_hoverItem).ItemName,
+                        _leg.GetDescription(),
+                        ((WearableItem)_hoverItem).GetDescription());
+                }
+                else // Condition for showing a single wearable item
+                {
+                    // Showing the wearable description
+                    UIInGameUIController.Instance.ShowConsumablePopup(
+                        ((WearableItem)_hoverItem).ItemName,
+                        ((WearableItem)_hoverItem).GetDescription());
+                }
+            }
         }
         else UIInGameUIController.Instance.HideAllPopUp(); // Condition for hiding all
                                                            // item descriptions
     }
-
+    
     /// <summary>
     /// This method picks up the item.
     /// </summary>
@@ -288,9 +352,115 @@ public class PlayerCharacter : PlayerCombatControl
             // Condition for healing the player
             if (((ConsumableItem)_hoverItem).Consumable == ConsumableType.Heal)
                 Heal(((ConsumableItem)_hoverItem).PickConsumable());
-
-
         }
+        // Condition for picking up the wearable
+        else if (_hoverItem as WearableItem)
+        {
+            // Setting the wearable item to its correct equipment place
+            // and removing the old item if exist
+            UpdateWearableItems(((WearableItem)_hoverItem));
+
+            // Picking up the wearable item
+            ((WearableItem)_hoverItem).PickUpItem();
+        }
+    }
+
+    /// <summary>
+    /// This method sets the wearable item and removes any similar wearable item, 
+    /// also removes and applies blendshape.
+    /// </summary>
+    /// <param name="item">The item to store or remove is present,
+    ///                    of type WearableItem</param>
+    private void UpdateWearableItems(WearableItem item)
+    {
+        if(item.Wearable == WearableType.Body)
+        {
+            // Condition for removing the head item
+            if (_body != null)
+            {
+                SetWearableItemBlendShape(_body, 0); // Removing blendshape
+                _body.SetParentToWorld(GameWorldManager.Instance.Equipments,
+                                      transform.position);
+                _body = null; // Removing the item's reference
+            }
+
+            _body = item; // Setting the new item
+        }
+        else if (item.Wearable == WearableType.Hands)
+        {
+            // Todo: remove the hand item and its stats
+        }
+        // Checking if the item is head
+        else if (item.Wearable == WearableType.Head)
+        {
+            // Condition for removing the head item
+            if(_head != null)
+            {
+                SetWearableItemBlendShape(_head, 0); // Removing blendshape
+                _head.SetParentToWorld(GameWorldManager.Instance.Equipments,
+                                      transform.position);
+                _head = null; // Removing the item's reference
+            }
+
+            _head = item; // Setting the new item
+        }
+        // Checking if the item is legs
+        else if (item.Wearable == WearableType.Legs)
+        {
+            // Condition for removing the legs item
+            if (_leg != null)
+            {
+                SetWearableItemBlendShape(_leg, 0); // Removing blendshape
+                _leg.SetParentToWorld(GameWorldManager.Instance.Equipments,
+                                      transform.position);
+                _leg = null; // Removing the item's reference
+            }
+
+            _leg = item; // Setting the new item
+        }
+        // Checking if the item is shoes
+        else if (item.Wearable == WearableType.Shoes)
+        {
+            // Condition for removing the legs item
+            if (_shoe != null)
+            {
+                SetWearableItemBlendShape(_shoe, 0); // Removing blendshape
+                _shoe.SetParentToWorld(GameWorldManager.Instance.Equipments,
+                                      transform.position);
+                _shoe = null; // Removing the item's reference
+            }
+
+            _shoe = item; // Setting the new item
+        }
+
+        SetWearableItemBlendShape(item, 100); // Giving blendshape
+    }
+
+    /// <summary>
+    /// This method applies blendshape to the player model.
+    /// </summary>
+    /// <param name="item">The item from which the blendshape will be applied,
+    ///                    of type WearableItem</param>
+    /// <param name="weight">The amount of blendshape to apply, of type float</param>
+    private void SetWearableItemBlendShape(WearableItem item, float weight)
+    {
+        // Condition to apply a blendshape
+        if (item.BlendShapeType != MeshShapeType.None)
+        {
+            SkinnedMesh.SetBlendShapeWeight((int)item.BlendShapeType, weight);
+        }
+    }
+
+    /// <summary>
+    /// This method calculates the damage value using the defense stat, damage value
+    /// is never 0 and the lowest value is 1.
+    /// </summary>
+    /// <param name="amount">The damage value to reduce from, or type int</param>
+    /// <returns>The new damage value, if damage value 0 then converted to 1,
+    ///          of type int</returns>
+    private int CalculateDamage(int amount)
+    {
+        return (amount - _statDefense) <= 0 ? 1 : amount - _statDefense;
     }
 
     /// <summary>
@@ -317,8 +487,8 @@ public class PlayerCharacter : PlayerCombatControl
     /// <param name="amount">The amount of damage to take, of type int</param>
     public override void TakeDamage(int amount)
     {
-        // Conditions to take damage
-        if(!_IsDash) base.TakeDamage(amount);
+        // Conditions to take damage by calculating the damage
+        if(!_IsDash) base.TakeDamage(CalculateDamage(amount));
     }
 
     /// <summary>
@@ -418,4 +588,17 @@ public class PlayerCharacter : PlayerCombatControl
     /// This method resets the pickup timer.
     /// </summary>
     public void ResetPickupTimer() { _pickUpTimer = 0; }
+
+    /// <summary>
+    /// This method adds defense stat from items or others.
+    /// </summary>
+    /// <param name="amount">The amount of defense stat to add, of type int</param>
+    public void AddStatDefense(int amount) { _statDefense += amount; }
+
+    /// <summary>
+    /// This method removes defense stat.
+    /// </summary>
+    /// <param name="amount">The amount of defense stat to remove, of type int</param>
+    public void RemoveStatDefense(int amount)
+    { _statDefense = (_statDefense - amount) <= 0 ? 0 : _statDefense - amount; }
 }
