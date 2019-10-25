@@ -34,6 +34,7 @@ public class PlayerCharacter : PlayerCombatControl
     private WearableItem _hand;
     private WearableItem _body;
     private WearableItem _leg;
+    private WearableItem _shoe;
     private WearableItem _amulet;
     private WearableItem _ring1;
     private WearableItem _ring2;
@@ -374,7 +375,16 @@ public class PlayerCharacter : PlayerCombatControl
     {
         if(item.Wearable == WearableType.Body)
         {
-            // Todo: remove the body item and its stats
+            // Condition for removing the head item
+            if (_body != null)
+            {
+                SetWearableItemBlendShape(_body, 0); // Removing blendshape
+                _body.SetParentToWorld(GameWorldManager.Instance.Equipments,
+                                      transform.position);
+                _body = null; // Removing the item's reference
+            }
+
+            _body = item; // Setting the new item
         }
         else if (item.Wearable == WearableType.Hands)
         {
@@ -407,6 +417,20 @@ public class PlayerCharacter : PlayerCombatControl
             }
 
             _leg = item; // Setting the new item
+        }
+        // Checking if the item is shoes
+        else if (item.Wearable == WearableType.Shoes)
+        {
+            // Condition for removing the legs item
+            if (_shoe != null)
+            {
+                SetWearableItemBlendShape(_shoe, 0); // Removing blendshape
+                _shoe.SetParentToWorld(GameWorldManager.Instance.Equipments,
+                                      transform.position);
+                _shoe = null; // Removing the item's reference
+            }
+
+            _shoe = item; // Setting the new item
         }
 
         SetWearableItemBlendShape(item, 100); // Giving blendshape
