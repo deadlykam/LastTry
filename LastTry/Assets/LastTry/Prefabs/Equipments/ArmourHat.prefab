@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6701159306449603686}
   m_Layer: 14
   m_Name: ArmourHat
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63,9 +63,15 @@ MonoBehaviour:
   Cost: 50
   ItemCollider: {fileID: 6701159306449603687}
   PositionOffset: {x: 0, y: 0, z: 0}
+  UpgradeLimit: 0
+  AttackOffset: 0
+  DefenseOffset: 0
+  HealthOffset: 0
   WorldObject: {fileID: 473125924885086110}
   WearableObject: {fileID: 3701006455595322287}
   Wearable: 1
+  BlendShapeType: 0
+  Stats: []
 --- !u!1001 &6701159306572362693
 PrefabInstance:
   m_ObjectHideFlags: 0

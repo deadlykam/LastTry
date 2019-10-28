@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 948856532903552603}
   m_Layer: 14
   m_Name: ArmourLeg
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63,9 +63,14 @@ MonoBehaviour:
   Cost: 500
   ItemCollider: {fileID: 948856532903552602}
   PositionOffset: {x: 0, y: 0, z: 0}
+  UpgradeLimit: 0
+  AttackOffset: 0
+  DefenseOffset: 0
+  HealthOffset: 0
   WorldObject: {fileID: 6620431685593870255}
   WearableObject: {fileID: 2491966141307019172}
   Wearable: 4
+  BlendShapeType: 0
   Stats:
   - StatAmount: 2
     Stat: 2

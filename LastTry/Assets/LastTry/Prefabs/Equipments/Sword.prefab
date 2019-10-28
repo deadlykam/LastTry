@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5674792285299567348}
   m_Layer: 14
   m_Name: Sword
-  m_TagString: Weapons
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,6 +108,11 @@ MonoBehaviour:
   ItemName: Weak Sword
   Cost: 10
   ItemCollider: {fileID: 7378668181401544854}
+  PositionOffset: {x: 0, y: 0, z: 0}
+  UpgradeLimit: 0
+  AttackOffset: 0
+  DefenseOffset: 0
+  HealthOffset: 0
   Weapon: 1
   DamageMax: 3
   DamageMin: 1

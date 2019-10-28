@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 317495106390053740}
   m_Layer: 14
   m_Name: DummyHealth
-  m_TagString: Consumables
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

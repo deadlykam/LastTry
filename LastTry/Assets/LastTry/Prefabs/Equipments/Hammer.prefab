@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3122954074716856519}
   m_Layer: 14
   m_Name: Hammer
-  m_TagString: Weapons
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,6 +108,11 @@ MonoBehaviour:
   ItemName: Weak Hammer
   Cost: 100
   ItemCollider: {fileID: 3122954074716856518}
+  PositionOffset: {x: 0, y: 0.72, z: 0}
+  UpgradeLimit: 0
+  AttackOffset: 0
+  DefenseOffset: 0
+  HealthOffset: 0
   Weapon: 3
   DamageMax: 50
   DamageMin: 25
@@ -117,4 +122,3 @@ MonoBehaviour:
     AttackAnimation: {fileID: 7400000, guid: ba834734ad641aa41872898f57bc82fe, type: 2}
   PlacementPosition: {x: 9.685754e-10, y: 5.960464e-10, z: -9.313225e-11}
   PlacementRotation: {x: 89.802, y: 132.231, z: -47.097}
-  PositionOffset: {x: 0, y: 0.72, z: 0}
