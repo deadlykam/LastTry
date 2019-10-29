@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// This class is for all the armours and wearable items like pendant, ring, etc.
 /// </summary>
-public class WearableItem : Items
+public class WearableItem : UpgradableItem
 {
     [Header("Wearable Item Properties")]
     public GameObject WorldObject;
@@ -15,6 +15,12 @@ public class WearableItem : Items
     public StatInfo[] Stats;
 
     private string _description;
+
+
+    private void Start()
+    {
+        InitializeStartUp(); // Initializing the upgrade item values
+    }
 
     /// <summary>
     /// This method shows the description of the wearable item.
@@ -38,6 +44,20 @@ public class WearableItem : Items
         }
 
         return _description;
+    }
+
+    /// <summary>
+    /// This method upgrades the WearableItem.
+    /// </summary>
+    public override void UpgradeItem()
+    {
+        base.UpgradeItem();
+
+        // Increasing stat by offset, the current values are not used
+        // because it will yield wrong calculation when removing the item
+        GameWorldManager.Instance.Player.AddStatDamage(AttackOffset);
+        GameWorldManager.Instance.Player.AddStatDefense(DefenseOffset);
+        GameWorldManager.Instance.Player.AddStatHealth(HealthOffset);
     }
 
     /// <summary>
@@ -84,11 +104,14 @@ public class WearableItem : Items
         for (int i = 0; i < Stats.Length; i++)
         {
             if (Stats[i].Stat == StatType.Attack) // Removing damage stat
-                GameWorldManager.Instance.Player.RemoveStatDamage(Stats[i].StatAmount);
+                GameWorldManager.Instance.Player
+                    .RemoveStatDamage(Stats[i].StatAmount + GetAttack());
             else if (Stats[i].Stat == StatType.Defense) // Removing defense stat
-                GameWorldManager.Instance.Player.RemoveStatDefense(Stats[i].StatAmount);
+                GameWorldManager.Instance.Player
+                    .RemoveStatDefense(Stats[i].StatAmount + GetDefense());
             else if (Stats[i].Stat == StatType.Health) // Removing health stat
-                GameWorldManager.Instance.Player.RemoveStatHealth(Stats[i].StatAmount);
+                GameWorldManager.Instance.Player
+                    .RemoveStatHealth(Stats[i].StatAmount + GetHealth());
         }
 
         WorldObject.SetActive(true); // Showing the item again
@@ -98,6 +121,46 @@ public class WearableItem : Items
         WearableObject.bones = null;
         WearableObject.rootBone = null;
     }
+
+    /// <summary>
+    /// This method gets all the attribute value from the WearableItem.
+    /// </summary>
+    /// <returns>All the attribute value, of type string</returns>
+    public override string GetAttributeDescription()
+    {
+        _description = ""; // Removing previous values
+
+        // Loop for adding all the stat description
+        for(int i = 0; i < Stats.Length; i++)
+        {
+            // Condition to add attack stat
+            if (Stats[i].Stat == StatType.Attack) {
+                _description += Stats[i].GetStatName() + ": "
+                    + (Stats[i].StatAmount + GetAttack()).ToString() 
+                    + " (+" + AttackOffset.ToString() + ")";
+            }
+            // Condition to add defense stat
+            else if (Stats[i].Stat == StatType.Defense)
+            {
+                _description += Stats[i].GetStatName() + ": "
+                    + (Stats[i].StatAmount + GetDefense()).ToString()
+                    + " (+" + DefenseOffset.ToString() + ")";
+            }
+            // Condition to add health stat
+            else if (Stats[i].Stat == StatType.Health)
+            {
+                _description += Stats[i].GetStatName() + ": "
+                    + (Stats[i].StatAmount + GetHealth()).ToString()
+                    + " (+" + HealthOffset.ToString() + ")";
+            }
+
+            // Checking if the stat is not the last stat
+            // and adding a next line to it
+            if (i != Stats.Length - 1) _description += "\n";
+        }
+
+        return _description;
+    }
 }
 
 [System.Serializable]
@@ -105,6 +168,19 @@ public struct StatInfo
 {
     public int StatAmount;
     public StatType Stat;
+
+    /// <summary>
+    /// This method gets the name of the stat.
+    /// </summary>
+    /// <returns>The name of the stat, of type string</returns>
+    public string GetStatName()
+    {
+        if (Stat == StatType.Attack) return "Damage";
+        else if (Stat == StatType.Defense) return "Defense";
+        else if (Stat == StatType.Health) return "Health";
+
+        return "null";
+    }
 }
 
 public enum WearableType { None, Head, Body, Hands, Legs, Shoes };
