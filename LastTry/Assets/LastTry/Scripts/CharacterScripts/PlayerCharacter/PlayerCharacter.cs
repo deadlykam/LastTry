@@ -30,7 +30,18 @@ public class PlayerCharacter : PlayerCombatControl
 
     [Header("Wearable Slot Locations")]
     public SkinnedMeshRenderer SkinnedMesh;
-    private WearableItem _head;
+
+    /// <summary>
+    /// index 0 = body
+    /// index 1 = hand
+    /// index 2 = head
+    /// index 3 = legs
+    /// index 4 = shoes
+    /// </summary>
+    private WearableItem[] _wearableItems;
+    public int WearableItemsLength { get { return _wearableItems.Length; } }
+
+    /*private WearableItem _head;
     private WearableItem _hand;
     private WearableItem _body;
     private WearableItem _leg;
@@ -38,6 +49,21 @@ public class PlayerCharacter : PlayerCombatControl
     private WearableItem _amulet;
     private WearableItem _ring1;
     private WearableItem _ring2;
+
+    public WearableItem Helmet { get { return _head; } }
+    public bool IsWearHelmet { get { return _head != null; } }
+
+    public WearableItem Gloves { get { return _hand; } }
+    public bool IsWearGloves { get { return _hand != null; } }
+
+    public WearableItem Chest { get { return _body; } }
+    public bool IsWearChest { get { return _body != null; } }
+
+    public WearableItem Pants { get { return _leg; } }
+    public bool IsWearPants { get { return _leg != null; } }
+
+    public WearableItem Shoes { get { return _shoe; } }
+    public bool IsWearShoes { get { return _shoe != null; } }*/
 
     private int _statDefense = 0;
 
@@ -287,44 +313,53 @@ public class PlayerCharacter : PlayerCombatControl
             // Checking if item is Wearable Item
             else if(_hoverItem as WearableItem)
             {
-                // Condition for head wearable item
-                if(_head != null && 
-                   ((WearableItem)_hoverItem).Wearable == WearableType.Head)
-                {
-                    // Showing the wearable description here
-                    UIInGameUIController.Instance.ShowEquipmentPopup(
-                        _head.ItemName, ((WearableItem)_hoverItem).ItemName,
-                        _head.GetDescription(), 
-                        ((WearableItem)_hoverItem).GetDescription());
-                }
-                // Condition for hand wearable item
-                else if (_hand != null &&
-                   ((WearableItem)_hoverItem).Wearable == WearableType.Hands)
-                {
-                    // Showing the wearable description here
-                    UIInGameUIController.Instance.ShowEquipmentPopup(
-                        _hand.ItemName, ((WearableItem)_hoverItem).ItemName,
-                        _hand.GetDescription(),
-                        ((WearableItem)_hoverItem).GetDescription());
-                }
-                // Condition for body wearable item
-                else if (_body != null &&
+                if (_wearableItems[0] != null &&
                    ((WearableItem)_hoverItem).Wearable == WearableType.Body)
                 {
                     // Showing the wearable description here
                     UIInGameUIController.Instance.ShowEquipmentPopup(
-                        _body.ItemName, ((WearableItem)_hoverItem).ItemName,
-                        _body.GetDescription(),
+                        _wearableItems[0].ItemName, ((WearableItem)_hoverItem).ItemName,
+                        _wearableItems[0].GetDescription(),
+                        ((WearableItem)_hoverItem).GetDescription());
+                }
+                // Condition for hand wearable item
+                else if (_wearableItems[1] != null &&
+                   ((WearableItem)_hoverItem).Wearable == WearableType.Hands)
+                {
+                    // Showing the wearable description here
+                    UIInGameUIController.Instance.ShowEquipmentPopup(
+                        _wearableItems[1].ItemName, ((WearableItem)_hoverItem).ItemName,
+                        _wearableItems[1].GetDescription(),
+                        ((WearableItem)_hoverItem).GetDescription());
+                }
+                // Condition for head wearable item
+                if (_wearableItems[2] != null && 
+                   ((WearableItem)_hoverItem).Wearable == WearableType.Head)
+                {
+                    // Showing the wearable description here
+                    UIInGameUIController.Instance.ShowEquipmentPopup(
+                        _wearableItems[2].ItemName, ((WearableItem)_hoverItem).ItemName,
+                        _wearableItems[2].GetDescription(), 
                         ((WearableItem)_hoverItem).GetDescription());
                 }
                 // Condition for leg wearable item
-                else if (_leg != null &&
+                else if (_wearableItems[3] != null &&
                    ((WearableItem)_hoverItem).Wearable == WearableType.Legs)
                 {
                     // Showing the wearable description here
                     UIInGameUIController.Instance.ShowEquipmentPopup(
-                        _leg.ItemName, ((WearableItem)_hoverItem).ItemName,
-                        _leg.GetDescription(),
+                        _wearableItems[3].ItemName, ((WearableItem)_hoverItem).ItemName,
+                        _wearableItems[3].GetDescription(),
+                        ((WearableItem)_hoverItem).GetDescription());
+                }
+                // Condition for shoes wearable item
+                else if (_wearableItems[4] != null &&
+                   ((WearableItem)_hoverItem).Wearable == WearableType.Legs)
+                {
+                    // Showing the wearable description here
+                    UIInGameUIController.Instance.ShowEquipmentPopup(
+                        _wearableItems[4].ItemName, ((WearableItem)_hoverItem).ItemName,
+                        _wearableItems[4].GetDescription(),
                         ((WearableItem)_hoverItem).GetDescription());
                 }
                 else // Condition for showing a single wearable item
@@ -375,6 +410,7 @@ public class PlayerCharacter : PlayerCombatControl
     ///                    of type WearableItem</param>
     private void UpdateWearableItems(WearableItem item)
     {
+        /* Replacing with dynamic
         if(item.Wearable == WearableType.Body)
         {
             // Condition for removing the head item
@@ -433,6 +469,66 @@ public class PlayerCharacter : PlayerCombatControl
             }
 
             _shoe = item; // Setting the new item
+        }*/
+
+        if (item.Wearable == WearableType.Body)
+        {
+            // Condition for removing the head item
+            if (_wearableItems[0] != null)
+            {
+                SetWearableItemBlendShape(_wearableItems[0], 0); // Removing blendshape
+                _wearableItems[0].DropItem(GameWorldManager.Instance.Equipments,
+                                      transform.position);
+                _wearableItems[0] = null; // Removing the item's reference
+            }
+
+            _wearableItems[0] = item; // Setting the new item
+        }
+        else if (item.Wearable == WearableType.Hands)
+        {
+            // Todo: remove the hand item and its stats
+        }
+        // Checking if the item is head
+        else if (item.Wearable == WearableType.Head)
+        {
+            // Condition for removing the head item
+            if (_wearableItems[2] != null)
+            {
+                SetWearableItemBlendShape(_wearableItems[2], 0); // Removing blendshape
+                _wearableItems[2].DropItem(GameWorldManager.Instance.Equipments,
+                                      transform.position);
+                _wearableItems[2] = null; // Removing the item's reference
+            }
+
+            _wearableItems[2] = item; // Setting the new item
+        }
+        // Checking if the item is legs
+        else if (item.Wearable == WearableType.Legs)
+        {
+            // Condition for removing the legs item
+            if (_wearableItems[3] != null)
+            {
+                SetWearableItemBlendShape(_wearableItems[3], 0); // Removing blendshape
+                _wearableItems[3].DropItem(GameWorldManager.Instance.Equipments,
+                                      transform.position);
+                _wearableItems[3] = null; // Removing the item's reference
+            }
+
+            _wearableItems[3] = item; // Setting the new item
+        }
+        // Checking if the item is shoes
+        else if (item.Wearable == WearableType.Shoes)
+        {
+            // Condition for removing the legs item
+            if (_wearableItems[4] != null)
+            {
+                SetWearableItemBlendShape(_wearableItems[4], 0); // Removing blendshape
+                _wearableItems[4].DropItem(GameWorldManager.Instance.Equipments,
+                                      transform.position);
+                _wearableItems[4] = null; // Removing the item's reference
+            }
+
+            _wearableItems[4] = item; // Setting the new item
         }
 
         SetWearableItemBlendShape(item, 100); // Giving blendshape
@@ -471,6 +567,8 @@ public class PlayerCharacter : PlayerCombatControl
     protected override void InitializeStartUp()
     {
         base.InitializeStartUp();
+
+        _wearableItems = new WearableItem[5];
     }
 
     /// <summary>
@@ -603,4 +701,11 @@ public class PlayerCharacter : PlayerCombatControl
     /// <param name="amount">The amount of defense stat to remove, of type int</param>
     public void RemoveStatDefense(int amount)
     { _statDefense = (_statDefense - amount) <= 0 ? 0 : _statDefense - amount; }
+
+    /// <summary>
+    /// This method gets the WearableItem of the player.
+    /// </summary>
+    /// <param name="index">The index of the WearableItem, of type int</param>
+    /// <returns>The wearable item of the player, of type WearableItem</returns>
+    public WearableItem GetWearableItem(int index) { return _wearableItems[index]; }
 }
