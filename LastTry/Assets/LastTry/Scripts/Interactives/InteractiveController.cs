@@ -6,8 +6,8 @@ using UnityEngine;
 public class InteractiveController : MonoBehaviour
 {
     [Header("Interactive Properties")]
-    public string InteractiveName;
-    public BoxCollider InteractiveCollider;
+    public string ObjectName;
+    public BoxCollider ObjectCollider;
 
 
     /// <summary>
@@ -16,7 +16,7 @@ public class InteractiveController : MonoBehaviour
     /// <param name="isEnable">The flag to enable or disable the iteractive collider,
     ///                        of type BoxCollider</param>
     protected virtual void SetCollider(bool isEnable)
-    { InteractiveCollider.enabled = isEnable; }
+    { ObjectCollider.enabled = isEnable; }
 
     /// <summary>
     /// This method performs the action of the interactive.
@@ -27,5 +27,5 @@ public class InteractiveController : MonoBehaviour
     /// This method gets the description of the interactive.
     /// </summary>
     /// <returns>The description of the interactive, of type string</returns>
-    public virtual string GetDescription() { return InteractiveName; }
+    public virtual string GetDescription() { return ObjectName; }
 }
