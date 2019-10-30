@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
-public class InteractiveController : MonoBehaviour
+public class Interactive : MonoBehaviour
 {
     [Header("Interactive Properties")]
     public string ObjectName;

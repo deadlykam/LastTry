@@ -55,8 +55,8 @@ public class PlayerCharacter : PlayerCombatControl
     /// <summary>
     /// The item being currently hovered over.
     /// </summary>
-    private InteractiveController _hoverObject;
-    public InteractiveController HoverObject { get { return _hoverObject; } }
+    private Interactive _hoverObject;
+    public Interactive HoverObject { get { return _hoverObject; } }
 
     public bool IsHoverObject { get { return _hoverObject != null; } }
 
@@ -525,8 +525,8 @@ public class PlayerCharacter : PlayerCombatControl
     /// This method adds a hovered over interactive.
     /// </summary>
     /// <param name="hoverObject">The object that is being hovered over by the
-    ///                           player, of type InteractiveController</param>
-    public void AddHoverObject(InteractiveController hoverObject)
+    ///                           player, of type Interactive</param>
+    public void AddHoverObject(Interactive hoverObject)
     {
         // Condition to check if there are no current hovered object
         if (_hoverObject == null)
@@ -556,8 +556,8 @@ public class PlayerCharacter : PlayerCombatControl
     /// </summary>
     /// <param name="hoverItem">The object needed to check if to remove
     ///                         the hover object, of type 
-    ///                         InteractiveController</param>
-    public void RemoveHoverObject(InteractiveController hoverItem)
+    ///                         Interactive</param>
+    public void RemoveHoverObject(Interactive hoverItem)
     {
         // Condition for removing the selected hover object
         if(_hoverObject == hoverItem)

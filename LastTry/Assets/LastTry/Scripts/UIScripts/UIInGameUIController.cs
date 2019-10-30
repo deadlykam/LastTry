@@ -90,10 +90,10 @@ public class UIInGameUIController : MonoBehaviour
     /// This method sets the bar for the appropriate pop up menu.
     /// </summary>
     /// <param name="interactive">To check the type of object, of type 
-    ///                           InteractiveController</param>
+    ///                           Interactive</param>
     /// <param name="amount">The fill amount for the popup bar in the range from
     ///                      0 - 1, of type float</param>
-    public void SetAllBar(InteractiveController interactive, float amount)
+    public void SetAllBar(Interactive interactive, float amount)
     {
         // Condition for setting the weapon pop up bar
         if (interactive as WeaponItem)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopInteractive : InteractiveController
+public class ShopInteractive : Interactive
 {
 
     /// <summary>

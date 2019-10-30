@@ -139,7 +139,7 @@ public class GameWorldManager : MonoBehaviour
     /// This method adds back an item for being dropped again.
     /// </summary>
     /// <param name="item">The item to add back, of type Items</param>
-    public void ReAddItem(Items item)
+    public void ReAddItem(Item item)
     {
         // Conditions for adding back items
         if (item as WeaponItem) _equipments.Add(((WeaponItem)item));
