@@ -21,6 +21,6 @@ public class ShopInteractive : InteractiveController
     /// <returns>The description of the shop, of type string</returns>
     public override string GetDescription()
     {
-        return "To open " + InteractiveName;
+        return "To open " + ObjectName;
     }
 }
