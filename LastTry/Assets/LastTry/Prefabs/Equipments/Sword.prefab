@@ -105,9 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e91b39c941c9d264ebb636747ef4008a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Weak Sword
+  ObjectName: 
+  ObjectCollider: {fileID: 7378668181401544854}
   Cost: 10
-  ItemCollider: {fileID: 7378668181401544854}
   PositionOffset: {x: 0, y: 0, z: 0}
   UpgradeLimit: 0
   AttackOffset: 0

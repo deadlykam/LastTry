@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpgradableItem : Items
+public class UpgradableItem : Item
 {
     [Header("Upgradable Properties")]
     public int UpgradeLimit;

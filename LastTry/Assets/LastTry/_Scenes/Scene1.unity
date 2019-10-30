@@ -194,6 +194,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1375315}
   m_CullTransparentMesh: 0
+--- !u!65 &16031286 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 7244895812509572965, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5566625991544792733}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &16604694
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,6 +521,11 @@ PrefabInstance:
       propertyPath: PositionOffset.y
       value: 0.49
       objectReference: {fileID: 0}
+    - target: {fileID: 5674792285299567348, guid: 5ab36155d071c8b4ca92f808d2a5d49a,
+        type: 3}
+      propertyPath: ObjectName
+      value: Normal Sword
+      objectReference: {fileID: 0}
     - target: {fileID: 8495177797391494746, guid: 5ab36155d071c8b4ca92f808d2a5d49a,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -717,6 +728,12 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
+--- !u!65 &49387909 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 6701159306449603687, guid: d5dc95b1d69506a44b9f4dcbc0b441d8,
+    type: 3}
+  m_PrefabInstance: {fileID: 617745168}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &59644928
 GameObject:
   m_ObjectHideFlags: 0
@@ -1452,7 +1469,7 @@ PrefabInstance:
     - target: {fileID: 317495106390053737, guid: fc93ae63b5c512843852c5d51005f1c1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 317495106390053737, guid: fc93ae63b5c512843852c5d51005f1c1,
         type: 3}
@@ -1478,6 +1495,11 @@ PrefabInstance:
         type: 3}
       propertyPath: ConsumableAmount
       value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 317495106390053740, guid: fc93ae63b5c512843852c5d51005f1c1,
+        type: 3}
+      propertyPath: ObjectName
+      value: Mega Health Pack
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc93ae63b5c512843852c5d51005f1c1, type: 3}
@@ -2432,6 +2454,11 @@ PrefabInstance:
     - target: {fileID: 3122954074716856519, guid: 2baeccc54e00f354d980e352bd102d1d,
         type: 3}
       propertyPath: ItemName
+      value: Normal Hammer
+      objectReference: {fileID: 0}
+    - target: {fileID: 3122954074716856519, guid: 2baeccc54e00f354d980e352bd102d1d,
+        type: 3}
+      propertyPath: ObjectName
       value: Normal Hammer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -6672,13 +6699,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 538737660}
-    characterCount: 1
+    characterCount: 0
     spriteCount: 0
     spaceCount: 0
-    wordCount: 1
+    wordCount: 0
     linkCount: 0
-    lineCount: 1
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -7701,6 +7728,11 @@ PrefabInstance:
       propertyPath: BlendShapeType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 948856532903552603, guid: 3cae99d91c111c94486e1646ece19f14,
+        type: 3}
+      propertyPath: ObjectName
+      value: Normal Short Leg
+      objectReference: {fileID: 0}
     - target: {fileID: 8688053989090652547, guid: 3cae99d91c111c94486e1646ece19f14,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -7825,6 +7857,16 @@ PrefabInstance:
       propertyPath: BlendShapeType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6701159306449603686, guid: d5dc95b1d69506a44b9f4dcbc0b441d8,
+        type: 3}
+      propertyPath: ObjectCollider
+      value: 
+      objectReference: {fileID: 49387909}
+    - target: {fileID: 6701159306449603686, guid: d5dc95b1d69506a44b9f4dcbc0b441d8,
+        type: 3}
+      propertyPath: ObjectName
+      value: Normal Hat
+      objectReference: {fileID: 0}
     - target: {fileID: 5458390839815822326, guid: d5dc95b1d69506a44b9f4dcbc0b441d8,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -7903,6 +7945,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 317495106390053740, guid: fc93ae63b5c512843852c5d51005f1c1,
+        type: 3}
+      propertyPath: ObjectName
+      value: Weak Health Pack
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc93ae63b5c512843852c5d51005f1c1, type: 3}
@@ -10782,13 +10829,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 896214459}
-    characterCount: 1
+    characterCount: 0
     spriteCount: 0
     spaceCount: 0
-    wordCount: 1
+    wordCount: 0
     linkCount: 0
-    lineCount: 1
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -10903,6 +10950,11 @@ PrefabInstance:
     - target: {fileID: 3122954074716856519, guid: 2baeccc54e00f354d980e352bd102d1d,
         type: 3}
       propertyPath: ItemName
+      value: Legendary Hammer
+      objectReference: {fileID: 0}
+    - target: {fileID: 3122954074716856519, guid: 2baeccc54e00f354d980e352bd102d1d,
+        type: 3}
+      propertyPath: ObjectName
       value: Legendary Hammer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -12980,13 +13032,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1125541028}
-    characterCount: 1
+    characterCount: 0
     spriteCount: 0
     spaceCount: 0
-    wordCount: 1
+    wordCount: 0
     linkCount: 0
-    lineCount: 1
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -16696,7 +16748,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 327746367}
-        m_MethodName: PickUpItem
+        m_MethodName: PickUpObject
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17466,6 +17518,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 317495106390053740, guid: fc93ae63b5c512843852c5d51005f1c1,
+        type: 3}
+      propertyPath: ObjectName
+      value: Weak Health Pack
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc93ae63b5c512843852c5d51005f1c1, type: 3}
@@ -19227,7 +19284,7 @@ PrefabInstance:
     - target: {fileID: 317495106390053737, guid: fc93ae63b5c512843852c5d51005f1c1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 317495106390053737, guid: fc93ae63b5c512843852c5d51005f1c1,
         type: 3}
@@ -19253,6 +19310,11 @@ PrefabInstance:
         type: 3}
       propertyPath: ConsumableAmount
       value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 317495106390053740, guid: fc93ae63b5c512843852c5d51005f1c1,
+        type: 3}
+      propertyPath: ObjectName
+      value: Mega Health Pack
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc93ae63b5c512843852c5d51005f1c1, type: 3}
@@ -19800,9 +19862,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e91b39c941c9d264ebb636747ef4008a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Red Laser
+  ObjectName: 
+  ObjectCollider: {fileID: 0}
   Cost: 10
-  ItemCollider: {fileID: 1751083157}
   PositionOffset: {x: 0, y: 0, z: 0}
   UpgradeLimit: 0
   AttackOffset: 0
@@ -20426,7 +20488,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1801374406
 GameObject:
@@ -21486,6 +21548,11 @@ PrefabInstance:
       propertyPath: PositionOffset.y
       value: 0.49
       objectReference: {fileID: 0}
+    - target: {fileID: 5674792285299567348, guid: 5ab36155d071c8b4ca92f808d2a5d49a,
+        type: 3}
+      propertyPath: ObjectName
+      value: Legendary Sword
+      objectReference: {fileID: 0}
     - target: {fileID: 8495177797391494746, guid: 5ab36155d071c8b4ca92f808d2a5d49a,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -21554,7 +21621,7 @@ PrefabInstance:
     - target: {fileID: 8982966793451350910, guid: 2baeccc54e00f354d980e352bd102d1d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8982966793451350910, guid: 2baeccc54e00f354d980e352bd102d1d,
         type: 3}
@@ -21570,6 +21637,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3122954074716856519, guid: 2baeccc54e00f354d980e352bd102d1d,
+        type: 3}
+      propertyPath: ObjectName
+      value: Weak Hammer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2baeccc54e00f354d980e352bd102d1d, type: 3}
@@ -22841,7 +22913,7 @@ PrefabInstance:
     - target: {fileID: 948856532903552605, guid: 3cae99d91c111c94486e1646ece19f14,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.65
+      value: -6.05
       objectReference: {fileID: 0}
     - target: {fileID: 948856532903552605, guid: 3cae99d91c111c94486e1646ece19f14,
         type: 3}
@@ -22866,7 +22938,7 @@ PrefabInstance:
     - target: {fileID: 948856532903552605, guid: 3cae99d91c111c94486e1646ece19f14,
         type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 948856532903552605, guid: 3cae99d91c111c94486e1646ece19f14,
         type: 3}
@@ -22882,6 +22954,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 948856532903552603, guid: 3cae99d91c111c94486e1646ece19f14,
+        type: 3}
+      propertyPath: ObjectName
+      value: Legendary Short Leg
+      objectReference: {fileID: 0}
+    - target: {fileID: 948856532903552603, guid: 3cae99d91c111c94486e1646ece19f14,
+        type: 3}
+      propertyPath: Stats.Array.data[0].StatAmount
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 948856532903552603, guid: 3cae99d91c111c94486e1646ece19f14,
+        type: 3}
+      propertyPath: Stats.Array.data[1].StatAmount
+      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cae99d91c111c94486e1646ece19f14, type: 3}
@@ -24641,6 +24728,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 317495106390053740, guid: fc93ae63b5c512843852c5d51005f1c1,
+        type: 3}
+      propertyPath: ObjectName
+      value: Weak Health Pack
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc93ae63b5c512843852c5d51005f1c1, type: 3}
 --- !u!1001 &948856531905979633
@@ -24719,6 +24811,11 @@ PrefabInstance:
         type: 3}
       propertyPath: Stats.Array.data[1].StatAmount
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 948856532903552603, guid: 3cae99d91c111c94486e1646ece19f14,
+        type: 3}
+      propertyPath: ObjectName
+      value: Weak Short Leg
       objectReference: {fileID: 0}
     - target: {fileID: 8688053989090652547, guid: 3cae99d91c111c94486e1646ece19f14,
         type: 3}
@@ -24856,7 +24953,7 @@ PrefabInstance:
     - target: {fileID: 5436395007351469250, guid: edd9976957253a0419cea627922c0412,
         type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 5436395007351469250, guid: edd9976957253a0419cea627922c0412,
         type: 3}
@@ -24883,6 +24980,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e2805dbf8439cfe47971d2f282a7d747, type: 2}
+    - target: {fileID: 8228617796299621609, guid: edd9976957253a0419cea627922c0412,
+        type: 3}
+      propertyPath: ObjectName
+      value: Weak Shoes
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edd9976957253a0419cea627922c0412, type: 3}
 --- !u!114 &2929252284524374422 stripped
@@ -24968,6 +25070,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3122954074716856519, guid: 2baeccc54e00f354d980e352bd102d1d,
+        type: 3}
+      propertyPath: ObjectName
+      value: Weak Hammer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2baeccc54e00f354d980e352bd102d1d, type: 3}
@@ -25170,7 +25277,7 @@ PrefabInstance:
     - target: {fileID: 3733122275097509276, guid: f6d29e4dc31c3624bb16ced045c36c87,
         type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3733122275097509276, guid: f6d29e4dc31c3624bb16ced045c36c87,
         type: 3}
@@ -25191,6 +25298,11 @@ PrefabInstance:
         type: 3}
       propertyPath: Stats.Array.data[0].StatAmount
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733122275097509278, guid: f6d29e4dc31c3624bb16ced045c36c87,
+        type: 3}
+      propertyPath: ObjectName
+      value: Weak Legging
       objectReference: {fileID: 0}
     - target: {fileID: 7768277569222415008, guid: f6d29e4dc31c3624bb16ced045c36c87,
         type: 3}
@@ -25340,6 +25452,16 @@ PrefabInstance:
       propertyPath: DamageMin
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8214687357827361251, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
+        type: 3}
+      propertyPath: ObjectCollider
+      value: 
+      objectReference: {fileID: 16031286}
+    - target: {fileID: 8214687357827361251, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
+        type: 3}
+      propertyPath: ObjectName
+      value: Weak Sword
+      objectReference: {fileID: 0}
     - target: {fileID: 6993477362775589908, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
         type: 3}
       propertyPath: m_TagString
@@ -25397,7 +25519,7 @@ PrefabInstance:
     - target: {fileID: 6701159306449603684, guid: d5dc95b1d69506a44b9f4dcbc0b441d8,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6701159306449603684, guid: d5dc95b1d69506a44b9f4dcbc0b441d8,
         type: 3}
@@ -25448,6 +25570,11 @@ PrefabInstance:
         type: 3}
       propertyPath: BlendShapeType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6701159306449603686, guid: d5dc95b1d69506a44b9f4dcbc0b441d8,
+        type: 3}
+      propertyPath: ObjectName
+      value: Weak Hat
       objectReference: {fileID: 0}
     - target: {fileID: 5458390839815822326, guid: d5dc95b1d69506a44b9f4dcbc0b441d8,
         type: 3}
@@ -25630,7 +25757,7 @@ PrefabInstance:
     - target: {fileID: 7246878851383931027, guid: ba17b3fbf0c42654bb4e52aadf2aa9a8,
         type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 7246878851383931027, guid: ba17b3fbf0c42654bb4e52aadf2aa9a8,
         type: 3}
@@ -25657,5 +25784,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e2805dbf8439cfe47971d2f282a7d747, type: 2}
+    - target: {fileID: 5084804828322691172, guid: ba17b3fbf0c42654bb4e52aadf2aa9a8,
+        type: 3}
+      propertyPath: ObjectName
+      value: Weak Chest Armour
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba17b3fbf0c42654bb4e52aadf2aa9a8, type: 3}

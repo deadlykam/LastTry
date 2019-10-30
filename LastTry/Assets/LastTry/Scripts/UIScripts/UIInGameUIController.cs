@@ -89,19 +89,20 @@ public class UIInGameUIController : MonoBehaviour
     /// <summary>
     /// This method sets the bar for the appropriate pop up menu.
     /// </summary>
-    /// <param name="item">To check the type of item, of type Items</param>
+    /// <param name="interactive">To check the type of object, of type 
+    ///                           Interactive</param>
     /// <param name="amount">The fill amount for the popup bar in the range from
     ///                      0 - 1, of type float</param>
-    public void SetAllBar(Items item, float amount)
+    public void SetAllBar(Interactive interactive, float amount)
     {
         // Condition for setting the weapon pop up bar
-        if (item as WeaponItem)
+        if (interactive as WeaponItem)
             EquipmentItemPopup.SetFillAmount(amount);
         // Condition for setting the consumable
-        else if (item as ConsumableItem)
+        else if (interactive as ConsumableItem)
             ConsumableItemPopup.SetFillAmount(amount);
         // Condition for setting the wearable 
-        else if(item as WearableItem)
+        else if(interactive as WearableItem)
         {
             EquipmentItemPopup.SetFillAmount(amount);
             ConsumableItemPopup.SetFillAmount(amount);
