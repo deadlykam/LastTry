@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Items : InteractiveController
+public class Item : Interactive
 {
     [Header("Items Properties")]
     public int Cost;

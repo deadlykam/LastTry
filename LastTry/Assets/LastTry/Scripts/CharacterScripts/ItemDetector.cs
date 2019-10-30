@@ -10,13 +10,13 @@ public class ItemDetector : MonoBehaviour
     {
         // Checking if the detected object is item
         if(other.CompareTag("Item"))
-            Player.AddHoverObject(other.GetComponent<Items>());
+            Player.AddHoverObject(other.GetComponent<Item>());
     }
 
     private void OnTriggerExit(Collider other)
     {
         // Checking if the detected object is item
         if (other.CompareTag("Item"))
-            Player.RemoveHoverObject(other.GetComponent<Items>());
+            Player.RemoveHoverObject(other.GetComponent<Item>());
     }
 }
