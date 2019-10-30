@@ -105,9 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e91b39c941c9d264ebb636747ef4008a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Weak Hammer
+  ObjectName: 
+  ObjectCollider: {fileID: 3122954074716856518}
   Cost: 100
-  ItemCollider: {fileID: 3122954074716856518}
   PositionOffset: {x: 0, y: 0.72, z: 0}
   UpgradeLimit: 0
   AttackOffset: 0
