@@ -68,7 +68,7 @@ MonoBehaviour:
   DefenseOffset: 0
   HealthOffset: 0
   WorldObject: {fileID: 473125924885086110}
-  WearableObject: {fileID: 3701006455595322287}
+  WearableObject: {fileID: 1189181967672937373}
   Wearable: 1
   BlendShapeType: 0
   Stats: []
@@ -146,15 +146,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 528a61c5482ecd7478c9c51856058b70, type: 3}
---- !u!1 &3701006455595322287 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8044503301940820074, guid: 528a61c5482ecd7478c9c51856058b70,
-    type: 3}
-  m_PrefabInstance: {fileID: 6701159306572362693}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5197954629210287512 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1503521474154159709, guid: 528a61c5482ecd7478c9c51856058b70,
+    type: 3}
+  m_PrefabInstance: {fileID: 6701159306572362693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &1189181967672937373 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5512298537104078936, guid: 528a61c5482ecd7478c9c51856058b70,
     type: 3}
   m_PrefabInstance: {fileID: 6701159306572362693}
   m_PrefabAsset: {fileID: 0}
