@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCharacter : PlayerCombatControl
+public class PlayerCharacter : PlayerCoinControl
 {
     [Header("Player Character Properties")]
     public Joystick JoystickAndroid;
@@ -11,8 +11,6 @@ public class PlayerCharacter : PlayerCombatControl
         "otherwise touching screen will act as triggering attack.")]
     public bool IsJoyPad;
     public float MovementAcceleration;
-    private int _coins = 100; // Default must be 0
-    public int Coins { get { return _coins; } }
 
     [Tooltip("This timer is for joypad use not the virtual button press.")]
     public float PickUpTimer;
@@ -78,6 +76,9 @@ public class PlayerCharacter : PlayerCombatControl
 
         // Calling the update of BasicAnimation
         UpdateBasicAnimation();
+
+        // Calling the update of PlayerCoinControl
+        UpdatePlayerCoinControl();
 
         if (!IsDead) // Condition for not being dead
         {
@@ -489,9 +490,6 @@ public class PlayerCharacter : PlayerCombatControl
 
         // Initializing the size of the wearable items
         _wearableItems = new WearableItem[5];
-
-        // Updating the player's coin in the UI
-        UIInGameUIController.Instance.SetPlayerCoins(_coins);
     }
 
     /// <summary>
@@ -633,26 +631,4 @@ public class PlayerCharacter : PlayerCombatControl
     /// <param name="index">The index of the WearableItem, of type int</param>
     /// <returns>The wearable item of the player, of type WearableItem</returns>
     public WearableItem GetWearableItem(int index) { return _wearableItems[index]; }
-
-    /// <summary>
-    /// This method checks if there are enough coins for the given amount.
-    /// </summary>
-    /// <param name="amount">The amount to check if enough coins are available,
-    ///                      of type int</param>
-    /// <returns>True means enough coins are available, false otherwise,
-    ///          of type bool</returns>
-    public bool IsEnoughCoins(int amount) { return _coins >= amount; }
-
-    /// <summary>
-    /// This method reduces money after any transactions.
-    /// </summary>
-    /// <param name="amount">The price of the item, of type int</param>
-    public void Buy(int amount)
-    {
-        // Reducing the coins
-        _coins = (_coins - amount) <= 0 ? 0 : _coins - amount;
-
-        // Updating the player's coin in the UI
-        UIInGameUIController.Instance.SetPlayerCoins(_coins);
-    }
 }
