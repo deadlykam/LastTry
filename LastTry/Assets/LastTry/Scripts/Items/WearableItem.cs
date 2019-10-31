@@ -34,11 +34,20 @@ public class WearableItem : UpgradableItem
         for (int i = 0; i < Stats.Length; i++)
         {
             if (Stats[i].Stat == StatType.Attack) // For showing attack description
-                _description = _description + "Damage: +" + Stats[i].StatAmount.ToString();
+            {
+                _description = _description + "Damage: +" 
+                    + (Stats[i].StatAmount + GetAttack()).ToString();
+            }
             else if (Stats[i].Stat == StatType.Defense) // For showing defense description
-                _description = _description + "Defense: +" + Stats[i].StatAmount.ToString();
+            {
+                _description = _description + "Defense: +" 
+                    + (Stats[i].StatAmount + GetDefense()).ToString();
+            }
             else if (Stats[i].Stat == StatType.Health) // For showing defense description
-                _description = _description + "Health: +" + Stats[i].StatAmount.ToString();
+            {
+                _description = _description + "Health: +" 
+                    + (Stats[i].StatAmount + GetHealth()).ToString();
+            }
 
             _description = _description + "\n"; // Adding a new line
         }
