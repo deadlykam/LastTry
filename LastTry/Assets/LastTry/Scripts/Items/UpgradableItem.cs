@@ -7,6 +7,7 @@ public class UpgradableItem : Item
     [Header("Upgradable Properties")]
     public int UpgradeLimit;
     private int _upgradeCurrent;
+    public int UpgradeCost;
     public int AttackOffset;
     private int _attackCurrent;
     public int DefenseOffset;
@@ -46,13 +47,20 @@ public class UpgradableItem : Item
     {
         if (IsUpgradable) // Checking if item is upgradable
         {
-            _attackCurrent += AttackOffset;   // Upgrading attack
-            _defenseCurrent += DefenseOffset; // Upgrading defense
-            _healthCurrent += HealthOffset;   // Upgrading health
+            // Checking if player have enough coins
+            if (GameWorldManager.Instance.Player.IsEnoughCoins(UpgradeCost))
+            {
+                _attackCurrent += AttackOffset;   // Upgrading attack
+                _defenseCurrent += DefenseOffset; // Upgrading defense
+                _healthCurrent += HealthOffset;   // Upgrading health
 
-            // Incrementing upgrade counter
-            _upgradeCurrent = (_upgradeCurrent + 1) >= UpgradeLimit 
-                              ? UpgradeLimit : _upgradeCurrent + 1;
+                // Incrementing upgrade counter
+                _upgradeCurrent = (_upgradeCurrent + 1) >= UpgradeLimit
+                                    ? UpgradeLimit : _upgradeCurrent + 1;
+
+                // Buying using player coins
+                GameWorldManager.Instance.Player.Buy(UpgradeCost);
+            }
         }
     }
 
@@ -60,7 +68,8 @@ public class UpgradableItem : Item
     /// This method gets the upgrade percentage value.
     /// </summary>
     /// <returns>The upgrade percentage value, of type float</returns>
-    public virtual float GetUpgradePercentage() { return _upgradeCurrent / UpgradeLimit; }
+    public virtual float GetUpgradePercentage()
+    { return (float) _upgradeCurrent / (float) UpgradeLimit; }
 
     /// <summary>
     /// This method returns all the attribute value in UpgradableItem.
