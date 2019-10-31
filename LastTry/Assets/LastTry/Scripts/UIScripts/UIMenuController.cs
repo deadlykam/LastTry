@@ -7,6 +7,8 @@ public class UIMenuController : MonoBehaviour
     [Header("UIMenuController Properties")]
     public Canvas[] Canvases;
 
+    public bool isMenuShown { get { return Canvases[0].enabled; } }
+
     /// <summary>
     /// This method enables/disables all the canvases.
     /// </summary>
