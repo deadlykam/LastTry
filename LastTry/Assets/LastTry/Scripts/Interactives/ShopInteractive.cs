@@ -8,10 +8,8 @@ public class ShopInteractive : Interactive
     /// <summary>
     /// This method opens the shop.
     /// </summary>
-    public override void Action()
+    public void Action()
     {
-        // Todo: Open shop UI here
-        // Todo: Load player equipments here
         UIShopController.Instance.ShowMenu();
     }
 
