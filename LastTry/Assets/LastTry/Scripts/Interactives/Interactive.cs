@@ -19,11 +19,6 @@ public class Interactive : MonoBehaviour
     { ObjectCollider.enabled = isEnable; }
 
     /// <summary>
-    /// This method performs the action of the interactive.
-    /// </summary>
-    public virtual void Action() { /*Override method to perform actions*/ }
-
-    /// <summary>
     /// This method gets the description of the interactive.
     /// </summary>
     /// <returns>The description of the interactive, of type string</returns>
