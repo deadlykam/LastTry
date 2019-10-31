@@ -8,15 +8,13 @@ public class ItemDetector : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        // Checking if the detected object is item
-        if(other.CompareTag("Item"))
-            Player.AddHoverObject(other.GetComponent<Item>());
+        // Taking in any interactives
+        Player.AddHoverObject(other.GetComponent<Interactive>());
     }
 
     private void OnTriggerExit(Collider other)
     {
-        // Checking if the detected object is item
-        if (other.CompareTag("Item"))
-            Player.RemoveHoverObject(other.GetComponent<Item>());
+        // Removing any interactives
+        Player.RemoveHoverObject(other.GetComponent<Interactive>());
     }
 }
