@@ -11,7 +11,6 @@ public class PlayerCharacter : PlayerCombatControl
         "otherwise touching screen will act as triggering attack.")]
     public bool IsJoyPad;
     public float MovementAcceleration;
-    [SerializeField]
     private int _coins = 100; // Default must be 0
     public int Coins { get { return _coins; } }
 
@@ -488,7 +487,11 @@ public class PlayerCharacter : PlayerCombatControl
     {
         base.InitializeStartUp();
 
+        // Initializing the size of the wearable items
         _wearableItems = new WearableItem[5];
+
+        // Updating the player's coin in the UI
+        UIInGameUIController.Instance.SetPlayerCoins(_coins);
     }
 
     /// <summary>
@@ -648,5 +651,8 @@ public class PlayerCharacter : PlayerCombatControl
     {
         // Reducing the coins
         _coins = (_coins - amount) <= 0 ? 0 : _coins - amount;
+
+        // Updating the player's coin in the UI
+        UIInGameUIController.Instance.SetPlayerCoins(_coins);
     }
 }
