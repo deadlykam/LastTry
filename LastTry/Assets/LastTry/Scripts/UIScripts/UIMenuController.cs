@@ -26,5 +26,5 @@ public class UIMenuController : MonoBehaviour
     /// <summary>
     /// This method hides the menu.
     /// </summary>
-    public virtual void HideMenu() { SetCanvases(false); }
+    public virtual void BtnClose() { SetCanvases(false); }
 }
