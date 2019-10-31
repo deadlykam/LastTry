@@ -2401,13 +2401,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 184906274}
-    characterCount: 5
+    characterCount: 0
     spriteCount: 0
     spaceCount: 0
-    wordCount: 1
+    wordCount: 0
     linkCount: 0
-    lineCount: 1
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -5661,13 +5661,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 538737660}
-    characterCount: 1
+    characterCount: 0
     spriteCount: 0
     spaceCount: 0
-    wordCount: 1
+    wordCount: 0
     linkCount: 0
-    lineCount: 1
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -8064,13 +8064,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 896214459}
-    characterCount: 1
+    characterCount: 0
     spriteCount: 0
     spaceCount: 0
-    wordCount: 1
+    wordCount: 0
     linkCount: 0
-    lineCount: 1
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -9567,13 +9567,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1125541028}
-    characterCount: 1
+    characterCount: 0
     spriteCount: 0
     spaceCount: 0
-    wordCount: 1
+    wordCount: 0
     linkCount: 0
-    lineCount: 1
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -19094,6 +19094,46 @@ PrefabInstance:
         type: 3}
       propertyPath: HealFontColour.a
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
+        type: 3}
+      propertyPath: CoinGainedColour.r
+      value: 0.3537736
+      objectReference: {fileID: 0}
+    - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
+        type: 3}
+      propertyPath: CoinGainedColour.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
+        type: 3}
+      propertyPath: CoinGainedColour.b
+      value: 0.38920808
+      objectReference: {fileID: 0}
+    - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
+        type: 3}
+      propertyPath: CoinGainedColour.a
+      value: 0.7137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
+        type: 3}
+      propertyPath: CoinLostColour.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
+        type: 3}
+      propertyPath: CoinLostColour.g
+      value: 0.45737815
+      objectReference: {fileID: 0}
+    - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
+        type: 3}
+      propertyPath: CoinLostColour.b
+      value: 0.35294116
+      objectReference: {fileID: 0}
+    - target: {fileID: 5566625992538791204, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
+        type: 3}
+      propertyPath: CoinLostColour.a
+      value: 0.7137255
       objectReference: {fileID: 0}
     - target: {fileID: 6068382214202627846, guid: 840d7fa51d7a85c4b9b085a33e54c68d,
         type: 3}
