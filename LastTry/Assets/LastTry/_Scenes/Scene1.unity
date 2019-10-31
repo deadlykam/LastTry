@@ -17345,7 +17345,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -67.1, y: -31.999939}
+  m_AnchoredPosition: {x: -67.1001, y: -31.999939}
   m_SizeDelta: {x: 322.01, y: 80.20001}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &2048011312
@@ -19188,6 +19188,10 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Item
+      objectReference: {fileID: 0}
+    - target: {fileID: 1962793092, guid: 840d7fa51d7a85c4b9b085a33e54c68d, type: 3}
+      propertyPath: m_Name
+      value: InteractiveDetector
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 840d7fa51d7a85c4b9b085a33e54c68d, type: 3}
