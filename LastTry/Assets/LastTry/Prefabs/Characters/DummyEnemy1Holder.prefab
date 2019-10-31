@@ -363,6 +363,7 @@ MonoBehaviour:
   HealthBarTimer: 5
   LaserContactOffset: {fileID: 9166675187863505357}
   ItemDropRate: 100
+  EnemyValue: 25
 --- !u!54 &2856416194704904054
 Rigidbody:
   m_ObjectHideFlags: 0
