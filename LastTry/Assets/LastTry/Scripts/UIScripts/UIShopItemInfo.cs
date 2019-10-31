@@ -11,6 +11,7 @@ public class UIShopItemInfo : MonoBehaviour
     public TextMeshProUGUI Attribute;
     public Image ItemUpgradeBar;
     public TextMeshProUGUI ItemName;
+    public TextMeshProUGUI ItemCost;
 
     public GameObject Upgrade;
     public GameObject Max;
@@ -63,6 +64,7 @@ public class UIShopItemInfo : MonoBehaviour
         _item = item; // Setting the item
         UpdateItemValues(); // Updating item values
         ItemName.text = _item.name; // Setting the item name
+        ItemCost.text = _item.UpgradeCost.ToString(); // Setting upgrade cost
     }
 
     /// <summary>
