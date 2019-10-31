@@ -17,6 +17,9 @@ public class ConsumableItem : Item
         // Condition for health item description
         if(Consumable == ConsumableType.Heal)
             return base.GetDescription() + ". +" + ConsumableAmount.ToString() + "HP";
+        // Condition for coin item description
+        else if (Consumable == ConsumableType.Coin)
+            return base.GetDescription() + ". +" + ConsumableAmount.ToString() + " Coins";
 
         return base.GetDescription();
     }
@@ -36,6 +39,13 @@ public class ConsumableItem : Item
         RemoveItem();
         base.PickUpItem();
     }
+
+    /// <summary>
+    /// This method sets the consumable amount.
+    /// </summary>
+    /// <param name="amount">The new consumable amount of the item,
+    ///                      of type int</param>
+    public void SetConsumableAmount(int amount) { ConsumableAmount = amount; }
 }
 
 public enum ConsumableType { None, Heal, Coin };
