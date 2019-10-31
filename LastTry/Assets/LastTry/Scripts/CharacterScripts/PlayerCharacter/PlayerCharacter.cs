@@ -11,6 +11,9 @@ public class PlayerCharacter : PlayerCombatControl
         "otherwise touching screen will act as triggering attack.")]
     public bool IsJoyPad;
     public float MovementAcceleration;
+    [SerializeField]
+    private int _coins = 100; // Default must be 0
+    public int Coins { get { return _coins; } }
 
     [Tooltip("This timer is for joypad use not the virtual button press.")]
     public float PickUpTimer;
@@ -269,88 +272,75 @@ public class PlayerCharacter : PlayerCombatControl
     {
         if (isShow) // Condition to show object description
         {
-            // Checking if the object is Equipment Item
-            if (_hoverObject as WeaponItem)
+            if (_hoverObject as Item) // Checking if interactive is any item
             {
-                // Showing the weapon description here
-                UIInGameUIController.Instance.ShowEquipmentPopup(
-                    GetDefaultWeapon().ObjectName, 
-                    ((WeaponItem)_hoverObject).ObjectName,
-                    GetDefaultWeapon().GetDescription(),
-                    ((WeaponItem)_hoverObject).GetDescription());
+                // Checking if the object is Equipment Item
+                if (_hoverObject as WeaponItem)
+                {
+                    // Showing the weapon description hereS
+                    UIInGameUIController.Instance.ShowPopup(
+                        GetDefaultWeapon(), _hoverObject);
+                }
+                // Checking if object is Consumable Item
+                else if (_hoverObject as ConsumableItem)
+                {
+                    // Showing the consumable description
+                    UIInGameUIController.Instance.ShowPopup(_hoverObject);
+                }
+                // Checking if object is Wearable Item
+                else if (_hoverObject as WearableItem)
+                {
+                    if (_wearableItems[0] != null &&
+                       ((WearableItem)_hoverObject).Wearable == WearableType.Body)
+                    {
+                        // Showing the wearable description here
+                        UIInGameUIController.Instance.ShowPopup(
+                            _wearableItems[0], _hoverObject);
+                    }
+                    // Condition for hand wearable item
+                    else if (_wearableItems[1] != null &&
+                       ((WearableItem)_hoverObject).Wearable == WearableType.Hands)
+                    {
+                        // Showing the wearable description here
+                        UIInGameUIController.Instance.ShowPopup(
+                            _wearableItems[1], _hoverObject);
+                    }
+                    // Condition for head wearable item
+                    if (_wearableItems[2] != null &&
+                       ((WearableItem)_hoverObject).Wearable == WearableType.Head)
+                    {
+                        // Showing the wearable description here
+                        UIInGameUIController.Instance.ShowPopup(
+                            _wearableItems[2], _hoverObject);
+                    }
+                    // Condition for leg wearable item
+                    else if (_wearableItems[3] != null &&
+                       ((WearableItem)_hoverObject).Wearable == WearableType.Legs)
+                    {
+                        // Showing the wearable description here
+                        UIInGameUIController.Instance.ShowPopup(
+                            _wearableItems[3], _hoverObject);
+                    }
+                    // Condition for shoes wearable item
+                    else if (_wearableItems[4] != null &&
+                       ((WearableItem)_hoverObject).Wearable == WearableType.Legs)
+                    {
+                        // Showing the wearable description here
+                        UIInGameUIController.Instance.ShowPopup(
+                            _wearableItems[4], _hoverObject);
+                    }
+                    else // Condition for showing a single wearable item
+                    {
+                        // Showing the wearable description
+                        UIInGameUIController.Instance.ShowPopup(_hoverObject);
+                    }
+                }
             }
-            // Checking if object is Consumable Item
-            else if (_hoverObject as ConsumableItem)
+            else // Interactive is not an item
             {
-                // Showing the consumable description
-                UIInGameUIController.Instance.ShowConsumablePopup(
-                    ((ConsumableItem)_hoverObject).ObjectName, 
-                    ((ConsumableItem)_hoverObject).GetDescription());
-            }
-            // Checking if object is Wearable Item
-            else if (_hoverObject as WearableItem)
-            {
-                if (_wearableItems[0] != null &&
-                   ((WearableItem)_hoverObject).Wearable == WearableType.Body)
-                {
-                    // Showing the wearable description here
-                    UIInGameUIController.Instance.ShowEquipmentPopup(
-                        _wearableItems[0].ObjectName, 
-                        ((WearableItem)_hoverObject).ObjectName,
-                        _wearableItems[0].GetDescription(),
-                        ((WearableItem)_hoverObject).GetDescription());
-                }
-                // Condition for hand wearable item
-                else if (_wearableItems[1] != null &&
-                   ((WearableItem)_hoverObject).Wearable == WearableType.Hands)
-                {
-                    // Showing the wearable description here
-                    UIInGameUIController.Instance.ShowEquipmentPopup(
-                        _wearableItems[1].ObjectName, 
-                        ((WearableItem)_hoverObject).ObjectName,
-                        _wearableItems[1].GetDescription(),
-                        ((WearableItem)_hoverObject).GetDescription());
-                }
-                // Condition for head wearable item
-                if (_wearableItems[2] != null && 
-                   ((WearableItem)_hoverObject).Wearable == WearableType.Head)
-                {
-                    // Showing the wearable description here
-                    UIInGameUIController.Instance.ShowEquipmentPopup(
-                        _wearableItems[2].ObjectName, 
-                        ((WearableItem)_hoverObject).ObjectName,
-                        _wearableItems[2].GetDescription(), 
-                        ((WearableItem)_hoverObject).GetDescription());
-                }
-                // Condition for leg wearable item
-                else if (_wearableItems[3] != null &&
-                   ((WearableItem)_hoverObject).Wearable == WearableType.Legs)
-                {
-                    // Showing the wearable description here
-                    UIInGameUIController.Instance.ShowEquipmentPopup(
-                        _wearableItems[3].ObjectName, 
-                        ((WearableItem)_hoverObject).ObjectName,
-                        _wearableItems[3].GetDescription(),
-                        ((WearableItem)_hoverObject).GetDescription());
-                }
-                // Condition for shoes wearable item
-                else if (_wearableItems[4] != null &&
-                   ((WearableItem)_hoverObject).Wearable == WearableType.Legs)
-                {
-                    // Showing the wearable description here
-                    UIInGameUIController.Instance.ShowEquipmentPopup(
-                        _wearableItems[4].ObjectName, 
-                        ((WearableItem)_hoverObject).ObjectName,
-                        _wearableItems[4].GetDescription(),
-                        ((WearableItem)_hoverObject).GetDescription());
-                }
-                else // Condition for showing a single wearable item
-                {
-                    // Showing the wearable description
-                    UIInGameUIController.Instance.ShowConsumablePopup(
-                        ((WearableItem)_hoverObject).ObjectName,
-                        ((WearableItem)_hoverObject).GetDescription());
-                }
+                // Condition for shop
+                if (_hoverObject as ShopInteractive)
+                    UIInGameUIController.Instance.ShowPopup(_hoverObject);
             }
         }
         else UIInGameUIController.Instance.HideAllPopUp(); // Condition for hiding all
@@ -384,6 +374,11 @@ public class PlayerCharacter : PlayerCombatControl
 
             // Picking up the wearable item
             ((WearableItem)_hoverObject).PickUpItem();
+        }
+        // Condition to perform shop action
+        else if(_hoverObject as ShopInteractive)
+        {
+            ((ShopInteractive)_hoverObject).Action();
         }
     }
 
@@ -635,4 +630,23 @@ public class PlayerCharacter : PlayerCombatControl
     /// <param name="index">The index of the WearableItem, of type int</param>
     /// <returns>The wearable item of the player, of type WearableItem</returns>
     public WearableItem GetWearableItem(int index) { return _wearableItems[index]; }
+
+    /// <summary>
+    /// This method checks if there are enough coins for the given amount.
+    /// </summary>
+    /// <param name="amount">The amount to check if enough coins are available,
+    ///                      of type int</param>
+    /// <returns>True means enough coins are available, false otherwise,
+    ///          of type bool</returns>
+    public bool IsEnoughCoins(int amount) { return _coins >= amount; }
+
+    /// <summary>
+    /// This method reduces money after any transactions.
+    /// </summary>
+    /// <param name="amount">The price of the item, of type int</param>
+    public void Buy(int amount)
+    {
+        // Reducing the coins
+        _coins = (_coins - amount) <= 0 ? 0 : _coins - amount;
+    }
 }
