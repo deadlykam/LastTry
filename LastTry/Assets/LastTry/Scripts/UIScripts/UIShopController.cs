@@ -48,7 +48,11 @@ public class UIShopController : UIMenuController
         // Loop for hiding all the UIItemInfos
         for (int i = 0; i < ItemInfos.Length; i++) ItemInfos[i].gameObject.SetActive(false);
 
-        for(int i = 0; i < GameWorldManager.Instance.Player.WearableItemsLength; i++)
+        // Checking if the weapon is not null and showing the weapon item
+        if(GameWorldManager.Instance.Player.GetDefaultWeapon() != null)
+            SetItemInfo(GameWorldManager.Instance.Player.GetDefaultWeapon());
+
+        for (int i = 0; i < GameWorldManager.Instance.Player.WearableItemsLength; i++)
         {
             // Checking if the item is an UpgradableItem and is within the
             // ItemInfos range and also showing the item
