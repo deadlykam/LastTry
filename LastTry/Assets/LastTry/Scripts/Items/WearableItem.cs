@@ -51,13 +51,20 @@ public class WearableItem : UpgradableItem
     /// </summary>
     public override void UpgradeItem()
     {
-        base.UpgradeItem();
+        if (IsUpgradable) // Checking if item is upgradable
+        {
+            // Checking if player have enough coins
+            if (GameWorldManager.Instance.Player.IsEnoughCoins(UpgradeCost))
+            {
+                base.UpgradeItem();
 
-        // Increasing stat by offset, the current values are not used
-        // because it will yield wrong calculation when removing the item
-        GameWorldManager.Instance.Player.AddStatDamage(AttackOffset);
-        GameWorldManager.Instance.Player.AddStatDefense(DefenseOffset);
-        GameWorldManager.Instance.Player.AddStatHealth(HealthOffset);
+                // Increasing stat by offset, the current values are not used
+                // because it will yield wrong calculation when removing the item
+                GameWorldManager.Instance.Player.AddStatDamage(AttackOffset);
+                GameWorldManager.Instance.Player.AddStatDefense(DefenseOffset);
+                GameWorldManager.Instance.Player.AddStatHealth(HealthOffset);
+            }
+        }
     }
 
     /// <summary>
