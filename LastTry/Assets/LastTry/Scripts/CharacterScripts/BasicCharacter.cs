@@ -60,17 +60,7 @@ public class BasicCharacter : MonoBehaviour
                          0 : _hurtTimer - Time.deltaTime;
         }
     }
-
-    /// <summary>
-    /// This method gets the default weapon of the character which is the
-    /// weapon at the 0th index.
-    /// </summary>
-    /// <returns>The weapon at the 0th index, of type WeaponItem</returns>
-    protected WeaponItem GetDefaultWeapon()
-    {
-        return Weapons[0];
-    }
-
+    
     /// <summary>
     /// This method gets the default weapon type of the character which is
     /// the weapontype at the 0th index.
@@ -91,6 +81,16 @@ public class BasicCharacter : MonoBehaviour
         Weapons[0].DropItem(GameWorldManager.Instance.Equipments);
 
         Weapons[0] = weaponItem; // Replacing the weapon at the 0th index
+    }
+
+    /// <summary>
+    /// This method gets the default weapon of the character which is the
+    /// weapon at the 0th index.
+    /// </summary>
+    /// <returns>The weapon at the 0th index, of type WeaponItem</returns>
+    public WeaponItem GetDefaultWeapon()
+    {
+        return Weapons[0];
     }
 
     /// <summary>
