@@ -362,6 +362,9 @@ public class PlayerCharacter : PlayerCoinControl
             // Condition for healing the player
             if (((ConsumableItem)_hoverObject).Consumable == ConsumableType.Heal)
                 Heal(((ConsumableItem)_hoverObject).GetValue());
+            // Condition for adding coins
+            else if (((ConsumableItem)_hoverObject).Consumable == ConsumableType.Coin)
+                AddCoin(((ConsumableItem)_hoverObject).GetValue());
 
             ((ConsumableItem)_hoverObject).PickUpItem(); // Picking up the item
         }

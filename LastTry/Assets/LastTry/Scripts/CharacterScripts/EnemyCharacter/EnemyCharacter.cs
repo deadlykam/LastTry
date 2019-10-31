@@ -149,6 +149,17 @@ public class EnemyCharacter : BasicAnimation
     }
 
     /// <summary>
+    /// This method gets the coin value of the enemy.
+    /// </summary>
+    /// <returns>The coin value of the enemy, of type int</returns>
+    private int GetEnemyValue()
+    {
+        return HealthMax
+               + 5/*Fixed value, please remove this and replace with weapon damage*/
+               + (HealthMax * 2);
+    }
+
+    /// <summary>
     /// This method initializes the enemy character at the start up in EnemyCharacter.
     /// </summary>
     protected override void InitializeStartUp()
@@ -229,7 +240,11 @@ public class EnemyCharacter : BasicAnimation
             if (!_isItemDropped)
             {
                 // Dropping item
-                GameWorldManager.Instance.RequestItemDrop(ItemDropRate, transform.position);
+                GameWorldManager.Instance
+                    .RequestItemDrop(
+                    ItemDropRate, 
+                    transform.position,
+                    GetEnemyValue());
                 // Giving player coins
                 GameWorldManager.Instance.Player.AddCoin(EnemyValue);
                 _isItemDropped = true; // Done with these logics

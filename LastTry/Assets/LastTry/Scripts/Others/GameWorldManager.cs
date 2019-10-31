@@ -30,15 +30,19 @@ public class GameWorldManager : MonoBehaviour
     [Header("Item Collection Location")]
     public Transform Equipments;
     public Transform Consumables;
+    public Transform Coins;
 
     [Header("Item Drop Rate Properties")]
     [Range(0, 100)]
     public int DropRateEquipment;
     [Range(0, 100)]
     public int DropRateConsumables;
+    [Range(0, 100)]
+    public int DropRateCoins;
 
     private List<WeaponItem> _equipments;
     private List<ConsumableItem> _consumables;
+    private List<ConsumableItem> _coins;
     private Queue<ItemDropInfo> _requestItemDrops;
 
     private bool _isProcessing = false;
@@ -57,6 +61,7 @@ public class GameWorldManager : MonoBehaviour
 
         _equipments = new List<WeaponItem>();
         _consumables = new List<ConsumableItem>();
+        _coins = new List<ConsumableItem>();
         _requestItemDrops = new Queue<ItemDropInfo>();
 
         // Loop for storing all equipment items
@@ -66,6 +71,10 @@ public class GameWorldManager : MonoBehaviour
         // Loop for storing all consumable items
         for (int i = 0; i < Consumables.childCount; i++)
             _consumables.Add(Consumables.GetChild(i).GetComponent<ConsumableItem>());
+
+        // Loop for storing all coin items
+        for (int i = 0; i < Coins.childCount; i++)
+            _coins.Add(Coins.GetChild(i).GetComponent<ConsumableItem>());
 
         _isProcessing = false;
     }
@@ -119,6 +128,20 @@ public class GameWorldManager : MonoBehaviour
                 _consumables.RemoveAt(_itemIndex); // Removing the item from index
             }
         }
+        // Condition for dropping a coin item
+        else if (_coins.Count != 0 && Random.Range(0, 100) < DropRateCoins)
+        {
+            _coins[0].gameObject.SetActive(true); // Enabling the item
+
+            _coins[0].SetConsumableAmount(processDrop.Value); // Setting the
+                                                              // consumable
+                                                              // amount
+
+            _coins[0].DropItem(Coins, processDrop.Position); // Dropping
+                                                             // the item
+
+            _coins.RemoveAt(0); // Removing the item
+        }
 
         _isProcessing = false; // Processing done
     }
@@ -130,9 +153,10 @@ public class GameWorldManager : MonoBehaviour
     ///                        of type int</param>
     /// <param name="position">The position at which the item will be dropped,
     ///                        of type Vector3</param>
-    public void RequestItemDrop(int dropRate, Vector3 position)
+    /// <param name="value">The value of the drop, of type int</param>
+    public void RequestItemDrop(int dropRate, Vector3 position, int value)
     {
-        _requestItemDrops.Enqueue(new ItemDropInfo(dropRate, position));
+        _requestItemDrops.Enqueue(new ItemDropInfo(dropRate, position, value));
     }
 
     /// <summary>
@@ -151,6 +175,7 @@ public struct ItemDropInfo
 {
     public int DropRate;
     public Vector3 Position;
+    public int Value;
 
     /// <summary>
     /// This constructor creats the ItemDropInfo struct object.
@@ -158,9 +183,11 @@ public struct ItemDropInfo
     /// <param name="dropRate">The drop rate for droping an item, of type int</param>
     /// <param name="position">The position for the item to be dropped, 
     ///                        of type Vector3</param>
-    public ItemDropInfo(int dropRate, Vector3 position)
+    /// <param name="value">The value of the drop, of type int</param>
+    public ItemDropInfo(int dropRate, Vector3 position, int value)
     {
         DropRate = dropRate;
         Position = position;
+        Value = value;
     }
 }
