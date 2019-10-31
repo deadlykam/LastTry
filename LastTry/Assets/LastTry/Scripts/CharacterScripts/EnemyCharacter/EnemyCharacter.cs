@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is the basic enemy character. All enemy type should extend from this class.
+/// </summary>
 public class EnemyCharacter : BasicAnimation
 {
     [Header("Enemy Character Properties")]
@@ -20,6 +23,9 @@ public class EnemyCharacter : BasicAnimation
     [Range(0, 100)]
     public int ItemDropRate;
     private bool _isItemDropped = false;
+
+    [Tooltip("The coin value of the enmey when it dies.")]
+    public int EnemyValue;
 
     private float _speedPercentage = 0;
     private Vector3 _lookAtTarget;
@@ -218,10 +224,15 @@ public class EnemyCharacter : BasicAnimation
                 _healthBarReference = -1;
             }
 
-            if (!_isItemDropped) // Condition for dropping an item
+            // Condition for dropping an item and giving
+            // the player coins.
+            if (!_isItemDropped)
             {
+                // Dropping item
                 GameWorldManager.Instance.RequestItemDrop(ItemDropRate, transform.position);
-                _isItemDropped = true;
+                // Giving player coins
+                GameWorldManager.Instance.Player.AddCoin(EnemyValue);
+                _isItemDropped = true; // Done with these logics
             }
         }
     }
