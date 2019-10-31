@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConsumableItem : Items
+public class ConsumableItem : Item
 {
     [Header("Consumable Item Property")]
     public ConsumableType Consumable;

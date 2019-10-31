@@ -18,7 +18,7 @@ public class UIButtonHold : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     void Update()
     {
         // Condition for checking if player is hovering over an item
-        if (UIJoypadController.Instance.IsHoverItem())
+        if (UIJoypadController.Instance.IsHoverObject())
         {
             if (_isButtonPressed) // Condition to check if button pressed
             {

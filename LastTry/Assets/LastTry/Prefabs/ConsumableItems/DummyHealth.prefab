@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 317495106390053740}
   m_Layer: 14
   m_Name: DummyHealth
-  m_TagString: Consumables
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,9 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49f6e7cf3ceb02844bb62cdc54db9200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Health Item
+  ObjectName: 
+  ObjectCollider: {fileID: 317495106390053741}
   Cost: 25
-  ItemCollider: {fileID: 317495106390053741}
   PositionOffset: {x: 0, y: 0.125, z: 0}
   Consumable: 1
   ConsumableAmount: 25

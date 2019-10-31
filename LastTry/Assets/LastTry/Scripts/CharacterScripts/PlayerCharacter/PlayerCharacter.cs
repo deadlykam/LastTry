@@ -11,6 +11,9 @@ public class PlayerCharacter : PlayerCombatControl
         "otherwise touching screen will act as triggering attack.")]
     public bool IsJoyPad;
     public float MovementAcceleration;
+    [SerializeField]
+    private int _coins = 100; // Default must be 0
+    public int Coins { get { return _coins; } }
 
     [Tooltip("This timer is for joypad use not the virtual button press.")]
     public float PickUpTimer;
@@ -30,14 +33,16 @@ public class PlayerCharacter : PlayerCombatControl
 
     [Header("Wearable Slot Locations")]
     public SkinnedMeshRenderer SkinnedMesh;
-    private WearableItem _head;
-    private WearableItem _hand;
-    private WearableItem _body;
-    private WearableItem _leg;
-    private WearableItem _shoe;
-    private WearableItem _amulet;
-    private WearableItem _ring1;
-    private WearableItem _ring2;
+
+    /// <summary>
+    /// index 0 = body
+    /// index 1 = hand
+    /// index 2 = head
+    /// index 3 = legs
+    /// index 4 = shoes
+    /// </summary>
+    private WearableItem[] _wearableItems;
+    public int WearableItemsLength { get { return _wearableItems.Length; } }
 
     private int _statDefense = 0;
 
@@ -53,10 +58,10 @@ public class PlayerCharacter : PlayerCombatControl
     /// <summary>
     /// The item being currently hovered over.
     /// </summary>
-    private Items _hoverItem;
-    public Items HoverItem { get { return _hoverItem; } }
+    private Interactive _hoverObject;
+    public Interactive HoverObject { get { return _hoverObject; } }
 
-    public bool IsHoverItem { get { return _hoverItem != null; } }
+    public bool IsHoverObject { get { return _hoverObject != null; } }
 
     private bool _isAttackButtonA = false;
 
@@ -85,7 +90,7 @@ public class PlayerCharacter : PlayerCombatControl
 
             if(!_IsDash) AttackHandler();
             DashHandler();
-            PickUpItemFromJoypad();
+            PickUpObjectFromJoypad();
         }
 
         // Setting the player health
@@ -234,13 +239,13 @@ public class PlayerCharacter : PlayerCombatControl
     }
 
     /// <summary>
-    /// Picking up item from joypad.
+    /// Picking up object from joypad.
     /// </summary>
-    private void PickUpItemFromJoypad()
+    private void PickUpObjectFromJoypad()
     {
         if (Input.GetButton("Fire1") && IsJoyPad)
         {
-            if (_hoverItem != null) PickUpItemTimer();
+            if (_hoverObject != null) PickUpObjectTimer();
         }
         else _pickUpTimer = 0; // This condition may be required to be called
                                // differently since joypad will not be used
@@ -259,111 +264,121 @@ public class PlayerCharacter : PlayerCombatControl
     }
     
     /// <summary>
-    /// This method shows/hides the item description.
+    /// This method shows/hides the object description.
     /// </summary>
-    /// <param name="isShow">The flag to show or hide item description,
+    /// <param name="isShow">The flag to show or hide object description,
     ///                      of type bool</param>
-    private void SetItemDescription(bool isShow)
+    private void SetObjectDescription(bool isShow)
     {
-        if (isShow) // Condition to show item description
+        if (isShow) // Condition to show object description
         {
-            // Checking if the item is Equipment Item
-            if (_hoverItem as WeaponItem)
+            if (_hoverObject as Item) // Checking if interactive is any item
             {
-                // Showing the weapon description here
-                UIInGameUIController.Instance.ShowEquipmentPopup(
-                    GetDefaultWeapon().ItemName, ((WeaponItem)_hoverItem).ItemName,
-                    GetDefaultWeapon().GetDescription(),
-                    ((WeaponItem)_hoverItem).GetDescription());
+                // Checking if the object is Equipment Item
+                if (_hoverObject as WeaponItem)
+                {
+                    // Showing the weapon description hereS
+                    UIInGameUIController.Instance.ShowPopup(
+                        GetDefaultWeapon(), _hoverObject);
+                }
+                // Checking if object is Consumable Item
+                else if (_hoverObject as ConsumableItem)
+                {
+                    // Showing the consumable description
+                    UIInGameUIController.Instance.ShowPopup(_hoverObject);
+                }
+                // Checking if object is Wearable Item
+                else if (_hoverObject as WearableItem)
+                {
+                    if (_wearableItems[0] != null &&
+                       ((WearableItem)_hoverObject).Wearable == WearableType.Body)
+                    {
+                        // Showing the wearable description here
+                        UIInGameUIController.Instance.ShowPopup(
+                            _wearableItems[0], _hoverObject);
+                    }
+                    // Condition for hand wearable item
+                    else if (_wearableItems[1] != null &&
+                       ((WearableItem)_hoverObject).Wearable == WearableType.Hands)
+                    {
+                        // Showing the wearable description here
+                        UIInGameUIController.Instance.ShowPopup(
+                            _wearableItems[1], _hoverObject);
+                    }
+                    // Condition for head wearable item
+                    if (_wearableItems[2] != null &&
+                       ((WearableItem)_hoverObject).Wearable == WearableType.Head)
+                    {
+                        // Showing the wearable description here
+                        UIInGameUIController.Instance.ShowPopup(
+                            _wearableItems[2], _hoverObject);
+                    }
+                    // Condition for leg wearable item
+                    else if (_wearableItems[3] != null &&
+                       ((WearableItem)_hoverObject).Wearable == WearableType.Legs)
+                    {
+                        // Showing the wearable description here
+                        UIInGameUIController.Instance.ShowPopup(
+                            _wearableItems[3], _hoverObject);
+                    }
+                    // Condition for shoes wearable item
+                    else if (_wearableItems[4] != null &&
+                       ((WearableItem)_hoverObject).Wearable == WearableType.Legs)
+                    {
+                        // Showing the wearable description here
+                        UIInGameUIController.Instance.ShowPopup(
+                            _wearableItems[4], _hoverObject);
+                    }
+                    else // Condition for showing a single wearable item
+                    {
+                        // Showing the wearable description
+                        UIInGameUIController.Instance.ShowPopup(_hoverObject);
+                    }
+                }
             }
-            // Checking if item is Consumable Item
-            else if(_hoverItem as ConsumableItem)
+            else // Interactive is not an item
             {
-                // Showing the consumable description
-                UIInGameUIController.Instance.ShowConsumablePopup(
-                    ((ConsumableItem)_hoverItem).ItemName, 
-                    ((ConsumableItem)_hoverItem).GetDescription());
-            }
-            // Checking if item is Wearable Item
-            else if(_hoverItem as WearableItem)
-            {
-                // Condition for head wearable item
-                if(_head != null && 
-                   ((WearableItem)_hoverItem).Wearable == WearableType.Head)
-                {
-                    // Showing the wearable description here
-                    UIInGameUIController.Instance.ShowEquipmentPopup(
-                        _head.ItemName, ((WearableItem)_hoverItem).ItemName,
-                        _head.GetDescription(), 
-                        ((WearableItem)_hoverItem).GetDescription());
-                }
-                // Condition for hand wearable item
-                else if (_hand != null &&
-                   ((WearableItem)_hoverItem).Wearable == WearableType.Hands)
-                {
-                    // Showing the wearable description here
-                    UIInGameUIController.Instance.ShowEquipmentPopup(
-                        _hand.ItemName, ((WearableItem)_hoverItem).ItemName,
-                        _hand.GetDescription(),
-                        ((WearableItem)_hoverItem).GetDescription());
-                }
-                // Condition for body wearable item
-                else if (_body != null &&
-                   ((WearableItem)_hoverItem).Wearable == WearableType.Body)
-                {
-                    // Showing the wearable description here
-                    UIInGameUIController.Instance.ShowEquipmentPopup(
-                        _body.ItemName, ((WearableItem)_hoverItem).ItemName,
-                        _body.GetDescription(),
-                        ((WearableItem)_hoverItem).GetDescription());
-                }
-                // Condition for leg wearable item
-                else if (_leg != null &&
-                   ((WearableItem)_hoverItem).Wearable == WearableType.Legs)
-                {
-                    // Showing the wearable description here
-                    UIInGameUIController.Instance.ShowEquipmentPopup(
-                        _leg.ItemName, ((WearableItem)_hoverItem).ItemName,
-                        _leg.GetDescription(),
-                        ((WearableItem)_hoverItem).GetDescription());
-                }
-                else // Condition for showing a single wearable item
-                {
-                    // Showing the wearable description
-                    UIInGameUIController.Instance.ShowConsumablePopup(
-                        ((WearableItem)_hoverItem).ItemName,
-                        ((WearableItem)_hoverItem).GetDescription());
-                }
+                // Condition for shop
+                if (_hoverObject as ShopInteractive)
+                    UIInGameUIController.Instance.ShowPopup(_hoverObject);
             }
         }
         else UIInGameUIController.Instance.HideAllPopUp(); // Condition for hiding all
-                                                           // item descriptions
+                                                           // object descriptions
     }
-    
+
     /// <summary>
-    /// This method picks up the item.
+    /// This method picks up the object.
     /// </summary>
-    private void PickUpItem()
+    private void PickUpInteractive()
     {
         // Condition for picking up the weapon
-        if (_hoverItem as WeaponItem) PickUpWeapon1(((WeaponItem)_hoverItem));
-        else if (_hoverItem as ConsumableItem) // Condition for picking up
-        {                                      // consumable
-            // Condition for healing the player
-            if (((ConsumableItem)_hoverItem).Consumable == ConsumableType.Heal)
-                Heal(((ConsumableItem)_hoverItem).GetValue());
-
-            ((ConsumableItem)_hoverItem).PickUpItem(); // Picking up the item
+        if (_hoverObject as WeaponItem)
+        {
+            PickUpWeapon1(((WeaponItem)_hoverObject));
         }
-        // Condition for picking up the wearable
-        else if (_hoverItem as WearableItem)
+        else if (_hoverObject as ConsumableItem) // Condition for picking up
+        {                                        // consumable
+            // Condition for healing the player
+            if (((ConsumableItem)_hoverObject).Consumable == ConsumableType.Heal)
+                Heal(((ConsumableItem)_hoverObject).GetValue());
+
+            ((ConsumableItem)_hoverObject).PickUpItem(); // Picking up the item
+        }
+        // Condition for picking up the wearable item
+        else if (_hoverObject as WearableItem)
         {
             // Setting the wearable item to its correct equipment place
             // and removing the old item if exist
-            UpdateWearableItems(((WearableItem)_hoverItem));
+            UpdateWearableItems(((WearableItem)_hoverObject));
 
             // Picking up the wearable item
-            ((WearableItem)_hoverItem).PickUpItem();
+            ((WearableItem)_hoverObject).PickUpItem();
+        }
+        // Condition to perform shop action
+        else if(_hoverObject as ShopInteractive)
+        {
+            ((ShopInteractive)_hoverObject).Action();
         }
     }
 
@@ -371,22 +386,23 @@ public class PlayerCharacter : PlayerCombatControl
     /// This method sets the wearable item and removes any similar wearable item, 
     /// also removes and applies blendshape.
     /// </summary>
-    /// <param name="item">The item to store or remove is present,
+    /// <param name="item">The item to store or remove if present,
     ///                    of type WearableItem</param>
     private void UpdateWearableItems(WearableItem item)
     {
-        if(item.Wearable == WearableType.Body)
+        // Checking if the item is body
+        if (item.Wearable == WearableType.Body)
         {
             // Condition for removing the head item
-            if (_body != null)
+            if (_wearableItems[0] != null)
             {
-                SetWearableItemBlendShape(_body, 0); // Removing blendshape
-                _body.DropItem(GameWorldManager.Instance.Equipments,
+                SetWearableItemBlendShape(_wearableItems[0], 0); // Removing blendshape
+                _wearableItems[0].DropItem(GameWorldManager.Instance.Equipments,
                                       transform.position);
-                _body = null; // Removing the item's reference
+                _wearableItems[0] = null; // Removing the item's reference
             }
 
-            _body = item; // Setting the new item
+            _wearableItems[0] = item; // Setting the new item
         }
         else if (item.Wearable == WearableType.Hands)
         {
@@ -396,43 +412,43 @@ public class PlayerCharacter : PlayerCombatControl
         else if (item.Wearable == WearableType.Head)
         {
             // Condition for removing the head item
-            if(_head != null)
+            if (_wearableItems[2] != null)
             {
-                SetWearableItemBlendShape(_head, 0); // Removing blendshape
-                _head.DropItem(GameWorldManager.Instance.Equipments,
+                SetWearableItemBlendShape(_wearableItems[2], 0); // Removing blendshape
+                _wearableItems[2].DropItem(GameWorldManager.Instance.Equipments,
                                       transform.position);
-                _head = null; // Removing the item's reference
+                _wearableItems[2] = null; // Removing the item's reference
             }
 
-            _head = item; // Setting the new item
+            _wearableItems[2] = item; // Setting the new item
         }
         // Checking if the item is legs
         else if (item.Wearable == WearableType.Legs)
         {
             // Condition for removing the legs item
-            if (_leg != null)
+            if (_wearableItems[3] != null)
             {
-                SetWearableItemBlendShape(_leg, 0); // Removing blendshape
-                _leg.DropItem(GameWorldManager.Instance.Equipments,
+                SetWearableItemBlendShape(_wearableItems[3], 0); // Removing blendshape
+                _wearableItems[3].DropItem(GameWorldManager.Instance.Equipments,
                                       transform.position);
-                _leg = null; // Removing the item's reference
+                _wearableItems[3] = null; // Removing the item's reference
             }
 
-            _leg = item; // Setting the new item
+            _wearableItems[3] = item; // Setting the new item
         }
         // Checking if the item is shoes
         else if (item.Wearable == WearableType.Shoes)
         {
             // Condition for removing the legs item
-            if (_shoe != null)
+            if (_wearableItems[4] != null)
             {
-                SetWearableItemBlendShape(_shoe, 0); // Removing blendshape
-                _shoe.DropItem(GameWorldManager.Instance.Equipments,
+                SetWearableItemBlendShape(_wearableItems[4], 0); // Removing blendshape
+                _wearableItems[4].DropItem(GameWorldManager.Instance.Equipments,
                                       transform.position);
-                _shoe = null; // Removing the item's reference
+                _wearableItems[4] = null; // Removing the item's reference
             }
 
-            _shoe = item; // Setting the new item
+            _wearableItems[4] = item; // Setting the new item
         }
 
         SetWearableItemBlendShape(item, 100); // Giving blendshape
@@ -471,6 +487,8 @@ public class PlayerCharacter : PlayerCombatControl
     protected override void InitializeStartUp()
     {
         base.InitializeStartUp();
+
+        _wearableItems = new WearableItem[5];
     }
 
     /// <summary>
@@ -499,90 +517,92 @@ public class PlayerCharacter : PlayerCombatControl
     public void ButtonA() { if (IsAcceptInput) _isAttackButtonA = true; }
 
     /// <summary>
-    /// This method adds a hovered over item.
+    /// This method adds a hovered over interactive.
     /// </summary>
-    /// <param name="hoverItem">The item that is being hovered over by the
-    ///                         player, of type Items</param>
-    public void AddHoverItem(Items hoverItem)
+    /// <param name="hoverObject">The object that is being hovered over by the
+    ///                           player, of type Interactive</param>
+    public void AddHoverObject(Interactive hoverObject)
     {
-        // Condition to check if there are no current hovered item
-        if(_hoverItem == null)
+        // Condition to check if there are no current hovered object
+        if (_hoverObject == null)
         {
-            _hoverItem = hoverItem;
+            _hoverObject = hoverObject;
 
-            SetItemDescription(true); // Showing item description
+            SetObjectDescription(true); // Showing interactive description
         }
-        else if(_hoverItem != hoverItem) // Checking if not same item
+        else if(_hoverObject != hoverObject) // Checking if not same object
         {
-            if(Vector3.Distance(transform.position, hoverItem.transform.position) <
-               Vector3.Distance(transform.position, _hoverItem.transform.position))
+            if(Vector3.Distance(transform.position, hoverObject.transform.position) <
+               Vector3.Distance(transform.position, _hoverObject.transform.position))
             {
-                _hoverItem = hoverItem;
+                _hoverObject = hoverObject;
 
-                SetItemDescription(true); // Showing item description
+                SetObjectDescription(true); // Showing interactive description
             }
         }
 
-        //Note: Don't show weapon description here because the detector is using
-        //      OnTriggerStay so then the description menu will be called every
-        //      detection frame which is not good for UI.
+        // Note: Don't show weapon description here because the detector is using
+        //       OnTriggerStay so then the description menu will be called every
+        //       detection frame which is not good for UI.
     }
 
     /// <summary>
-    /// This method removes the item from being picked up.
+    /// This method removes the interactive from being picked up.
     /// </summary>
-    /// <param name="hoverItem">The item needed to check if to remove
-    ///                         the hover item, of type Items</param>
-    public void RemoveHoverItem(Items hoverItem)
+    /// <param name="hoverItem">The object needed to check if to remove
+    ///                         the hover object, of type 
+    ///                         Interactive</param>
+    public void RemoveHoverObject(Interactive hoverItem)
     {
-        // Condition for removing the selected hover item
-        if(_hoverItem == hoverItem)
+        // Condition for removing the selected hover object
+        if(_hoverObject == hoverItem)
         {
-            _hoverItem = null;
-            SetItemDescription(false);
+            _hoverObject = null;
+            SetObjectDescription(false);
         }
     }
 
     /// <summary>
-    /// This method is for picking up items with timer.
+    /// This method is for picking up objects with timer.
     /// </summary>
-    public void PickUpItemTimer()
+    public void PickUpObjectTimer()
     {
-        if (IsHoverItem) // Condition to check if the player is hovering over a weapon
+        if (IsHoverObject) // Condition to check if the player is hovering over an object
         {
             // Counting how long the button has been pressed
             _pickUpTimer = (_pickUpTimer + Time.deltaTime) >= PickUpTimer ?
                                              PickUpTimer :
                                             _pickUpTimer + Time.deltaTime;
 
-            // Condition for picking up the item
+            // Condition for picking up the object
             if(_pickUpTimer == PickUpTimer)
             {
-                PickUpItem(); // Picking up the item
-                _hoverItem = null; // Clearing the hover selected item
+                PickUpInteractive(); // Picking up the object
+                _hoverObject = null; // Clearing the hover selected object
                 ResetPickupTimer();
 
                 UIInGameUIController.Instance.ResetAllBar();
-                SetItemDescription(false);
+                SetObjectDescription(false);
                 return; // No further logic required
             }
 
-            UIInGameUIController.Instance.SetAllBar(_hoverItem, _pickUpTimer / PickUpTimer);
+            UIInGameUIController.Instance
+                .SetAllBar(_hoverObject, _pickUpTimer / PickUpTimer);
         }
     }
 
     /// <summary>
-    /// This method picks up the item instantly.
+    /// This method picks up the object instantly.
     /// </summary>
-    public void PickUpItemInstant()
+    public void PickUpObjectInstant()
     {
-        if (IsHoverItem) // Condition to check if the player is hovering over a weapon
+        if (IsHoverObject) // Condition to check if the player is hovering over a weapon
         {
-            PickUpItem(); // Picking up the item
-            _hoverItem = null; // Clearing the hover selected item
+            PickUpInteractive(); // Picking up the object
+            _hoverObject = null; // Clearing the hover selected object
 
             ResetPickupTimer();
-            SetItemDescription(false);
+            SetObjectDescription(false);
         }
     }
 
@@ -603,4 +623,30 @@ public class PlayerCharacter : PlayerCombatControl
     /// <param name="amount">The amount of defense stat to remove, of type int</param>
     public void RemoveStatDefense(int amount)
     { _statDefense = (_statDefense - amount) <= 0 ? 0 : _statDefense - amount; }
+
+    /// <summary>
+    /// This method gets the WearableItem of the player.
+    /// </summary>
+    /// <param name="index">The index of the WearableItem, of type int</param>
+    /// <returns>The wearable item of the player, of type WearableItem</returns>
+    public WearableItem GetWearableItem(int index) { return _wearableItems[index]; }
+
+    /// <summary>
+    /// This method checks if there are enough coins for the given amount.
+    /// </summary>
+    /// <param name="amount">The amount to check if enough coins are available,
+    ///                      of type int</param>
+    /// <returns>True means enough coins are available, false otherwise,
+    ///          of type bool</returns>
+    public bool IsEnoughCoins(int amount) { return _coins >= amount; }
+
+    /// <summary>
+    /// This method reduces money after any transactions.
+    /// </summary>
+    /// <param name="amount">The price of the item, of type int</param>
+    public void Buy(int amount)
+    {
+        // Reducing the coins
+        _coins = (_coins - amount) <= 0 ? 0 : _coins - amount;
+    }
 }

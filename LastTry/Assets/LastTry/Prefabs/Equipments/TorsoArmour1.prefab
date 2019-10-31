@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5084804828322691172}
   m_Layer: 14
   m_Name: TorsoArmour1
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,10 +59,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73f098ca46c24234bb338efc0075372b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Weak Chest Armour
+  ObjectName: 
+  ObjectCollider: {fileID: 4502950211988598256}
   Cost: 500
-  ItemCollider: {fileID: 4502950211988598256}
   PositionOffset: {x: 0, y: 0, z: 0}
+  UpgradeLimit: 0
+  AttackOffset: 0
+  DefenseOffset: 0
+  HealthOffset: 0
   WorldObject: {fileID: 1598148351868929178}
   WearableObject: {fileID: 1351831609316565986}
   Wearable: 2

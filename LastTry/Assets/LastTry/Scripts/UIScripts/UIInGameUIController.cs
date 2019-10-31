@@ -10,6 +10,7 @@ public class UIInGameUIController : MonoBehaviour
     [Header("Popup Menu Properties")]
     public UIEquipmentPopUpController EquipmentItemPopup;
     public UIItemPopUpController ConsumableItemPopup;
+    public UIItemPopUpController InteractivePopup;
 
     [Header("Player Health Bar Properties")]
     public Image PlayerHealthBar;
@@ -50,7 +51,7 @@ public class UIInGameUIController : MonoBehaviour
     }
 
     /// <summary>
-    /// This method shows the consumable popup menu.
+    /// [Depricated]This method shows the consumable popup menu.
     /// </summary>
     /// <param name="itemName">The name of the item, of type string</param>
     /// <param name="itemDescription">The description of the item, of type string</param>
@@ -62,7 +63,7 @@ public class UIInGameUIController : MonoBehaviour
     }
 
     /// <summary>
-    /// This method shows the equipment popup menu.
+    /// [Depricated]This method shows the equipment popup menu.
     /// </summary>
     /// <param name="item1Name">The name of the item 1, of type string</param>
     /// <param name="item2Name">The name of the item 2, of type string</param>
@@ -78,33 +79,147 @@ public class UIInGameUIController : MonoBehaviour
     }
 
     /// <summary>
+    /// This method shows either the consumable pop up or interactive pop up.
+    /// </summary>
+    /// <param name="interactive">The object to check what type of interactive
+    ///                           it is and showing the correct pop up menu
+    ///                           corresponding to it, of type Interactive</param>
+    public void ShowPopup(Interactive interactive)
+    {
+        HideAllPopUp(); // Hiding any shown popup
+
+        if (interactive as Item) // Checking if the interactive is item
+        {
+            if(interactive as ConsumableItem) // Checking if consumable item
+            {
+                // Showing consumable details
+                ConsumableItemPopup
+                    .ShowMenu(((ConsumableItem)(interactive)).ObjectName,
+                              ((ConsumableItem)(interactive)).GetDescription());
+            }
+            else if (interactive as WeaponItem) // Checking if weapon item
+            {
+                // Showing weapon detials
+                ConsumableItemPopup
+                    .ShowMenu(((WeaponItem)(interactive)).ObjectName,
+                              ((WeaponItem)(interactive)).GetDescription());
+            }
+            else if (interactive as WearableItem) // Checking if wearable item
+            {
+                // Showing wearable details
+                ConsumableItemPopup
+                    .ShowMenu(((WearableItem)(interactive)).ObjectName,
+                              ((WearableItem)(interactive)).GetDescription());
+            }
+            else if (interactive as UpgradableItem) // Checking if upgradable item
+            {
+                // Showing upgradable details
+                ConsumableItemPopup
+                    .ShowMenu(((UpgradableItem)(interactive)).ObjectName,
+                              ((UpgradableItem)(interactive)).GetDescription());
+            }
+            else // Is only item
+            {
+                // Showing item details
+                ConsumableItemPopup
+                    .ShowMenu(((Item)(interactive)).ObjectName,
+                              ((Item)(interactive)).GetDescription());
+            }
+        }
+        else // Interactive is not item
+        {
+            if(interactive as ShopInteractive) // Checking if shop
+            {
+                // Showing shop details
+                InteractivePopup
+                    .ShowMenu(((ShopInteractive)(interactive)).ObjectName,
+                              ((ShopInteractive)(interactive)).GetDescription());
+            }
+            else // Is only interactive
+            {
+                // Showing interactive details
+                InteractivePopup
+                    .ShowMenu(interactive.ObjectName,
+                              interactive.GetDescription());
+            }
+        }
+    }
+
+    /// <summary>
+    /// This method shows the equipment pop up.
+    /// </summary>
+    /// <param name="interactive1">The details of the current item
+    ///                            being used, of type Interactive</param>
+    /// <param name="interactive2">The details of the item lying
+    ///                            on the game world, of type Interactive</param>
+    public void ShowPopup(Interactive interactive1, Interactive interactive2)
+    {
+        HideAllPopUp(); // Hiding any shown popup
+
+        if (interactive1 as WeaponItem) // Checking if weapon item
+        {
+            // Showing weapon detials
+            EquipmentItemPopup.ShowMenu(
+                ((WeaponItem)(interactive1)).ObjectName,
+                ((WeaponItem)(interactive2)).ObjectName,
+                ((WeaponItem)(interactive1)).GetDescription(),
+                ((WeaponItem)(interactive2)).GetDescription());
+        }
+        else if (interactive1 as WearableItem) // Checking if wearable item
+        {
+            // Showing wearable details
+            EquipmentItemPopup.ShowMenu(
+                ((WearableItem)(interactive1)).ObjectName,
+                ((WearableItem)(interactive2)).ObjectName,
+                ((WearableItem)(interactive1)).GetDescription(),
+                ((WearableItem)(interactive2)).GetDescription());
+        }
+        else // Is only item
+        {
+            // Showing item details
+            EquipmentItemPopup.ShowMenu(
+                ((Item)(interactive1)).ObjectName,
+                ((Item)(interactive2)).ObjectName,
+                ((Item)(interactive1)).GetDescription(),
+                ((Item)(interactive2)).GetDescription());
+        }
+    }
+
+    /// <summary>
     /// This method hides all the pop up menu.
     /// </summary>
     public void HideAllPopUp()
     {
         if(EquipmentItemPopup.IsMenuShown) EquipmentItemPopup.HideMenu();
         if (ConsumableItemPopup.IsMenuShown) ConsumableItemPopup.HideMenu();
+        if (InteractivePopup.IsMenuShown) InteractivePopup.HideMenu();
     }
 
     /// <summary>
     /// This method sets the bar for the appropriate pop up menu.
     /// </summary>
-    /// <param name="item">To check the type of item, of type Items</param>
+    /// <param name="interactive">To check the type of object, of type 
+    ///                           Interactive</param>
     /// <param name="amount">The fill amount for the popup bar in the range from
     ///                      0 - 1, of type float</param>
-    public void SetAllBar(Items item, float amount)
+    public void SetAllBar(Interactive interactive, float amount)
     {
         // Condition for setting the weapon pop up bar
-        if (item as WeaponItem)
+        if (interactive as WeaponItem)
             EquipmentItemPopup.SetFillAmount(amount);
         // Condition for setting the consumable
-        else if (item as ConsumableItem)
+        else if (interactive as ConsumableItem)
             ConsumableItemPopup.SetFillAmount(amount);
         // Condition for setting the wearable 
-        else if(item as WearableItem)
+        else if(interactive as WearableItem)
         {
             EquipmentItemPopup.SetFillAmount(amount);
             ConsumableItemPopup.SetFillAmount(amount);
+        }
+        // Condition for setting the shop
+        else if(interactive as ShopInteractive)
+        {
+            InteractivePopup.SetFillAmount(amount);
         }
     }
 
@@ -116,6 +231,7 @@ public class UIInGameUIController : MonoBehaviour
         // Conditions to check if fill amount not resetted for all menus
         if (EquipmentItemPopup.IsBarNotFinished) EquipmentItemPopup.SetFillAmount(0);
         if (ConsumableItemPopup.IsBarNotFinished) ConsumableItemPopup.SetFillAmount(0);
+        if (InteractivePopup.IsBarNotFinished) InteractivePopup.SetFillAmount(0);
     }
 
     /// <summary>
@@ -130,7 +246,8 @@ public class UIInGameUIController : MonoBehaviour
     /// <returns>True means not finished, false otherwise, of type bool</returns>
     public bool IsBarNotDone()
     {
-        return EquipmentItemPopup.IsBarNotFinished || ConsumableItemPopup.IsBarNotFinished;
+        return EquipmentItemPopup.IsBarNotFinished || ConsumableItemPopup.IsBarNotFinished
+               || InteractivePopup.IsBarNotFinished;
     }
 
     /// <summary>

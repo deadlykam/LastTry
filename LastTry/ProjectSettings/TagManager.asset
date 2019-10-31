@@ -5,8 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
-  - Weapons
   - Consumables
+  - Item
+  - Interactive
   layers:
   - Default
   - TransparentFX
@@ -22,8 +23,8 @@ TagManager:
   - EnemyDetector
   - Environment
   - PlayerDetector
-  - Items
-  - ItemDetector
+  - Interactives
+  - InteractiveDetector
   - 
   - 
   - 
