@@ -476,11 +476,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemIcon: {fileID: 3233394493514934068}
   Attribute: {fileID: 3233394495071868362}
-  ItemUpgradeBar: {fileID: 3233394494233618378}
   ItemName: {fileID: 3233394493451740947}
   ItemCost: {fileID: 3233394495117666620}
-  Upgrade: {fileID: 3233394494832810269}
-  Max: {fileID: 3233394493980037933}
+  Button: {fileID: 3233394494832810269}
+  NonButton: {fileID: 3233394493980037933}
+  ItemUpgradeBar: {fileID: 3233394494233618378}
 --- !u!1 &3233394494153593552
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,7 +948,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3233394494018299671}
-          m_MethodName: BtnUpgrade
+          m_MethodName: BtnAction
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
