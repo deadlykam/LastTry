@@ -32,7 +32,7 @@ public class PlayerCoinControl : PlayerCombatControl
     {
         base.InitializeStartUp();
 
-        _coins = 100; // Default must be 0
+        _coins = 10000; // Default must be 0
 
         // Updating the player's coin in the UI
         UIInGameUIController.Instance.SetPlayerCoins(_coins);
