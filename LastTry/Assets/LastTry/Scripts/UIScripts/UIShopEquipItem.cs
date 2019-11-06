@@ -7,16 +7,7 @@ using UnityEngine.UI;
 public class UIShopEquipItem : UIShopItem
 {
     [Header("Shop Item Properties")]
-    /*public Image ItemIcon;
-    public TextMeshProUGUI Attribute;*/
     public Image ItemUpgradeBar;
-    /*public TextMeshProUGUI ItemName;
-    public TextMeshProUGUI ItemCost;
-
-    public GameObject Upgrade;
-    public GameObject Max;
-
-    private UpgradableItem _item;*/
     
 
     /// <summary>
@@ -46,30 +37,16 @@ public class UIShopEquipItem : UIShopItem
     }
 
     /// <summary>
-    /// This method sets up the ItemInfo.
+    /// This method sets up the UIShopEquipItem.
     /// </summary>
     /// <param name="item">The item from which data are taken,
     ///                    of type UpgradableItem</param>
     public override void SetupInfo(UpgradableItem item)
     {
-        /*_item = item; // Setting the item
-        UpdateItemValues(); // Updating item values
-        ItemName.text = _item.name; // Setting the item name
-        ItemCost.text = _item.UpgradeCost.ToString(); // Setting upgrade cost*/
-        base.SetupInfo(item);
+        base.SetupInfo(item); // Basic item setup
         SetupCost(item.UpgradeCost); // Setting the cost of the item
         UpdateItemValues(); // Updating item values
     }
-
-    /*/// <summary>
-    /// This method updates the upgradable item.
-    /// </summary>
-    public void BtnUpgrade()
-    {
-        if (_item as WeaponItem) ((WeaponItem)_item).UpgradeItem();
-        else if (_item as WearableItem) ((WearableItem)_item).UpgradeItem();
-        UpdateItemValues(); // Updating item values
-    }*/
 
     /// <summary>
     /// This method upgrades the upgradable item.
