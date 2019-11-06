@@ -396,7 +396,7 @@ public class PlayerCharacter : PlayerCoinControl
         // Checking if the item is body
         if (item.Wearable == WearableType.Body)
         {
-            // Condition for removing the head item
+            // Condition for removing the body item
             if (_wearableItems[0] != null)
             {
                 SetWearableItemBlendShape(_wearableItems[0], 0); // Removing blendshape
@@ -548,6 +548,17 @@ public class PlayerCharacter : PlayerCoinControl
         // Note: Don't show weapon description here because the detector is using
         //       OnTriggerStay so then the description menu will be called every
         //       detection frame which is not good for UI.
+    }
+
+    /// <summary>
+    /// This method gets/equips an item from the shop.
+    /// </summary>
+    /// <param name="shopObject">The item to get or equip, of type
+    ///                          Interactive</param>
+    public void AddObject(Interactive shopObject)
+    {
+        _hoverObject = shopObject; // Setting the item to be equiped
+        PickUpObjectInstant(); // Equipping the item
     }
 
     /// <summary>

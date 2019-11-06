@@ -47,8 +47,8 @@ public class WeaponItem : UpgradableItem
     public override string GetDescription()
     {
         return base.GetDescription() + ". Damage: " 
-               + DamageMin.ToString() + " - " 
-               + DamageMax.ToString();
+               + GetTotalDamage(DamageMin).ToString() + " - " 
+               + GetTotalDamage(DamageMax).ToString();
     }
 
     /// <summary>

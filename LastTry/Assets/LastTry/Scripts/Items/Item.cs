@@ -71,4 +71,24 @@ public class Item : Interactive
     /// </summary>
     /// <param name="target">The new parent of the item, of type Transform</param>
     public virtual void PickUpItem(Transform target) { transform.parent = target; }
+
+    /// <summary>
+    /// This method checks if the item is buyable by the player.
+    /// </summary>
+    /// <returns>True means the item is buyable, false otherwise, 
+    ///          of type int</returns>
+    public virtual bool IsBuyable()
+    {
+        return GameWorldManager.Instance.Player.Coins >= Cost;
+    }
+
+    /// <summary>
+    /// This method buys the item and equips it.
+    /// </summary>
+    public virtual void BuyItem()
+    {
+        gameObject.SetActive(true); // Showing the gameobject
+        GameWorldManager.Instance.Player.Buy(Cost); // Using up the coins to buy
+        GameWorldManager.Instance.Player.AddObject(this); // Equipping the item
+    }
 }
