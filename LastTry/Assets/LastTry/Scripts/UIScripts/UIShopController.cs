@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIShopController : UIMenuController
 {
     public static UIShopController Instance;
 
     [Header("UIShopController Properties")]
+    public ScrollRect ShopScroll;
     public Transform BuyItemTransforms;
     private List<UpgradableItem> _buyItemList;
     public Canvas EquipmentsCanvas;
@@ -40,6 +42,15 @@ public class UIShopController : UIMenuController
             // Adding the buyable upgradable item
             _buyItemList.Add(BuyItemTransforms.GetChild(i).GetComponent<UpgradableItem>());
         }
+    }
+
+    /// <summary>
+    /// This method resets the scroll position.
+    /// </summary>
+    private void ResetScroll()
+    {
+        // Resetting the scroll position
+        ShopScroll.verticalNormalizedPosition = 1;
     }
 
     /// <summary>
@@ -149,6 +160,9 @@ public class UIShopController : UIMenuController
     {
         base.ShowMenu();
 
+        // Resetting the scroll position
+        ResetScroll();
+
         EquipmentsCanvas.enabled = true;
 
         SetEquipmentItemInfo(); // Showing equipment items
@@ -182,6 +196,9 @@ public class UIShopController : UIMenuController
     /// </summary>
     public void BtnOpenBuyMenu()
     {
+        // Resetting the scroll position
+        ResetScroll();
+
         EquipmentsCanvas.enabled = false;
         BuyCanvas.enabled = true;
 
@@ -193,6 +210,9 @@ public class UIShopController : UIMenuController
     /// </summary>
     public void BtnOpenEquipmentMenu()
     {
+        // Resetting the scroll position
+        ResetScroll();
+
         EquipmentsCanvas.enabled = true;
         BuyCanvas.enabled = false;
         SetEquipmentItemInfo();
