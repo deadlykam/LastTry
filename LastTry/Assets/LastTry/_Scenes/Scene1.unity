@@ -8665,6 +8665,7 @@ MonoBehaviour:
   - {fileID: 1414683615}
   - {fileID: 679772391}
   - {fileID: 1653517788}
+  ShopScroll: {fileID: 1529086310}
   BuyItemTransforms: {fileID: 681473712}
   EquipmentsCanvas: {fileID: 766431107}
   BuyCanvas: {fileID: 1126421654}
