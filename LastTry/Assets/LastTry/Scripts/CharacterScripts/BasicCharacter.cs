@@ -15,6 +15,7 @@ public class BasicCharacter : MonoBehaviour
     public int HealthMin;
     [SerializeField]
     private int _health;
+    protected int StatHealth = 0;
     public bool IsDead { get { return _health == 0; } }
 
     public WeaponItem[] Weapons; // For storing multiple weapons for player and boss
@@ -29,6 +30,7 @@ public class BasicCharacter : MonoBehaviour
     protected bool IsHurt { get { return _hurtTimer != 0; } }
 
     public Color DamageFontColour;
+    public Color HealFontColour;
 
     // Start is called before the first frame update
     void Start()
@@ -58,17 +60,7 @@ public class BasicCharacter : MonoBehaviour
                          0 : _hurtTimer - Time.deltaTime;
         }
     }
-
-    /// <summary>
-    /// This method gets the default weapon of the character which is the
-    /// weapon at the 0th index.
-    /// </summary>
-    /// <returns>The weapon at the 0th index, of type WeaponItem</returns>
-    protected WeaponItem GetDefaultWeapon()
-    {
-        return Weapons[0];
-    }
-
+    
     /// <summary>
     /// This method gets the default weapon type of the character which is
     /// the weapontype at the 0th index.
@@ -86,9 +78,19 @@ public class BasicCharacter : MonoBehaviour
     protected virtual void PickUpWeapon1(WeaponItem weaponItem)
     {
         // Dropping the item in the game world
-        Weapons[0].SetParentToWorld(GameWorldManager.Instance.Items);
+        Weapons[0].DropItem(GameWorldManager.Instance.Equipments);
 
         Weapons[0] = weaponItem; // Replacing the weapon at the 0th index
+    }
+
+    /// <summary>
+    /// This method gets the default weapon of the character which is the
+    /// weapon at the 0th index.
+    /// </summary>
+    /// <returns>The weapon at the 0th index, of type WeaponItem</returns>
+    public WeaponItem GetDefaultWeapon()
+    {
+        return Weapons[0];
     }
 
     /// <summary>
@@ -100,7 +102,7 @@ public class BasicCharacter : MonoBehaviour
         _hurtTimer = HurtTimer; // Starting the hurt timer
 
         // Taking damage and keeping health with in range
-        _health = (_health - amount <= 0) ? 0 : _health - amount;
+        _health = (_health - amount) <= 0 ? 0 : _health - amount;
 
         // Condition for the BasicCharacter to die
         if (_health == 0)
@@ -117,11 +119,52 @@ public class BasicCharacter : MonoBehaviour
     }
 
     /// <summary>
+    /// This method heals the basic character.
+    /// </summary>
+    /// <param name="amount">The amount of health to add to the current health, if
+    ///                      health amount is over max then max amount will be used,
+    ///                      of type int</param>
+    public virtual void Heal(int amount)
+    {
+        // Calculating health from healing
+        _health = (_health + amount) >= GetTotalHealth() ? 
+                                        GetTotalHealth() : _health + amount;
+
+        // Starting a heal font effect
+        UIDamageFontManager.Instance.RequestDamageFont(transform.position, amount,
+                                                       HealFontColour);
+    }
+
+    /// <summary>
     /// This method returns the health percentage value.
     /// </summary>
     /// <returns>The health percentage value of health, of type float</returns>
     public virtual float GetHealthPercentage()
-    { return (float)_health / (float)HealthMax; }
+    { return (float)_health / (float)GetTotalHealth(); }
+
+    /// <summary>
+    /// This method adds health stat from items or others.
+    /// </summary>
+    /// <param name="amount">The amount of health stat to add, of type int</param>
+    public virtual void AddStatHealth(int amount) { StatHealth += amount; }
+
+    /// <summary>
+    /// This method removes health stat.
+    /// </summary>
+    /// <param name="amount">The amount of health stat to remove, of type int</param>
+    public virtual void RemoveStatHealth(int amount)
+    {
+        StatHealth = (StatHealth - amount) <= 0 ? 0 : StatHealth - amount;
+
+        // Checking if current health is above total health and fixing it
+        _health = _health >= GetTotalHealth() ? GetTotalHealth() : _health;
+    }
+
+    /// <summary>
+    /// This method gets the total max health amount.
+    /// </summary>
+    /// <returns>The total max health, of type int</returns>
+    public virtual int GetTotalHealth() { return HealthMax + StatHealth; }
 }
 
 public enum CharacterState { None, Move, Stop, MoveToEnemy, AttackEnemy, GetNextEnemy};

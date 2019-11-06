@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is the basic enemy character. All enemy type should extend from this class.
+/// </summary>
 public class EnemyCharacter : BasicAnimation
 {
     [Header("Enemy Character Properties")]
@@ -16,6 +19,13 @@ public class EnemyCharacter : BasicAnimation
         " the enemy so that the laser does not go completely inside the enemy" +
         " or on the ground location of the enemy. This ONLY used by the bot.")]
     public GameObject LaserContactOffset;
+
+    [Range(0, 100)]
+    public int ItemDropRate;
+    private bool _isItemDropped = false;
+
+    [Tooltip("The coin value of the enmey when it dies.")]
+    public int EnemyValue;
 
     private float _speedPercentage = 0;
     private Vector3 _lookAtTarget;
@@ -139,6 +149,17 @@ public class EnemyCharacter : BasicAnimation
     }
 
     /// <summary>
+    /// This method gets the coin value of the enemy.
+    /// </summary>
+    /// <returns>The coin value of the enemy, of type int</returns>
+    private int GetEnemyValue()
+    {
+        return HealthMax
+               + 5/*Fixed value, please remove this and replace with weapon damage*/
+               + (HealthMax * 2);
+    }
+
+    /// <summary>
     /// This method initializes the enemy character at the start up in EnemyCharacter.
     /// </summary>
     protected override void InitializeStartUp()
@@ -202,13 +223,32 @@ public class EnemyCharacter : BasicAnimation
         // Condition for setting health bar
         if (!IsDead && !_hasHealthBar) Manager.RequestHealthBar(transform);
 
-        // Condition to free up a health bar
-        if(IsDead && _hasHealthBar)
+        // Condition for death
+        if(IsDead)
         {
-            // Freeing up a health bar
-            Manager.RequestToReleasehealthBar(_healthBarReference);
-            // Removing the reference to the health bar
-            _healthBarReference = -1;
+            // Condition to free up health bar
+            if (_hasHealthBar)
+            {
+                // Freeing up a health bar
+                Manager.RequestToReleasehealthBar(_healthBarReference);
+                // Removing the reference to the health bar
+                _healthBarReference = -1;
+            }
+
+            // Condition for dropping an item and giving
+            // the player coins.
+            if (!_isItemDropped)
+            {
+                // Dropping item
+                GameWorldManager.Instance
+                    .RequestItemDrop(
+                    ItemDropRate, 
+                    transform.position,
+                    GetEnemyValue());
+                // Giving player coins
+                GameWorldManager.Instance.Player.AddCoin(EnemyValue);
+                _isItemDropped = true; // Done with these logics
+            }
         }
     }
 
