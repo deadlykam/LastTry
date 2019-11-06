@@ -24,6 +24,7 @@ public class PlayerCharacter : PlayerCoinControl
     public float DashReloadTimer;
     private float _dashReloadTimer;
     private bool _isDashReloaded { get { return _dashReloadTimer == 0; } }
+    private bool _isDashButton; // This get flag info from the virtual button
 
     [Header("Weapon Slot Locations")]
     public Transform RightHand;
@@ -150,7 +151,7 @@ public class PlayerCharacter : PlayerCoinControl
     private void DashHandler()
     {
         // Condition for dashing
-        if (!_IsDash && Input.GetButtonDown("Fire2")
+        if (!_IsDash && (Input.GetButtonDown("Fire2") || _isDashButton)
             && _isDashReloaded)
         {
             _dashTimer = DashTimer;
@@ -188,6 +189,9 @@ public class PlayerCharacter : PlayerCoinControl
                                0 :
                                (_dashReloadTimer - Time.deltaTime);
         }
+
+        // Condition for resetting the dash button
+        if (_isDashButton) _isDashButton = false;
     }
 
     /// <summary>
@@ -514,12 +518,7 @@ public class PlayerCharacter : PlayerCoinControl
         // Conditions to take damage by calculating the damage
         if(!_IsDash) base.TakeDamage(CalculateDamage(amount));
     }
-
-    /// <summary>
-    /// This method takes the button A attack command from the on screen button A.
-    /// </summary>
-    public void ButtonA() { if (IsAcceptInput) _isAttackButtonA = true; }
-
+    
     /// <summary>
     /// This method adds a hovered over interactive.
     /// </summary>
@@ -645,4 +644,14 @@ public class PlayerCharacter : PlayerCoinControl
     /// <param name="index">The index of the WearableItem, of type int</param>
     /// <returns>The wearable item of the player, of type WearableItem</returns>
     public WearableItem GetWearableItem(int index) { return _wearableItems[index]; }
+
+    /// <summary>
+    /// This method takes the button A attack command from the on screen button A.
+    /// </summary>
+    public void ButtonA() { if (IsAcceptInput) _isAttackButtonA = true; }
+
+    /// <summary>
+    /// This method takes the button B dash command from the on screen button B.
+    /// </summary>
+    public void ButtonB() { _isDashButton = true; }
 }
