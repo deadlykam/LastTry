@@ -13,6 +13,7 @@ The main objective is to kill all the enemies in a stage. Once every enemies are
 - [Controls](#controls)
 - [Versioning](#versioning)
 - [Authors](#authors)
+- [License](#license)
 
 ## Prerequisites:
 #### Unity Game Engine
@@ -57,3 +58,6 @@ The project uses [Semantic Versioning](https://semver.org/). Available versions 
 
 ## Authors
 - Syed Shaiyan Kamran Waliullah \- [DeadlyKam](https://github.com/deadlykam)
+
+## License
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.md](docs/LICENSE.md) file for details
