@@ -160,7 +160,8 @@ public class PlayerCharacter : PlayerCoinControl
     private void DashHandler()
     {
         // Condition for dashing
-        if (!_IsDash && (Input.GetButtonDown("Fire2") || _isDashButton)
+        if (!_IsDash && 
+            ((Input.GetButtonDown("Fire2") && IsJoyPad) || _isDashButton)
             && _isDashReloaded)
         {
             _dashTimer = DashTimer;
@@ -506,7 +507,7 @@ public class PlayerCharacter : PlayerCoinControl
     {
         // Add other menu checks over here using 'and'
         // expression
-        return !UIShopController.Instance.isMenuShown;
+        return !UIShopController.Instance.IsMenuShown;
     }
 
     /// <summary>
