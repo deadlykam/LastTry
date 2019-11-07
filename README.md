@@ -7,12 +7,12 @@ This is a mobile RPG hack'n slash game with perma death system.
 The main objective is to kill all the enemies in a stage. Once every enemies are dead the player can choose which stat to upgrade from damage, health and special. Player also get to choose a random weapon/item at each stage end. Player can also upgrade weapon and armour. Upgrade money is acquired through killing enemies. Boss enemies drop special items. Player can also upgrade passive skills by acquiring separate money for it through killing enemies. Player will lose all items, weapons, money, passive money and upgrades when player dies. Player will start from the start when dead.
 
 ## Table of Contents:
--[Prerequisites](#prerequisites)
--[Installation](#installation)
--[Usage](#usage)
--[Controls](#controls)
--[Versioning](#versioning)
--[Authors](#authors)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Controls](#controls)
+- [Versioning](#versioning)
+- [Authors](#authors)
 
 ## Prerequisites:
 #### Unity Game Engine
@@ -26,7 +26,7 @@ Latest stable Unity version is 2019.2.9f1. Install Unity game engine from versio
 Latest stable Android Studio version is 3.4 Build #AI-183.5429.30.34.5452501, built on April 10, 2019. Install Android Studio from 3.4 Build #AI-183.5429.30.34.5452501 or latest version of Android Studio. [Download Android Studio from here](https://developer.android.com/studio). After the download then install the Android Studio and follow the installation instructions.
 
 ## Installation
-Download the latest stable version of the project and open it up in the Unity. It is that simple. If stable's version causes issue then please follow point *2.* in Prerequisites.
+Download the latest stable version of the project and open it up in the Unity. It is that simple. If stable's version causes issue then please follow point *2.* in [Prerequisites](#prerequisites).
 
 ## Usage
 Open the project in Unity. Navigate to Scene1.unity and open it which is in Assets/LastTry/\_Scenes/Scene1.unity
