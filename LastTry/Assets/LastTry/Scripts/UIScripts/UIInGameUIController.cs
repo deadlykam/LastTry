@@ -94,7 +94,7 @@ public class UIInGameUIController : MonoBehaviour
 
         // Condition to check if no interactive menus are shown,
         // If there not shown only then show the pop up dialogs
-        if (!UIShopController.Instance.isMenuShown)
+        if (!UIShopController.Instance.IsMenuShown)
         {
             if (interactive as Item) // Checking if the interactive is item
             {
@@ -167,7 +167,7 @@ public class UIInGameUIController : MonoBehaviour
 
         // Condition to check if no interactive menus are shown,
         // If there not shown only then show the pop up dialogs
-        if (!UIShopController.Instance.isMenuShown)
+        if (!UIShopController.Instance.IsMenuShown)
         {
             if (interactive1 as WeaponItem) // Checking if weapon item
             {
