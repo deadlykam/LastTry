@@ -188,6 +188,8 @@ public class UIShopController : UIMenuController
     {
         EquipmentsCanvas.enabled = false;
         BuyCanvas.enabled = false;
+        // Clearing the hover object
+        GameWorldManager.Instance.Player.ClearHoverObject();
         base.BtnClose();
     }
 
