@@ -577,6 +577,16 @@ public class PlayerCharacter : PlayerCoinControl
     }
 
     /// <summary>
+    /// This method clears the hover object and is usually called
+    /// by interactive objects like Shop.
+    /// </summary>
+    public void ClearHoverObject()
+    {
+        // Condition for clearing the hover object
+        if (_hoverObject != null) _hoverObject = null;
+    }
+
+    /// <summary>
     /// This method is for picking up objects with timer.
     /// </summary>
     public void PickUpObjectTimer()
