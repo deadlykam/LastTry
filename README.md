@@ -60,4 +60,4 @@ The project uses [Semantic Versioning](https://semver.org/). Available versions 
 - Syed Shaiyan Kamran Waliullah \- [DeadlyKam](https://github.com/deadlykam)
 
 ## License
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.md](docs/LICENSE.md) file for details
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.md](LICENSE) file for details
