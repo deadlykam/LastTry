@@ -87,7 +87,8 @@ public class PlayerCharacter : PlayerCoinControl
             UpdatePlayerCombatControl();
 
             // Condition for being able to move
-            if (IsMovable && !_IsDash) MovementRotationHandler();
+            if (IsMovable && !_IsDash)
+                MovementRotationHandler();
 
             if(!_IsDash) AttackHandler();
             DashHandler();
@@ -105,15 +106,23 @@ public class PlayerCharacter : PlayerCoinControl
     {
         // Accelerating horizontal movement from joystick/keyboard/joypad
         _horizontalValue = Mathf.SmoothDamp(_horizontalValue,
+
+                                            IsMenusClosed() ?
                                             JoystickAndroid.Horizontal
-                                            + Input.GetAxis("Horizontal"),
+                                            + Input.GetAxis("Horizontal")
+                                            : 0,
+
                                             ref _horzontalVelocity,
                                             MovementAcceleration);
 
         // Accelerating vertical movement from joystick/keyboard/joypad
         _verticalValue = Mathf.SmoothDamp(_verticalValue,
+
+                                          IsMenusClosed() ?
                                           JoystickAndroid.Vertical
-                                          + Input.GetAxis("Vertical"),
+                                          + Input.GetAxis("Vertical")
+                                          : 0,
+
                                           ref _verticalVelocity,
                                           MovementAcceleration);
 
@@ -486,6 +495,18 @@ public class PlayerCharacter : PlayerCoinControl
     private int CalculateDamage(int amount)
     {
         return (amount - _statDefense) <= 0 ? 1 : amount - _statDefense;
+    }
+
+    /// <summary>
+    /// This method checks if all interactive menus are closed.
+    /// </summary>
+    /// <returns>True means interactive menus are closed, false otherwise,
+    ///          of type bool</returns>
+    private bool IsMenusClosed()
+    {
+        // Add other menu checks over here using 'and'
+        // expression
+        return !UIShopController.Instance.isMenuShown;
     }
 
     /// <summary>
