@@ -7,8 +7,10 @@ public class UIJoypadController : MonoBehaviour
     public static UIJoypadController Instance;
 
     [Header("UI Joypad Controller Properties")]
-    public PlayerCharacter Player;
     public UIButtonHold ButtonAHold;
+
+    private PlayerCharacter _player
+    { get { return GameWorldManager.Instance.Player; } }
 
     private void Awake()
     {
@@ -24,13 +26,13 @@ public class UIJoypadController : MonoBehaviour
 
     private void Update()
     {
-        // Condition for giving the fill amount for the Weapon Popup menu
-        if (ButtonAHold.IsButtonPressed)
+        // Condition for giving the fill amount for the Item Popup menus
+        if (ButtonAHold.IsButtonPressed && _player.IsHoverObject)
             UIInGameUIController.Instance
-                .SetWeaponBar(ButtonAHold.GetHoldTimerPercentage());
+                .SetAllBar(_player.HoverObject, ButtonAHold.GetHoldTimerPercentage());
         else if (!ButtonAHold.IsButtonPressed // Condition for resetting the bar
-                && UIInGameUIController.Instance.IsWeaponBarNotDone())
-            UIInGameUIController.Instance.SetWeaponBar(0);
+                && UIInGameUIController.Instance.IsBarNotDone())
+            UIInGameUIController.Instance.ResetAllBar();
     }
 
     /// <summary>
@@ -38,12 +40,12 @@ public class UIJoypadController : MonoBehaviour
     /// </summary>
     /// <returns>True means the player is hovering over an item,
     ///          false otherwise, of type bool</returns>
-    public bool IsHoverItem() { return Player.IsHoverWeapon; }
+    public bool IsHoverObject() { return _player.IsHoverObject; }
 
     /// <summary>
     /// This method picks up an item.
     /// </summary>
-    public void PickUpItem() { Player.PickUpItemInstant(); }
+    public void PickUpObject() { _player.PickUpObjectInstant(); }
 
     /// <summary>
     /// This method returns the button A hold percentage.
@@ -55,6 +57,11 @@ public class UIJoypadController : MonoBehaviour
     /// <summary>
     /// This method sends the button A command to the player.
     /// </summary>
-    public void ButtonA() { Player.ButtonA(); }
+    public void ButtonA() { _player.ButtonA(); }
+
+    /// <summary>
+    /// This method sends the button B command to the player.
+    /// </summary>
+    public void ButtonB() { _player.ButtonB(); }
     #endregion Button Methods
 }

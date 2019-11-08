@@ -33,6 +33,8 @@ public class PlayerCombatControl : BasicAnimation
 
     protected bool IsStopDamage = false;
 
+    protected int StatDamage = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -109,11 +111,17 @@ public class PlayerCombatControl : BasicAnimation
             {
                 // Checking if enemy is not null and hurting it
                 if (Enemies[i] != null)
-                    Enemies[i].TakeDamage(GetDefaultWeapon().GetDamage());
+                    Enemies[i].TakeDamage(GetTotalDamage());
                 else Enemies.Remove(Enemies[i]); // Removing null enemies
             }
         }
     }
+
+    /// <summary>
+    /// This method gets the total damage from the weapon and stat.
+    /// </summary>
+    /// <returns>The total damage, of type int</returns>
+    private int GetTotalDamage() { return GetDefaultWeapon().GetDamage() + StatDamage; }
 
     /// <summary>
     /// This method initializes the player combat control at the start up 
@@ -154,6 +162,19 @@ public class PlayerCombatControl : BasicAnimation
             _combatState = CombatState.SetupInput;
         }
     }
+
+    /// <summary>
+    /// This method adds damage stat from items or others.
+    /// </summary>
+    /// <param name="amount">The amount of damage stat to increase, of type int</param>
+    public virtual void AddStatDamage(int amount) { StatDamage += amount; }
+
+    /// <summary>
+    /// This method removes damage stat.
+    /// </summary>
+    /// <param name="amount">The amount of damage stat to remove, of type int</param>
+    public virtual void RemoveStatDamage(int amount)
+    { StatDamage = (StatDamage - amount) <= 0 ? 0 : StatDamage - amount; }
 
     /// <summary>
     /// This method removes all the enemies in the enemy list.
