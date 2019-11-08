@@ -343,7 +343,8 @@ MonoBehaviour:
   HealthMax: 100
   HealthMin: 100
   _health: 0
-  Weapons: []
+  Weapons:
+  - {fileID: 6237267096772370607}
   SpeedMovement: 5
   SpeedSlerp: 0.25
   HurtTimer: 1
@@ -856,6 +857,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2266909259724219968}
   - component: {fileID: 2843650794360320178}
+  - component: {fileID: 4806348622072834662}
+  - component: {fileID: 6237267096772370607}
   m_Layer: 0
   m_Name: Gauntlet
   m_TagString: Untagged
@@ -962,6 +965,49 @@ SkinnedMeshRenderer:
     m_Center: {x: -2.3283064e-10, y: 0.0016547649, z: 0.000076391385}
     m_Extent: {x: 0.0044509927, y: 0.0030876605, z: 0.0013880321}
   m_DirtyAABB: 0
+--- !u!65 &4806348622072834662
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807839799300757264}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.008901985, y: 0.0032302146, z: 0.006365674}
+  m_Center: {x: -2.2656985e-10, y: -0.0001999573, z: 0.008574092}
+--- !u!114 &6237267096772370607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807839799300757264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e91b39c941c9d264ebb636747ef4008a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectName: Gauntlet Weak
+  ObjectCollider: {fileID: 4806348622072834662}
+  Cost: 100
+  PositionOffset: {x: 0, y: 0, z: 0}
+  UpgradeLimit: 2
+  UpgradeCost: 100
+  AttackOffset: 2
+  DefenseOffset: 2
+  HealthOffset: 0
+  Weapon: 4
+  DamageMax: 5
+  DamageMin: 3
+  AttackAnimations:
+  - TotalTime: 2.3
+    ProcessTime: 1.3
+    AttackAnimation: {fileID: 7400000, guid: b554d164891afe540951e48fc86d714b, type: 2}
+  PlacementPosition: {x: 0, y: 0, z: 0}
+  PlacementRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &4088297571137446276
 GameObject:
   m_ObjectHideFlags: 0
