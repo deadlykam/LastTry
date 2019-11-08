@@ -13,8 +13,8 @@ public class BasicCharacter : MonoBehaviour
 
     public int HealthMax;
     public int HealthMin;
-    [SerializeField]
     private int _health;
+    public int Health { get { return _health; } }
     protected int StatHealth = 0;
     public bool IsDead { get { return _health == 0; } }
 
@@ -126,8 +126,11 @@ public class BasicCharacter : MonoBehaviour
     ///                      of type int</param>
     public virtual void Heal(int amount)
     {
-        // Calculating health from healing
-        _health = (_health + amount) >= GetTotalHealth() ? 
+        // Calculating health from healing,
+        // If current health already more than total health
+        // then no healing is done,
+        _health = _health > GetTotalHealth() ? _health :
+                  (_health + amount) >= GetTotalHealth() ?
                                         GetTotalHealth() : _health + amount;
 
         // Starting a heal font effect
@@ -155,9 +158,6 @@ public class BasicCharacter : MonoBehaviour
     public virtual void RemoveStatHealth(int amount)
     {
         StatHealth = (StatHealth - amount) <= 0 ? 0 : StatHealth - amount;
-
-        // Checking if current health is above total health and fixing it
-        _health = _health >= GetTotalHealth() ? GetTotalHealth() : _health;
     }
 
     /// <summary>
