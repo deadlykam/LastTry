@@ -15,9 +15,10 @@ public class UIInGameUIController : MonoBehaviour
 
     [Header("Player Health Bar Properties")]
     public Image PlayerHealthBar;
+    public TextMeshProUGUI PlayerHealthText;
     public float PlayerHealthBarTimer;
     private float _playerHealthBarTimer;
-    private float _playerHealth = 1f;
+    private float _playerHealth = 1f; // Percentage value
 
     [Header("Player Coin Properties")]
     public TextMeshProUGUI TxtPlayerCoins;
@@ -267,12 +268,32 @@ public class UIInGameUIController : MonoBehaviour
     /// <summary>
     /// This method sets the fill amount for the player health bar.
     /// </summary>
-    /// <param name="amount">The amount to set for the player health bar,
+    /// <param name="amount">The amount to set for the player health bar, 
+    ///                      range from 0 - 1,
     ///                      of type float</param>
     public void SetPlayerHealthBar(float amount)
     {
-        _playerHealth = amount;
+        // Keeping the range from 0 - 1f
+        _playerHealth = amount > 1f ? 1f : amount;
         _playerHealthBarTimer = 0;
+    }
+
+    /// <summary>
+    /// This method sets the fill amount for the player health bar and updates
+    /// the player health text.
+    /// </summary>
+    /// <param name="healthPercentage">The amount to set for the player
+    ///                                health bar, range from 0 - 1,
+    ///                                of type float</param>
+    /// <param name="currentHealth">The current health of the player,
+    ///                             of type float</param>
+    /// <param name="maxHealth">The max health of the player,
+    ///                         of type float</param>
+    public void SetPlayerHealthBar(float healthPercentage, float currentHealth,
+        float maxHealth)
+    {
+        SetPlayerHealthBar(healthPercentage);
+        PlayerHealthText.text = currentHealth.ToString() + "/" + maxHealth.ToString();
     }
 
     /// <summary>

@@ -54,14 +54,6 @@ public class EnemyMelee : EnemyCharacter
         {
             if (IsReachedTarget && !IsAttacking) // Reached and attacking player
             {
-                /*// Condition for getting a new attacking animation
-                // and attack information
-                if (!IsAttacking)
-                {
-                    GetNewAttackAnimation();
-                    PlayAttackAnimation(CurrentCombatInfo.AttackAnimation);
-                }*/
-
                 // Condition for starting to attack the player
                 if (IsPlayerInWeaponRange)
                 {
@@ -81,11 +73,10 @@ public class EnemyMelee : EnemyCharacter
                 if (AttackTimer >= CurrentCombatInfo.ProcessTime &&
                     !_hasDealtDamage)
                 {
-                    // Todo: Make sure the damage is taken from the weapon
-                    //       and not from a fixed value. Fixed value is
-                    //       only for testing.
                     // Condition to make the player take damage
-                    if (IsPlayerInWeaponRange) Manager.Player.TakeDamage(5);
+                    if (IsPlayerInWeaponRange) Manager
+                            .Player.TakeDamage(GetDefaultWeapon().GetDamage());
+
                     _hasDealtDamage = true;
                 }
             }

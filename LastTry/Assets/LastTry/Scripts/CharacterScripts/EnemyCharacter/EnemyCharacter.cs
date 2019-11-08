@@ -155,7 +155,7 @@ public class EnemyCharacter : BasicAnimation
     private int GetEnemyValue()
     {
         return HealthMax
-               + 5/*Fixed value, please remove this and replace with weapon damage*/
+               + GetDefaultWeapon().GetDamage()
                + (HealthMax * 2);
     }
 
