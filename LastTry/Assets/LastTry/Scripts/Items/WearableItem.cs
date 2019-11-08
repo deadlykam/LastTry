@@ -96,11 +96,14 @@ public class WearableItem : UpgradableItem
         for(int i = 0; i < Stats.Length; i++)
         {
             if (Stats[i].Stat == StatType.Attack) // Adding damage stat
-                GameWorldManager.Instance.Player.AddStatDamage(Stats[i].StatAmount);
+                GameWorldManager.Instance.Player
+                    .AddStatDamage(Stats[i].StatAmount + GetAttack());
             else if (Stats[i].Stat == StatType.Defense) // Adding defense stat
-                GameWorldManager.Instance.Player.AddStatDefense(Stats[i].StatAmount);
+                GameWorldManager.Instance.Player
+                    .AddStatDefense(Stats[i].StatAmount + GetDefense());
             else if (Stats[i].Stat == StatType.Health) // Adding health stat
-                GameWorldManager.Instance.Player.AddStatHealth(Stats[i].StatAmount);
+                GameWorldManager.Instance.Player
+                    .AddStatHealth(Stats[i].StatAmount + GetHealth());
         }
 
         SetCollider(false); // Removing the collision
