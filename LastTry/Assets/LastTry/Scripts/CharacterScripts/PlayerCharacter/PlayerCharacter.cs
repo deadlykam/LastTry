@@ -95,9 +95,9 @@ public class PlayerCharacter : PlayerCoinControl
             PickUpObjectFromJoypad();
         }
 
-        // Setting the player health
+        /*// Setting the player health
         UIInGameUIController.Instance
-            .SetPlayerHealthBar(GetHealthPercentage(), Health, GetTotalHealth());
+            .SetPlayerHealthBar(GetHealthPercentage(), Health, GetTotalHealth());*/
     }
 
     /// <summary>
@@ -520,6 +520,10 @@ public class PlayerCharacter : PlayerCoinControl
 
         // Initializing the size of the wearable items
         _wearableItems = new WearableItem[5];
+
+        // Setting the player health
+        UIInGameUIController.Instance
+            .SetPlayerHealthBar(GetHealthPercentage(), Health, GetTotalHealth());
     }
 
     /// <summary>
@@ -533,15 +537,64 @@ public class PlayerCharacter : PlayerCoinControl
     }
 
     /// <summary>
-    /// This method hurts the player.
+    /// This method hurts the player and updates the player health UI.
     /// </summary>
     /// <param name="amount">The amount of damage to take, of type int</param>
     public override void TakeDamage(int amount)
     {
         // Conditions to take damage by calculating the damage
-        if(!_IsDash) base.TakeDamage(CalculateDamage(amount));
+        if (!_IsDash)
+        {
+            base.TakeDamage(CalculateDamage(amount));
+
+            // Setting the player health
+            UIInGameUIController.Instance
+                .SetPlayerHealthBar(GetHealthPercentage(), Health, GetTotalHealth());
+        }
     }
-    
+
+    /// <summary>
+    /// This method heals the player and updates the player health UI.
+    /// </summary>
+    /// <param name="amount">The amount of health to add to the current health, if
+    ///                      health amount is over max then max amount will be used,
+    ///                      of type int</param>
+    public override void Heal(int amount)
+    {
+        base.Heal(amount);
+
+        // Setting the player health
+        UIInGameUIController.Instance
+            .SetPlayerHealthBar(GetHealthPercentage(), Health, GetTotalHealth());
+    }
+
+    /// <summary>
+    /// This method adds health stat from items or others and updates the
+    /// player health UI.
+    /// </summary>
+    /// <param name="amount">The amount of health stat to add, of type int</param>
+    public override void AddStatHealth(int amount)
+    {
+        base.AddStatHealth(amount);
+
+        // Setting the player health
+        UIInGameUIController.Instance
+            .SetPlayerHealthBar(GetHealthPercentage(), Health, GetTotalHealth());
+    }
+
+    /// <summary>
+    /// This method removes health state and updates the player health UI.
+    /// </summary>
+    /// <param name="amount">The amount of health state to remove, of type int</param>
+    public override void RemoveStatHealth(int amount)
+    {
+        base.RemoveStatHealth(amount);
+
+        // Setting the player health
+        UIInGameUIController.Instance
+            .SetPlayerHealthBar(GetHealthPercentage(), Health, GetTotalHealth());
+    }
+
     /// <summary>
     /// This method adds a hovered over interactive.
     /// </summary>
