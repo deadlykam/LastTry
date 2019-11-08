@@ -75,4 +75,4 @@ public class WeaponItem : UpgradableItem
     }
 }
 
-public enum WeaponType { None, Sword, Staff, Hammer };
+public enum WeaponType { None, Sword, Staff, Hammer, Hand };
