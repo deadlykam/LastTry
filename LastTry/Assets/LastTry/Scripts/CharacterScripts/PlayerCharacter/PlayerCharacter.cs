@@ -96,7 +96,8 @@ public class PlayerCharacter : PlayerCoinControl
         }
 
         // Setting the player health
-        UIInGameUIController.Instance.SetPlayerHealthBar(GetHealthPercentage());
+        UIInGameUIController.Instance
+            .SetPlayerHealthBar(GetHealthPercentage(), Health, GetTotalHealth());
     }
 
     /// <summary>
