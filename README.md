@@ -57,7 +57,11 @@ Hit the play button on the Unity.
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/LastTry/releases).
 
 ## Authors
-- Syed Shaiyan Kamran Waliullah \- [DeadlyKam](https://github.com/deadlykam)
+- Syed Shaiyan Kamran Waliullah 
+  - [Kamran Wali Github](https://github.com/deadlykam)
+  - [Kamran Wali Twitter](https://twitter.com/KamranWaliDev)
+  - [Kamran Wali Youtube](https://www.youtube.com/channel/UCkm-BgvswLViigPWrMo8pjg)
+  - [Kamran Wali Website](https://deadlykam.github.io/)
 
 ## License
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.md](LICENSE) file for details
